@@ -60,6 +60,18 @@ Express is a web application framework for Node.js. It is used to build our back
 ### Postgres
 Postgres is a powerful, open source object-relational database system that uses and extends the SQL language combined with many features that safely store and scale the most complicated data workloads. A sample `Contact` schema is created in this application to store contact records.
 
-
 ### Prisma
 Prisma is an open-source database toolkit. It includes a JavaScript/TypeScript ORM for Node.js
+
+### PostgreSQL and Prisma
+This boilerplate uses [PostgreSQL](https://www.postgresql.org/) as its database and [Prisma](https://www.prisma.io/) as its ORM. Prisma makes it easy to perform database operations from your Node.js server.
+To connect to your PostgreSQL database, update the `DATABASE_URL` in the `.env` file with your database credentials. Then, you can use Prisma's [database client](https://www.prisma.io/docs/concepts/components/prisma-client) to perform database operations in your Express routes.
+This boilerplate includes a sample `Contact` model in `prisma/schema.prisma` and corresponding API routes in `server/routes/contact.routes.js` that demonstrate how to create and delete records in your PostgreSQL database using Prisma.
+
+### Express API and React
+This boilerplate includes a simple Express API in `server/index.js` and `server/routes/contact.routes.js`. The API includes routes for creating and deleting contacts.
+The React application components that use these API routes to create and delete contacts. The `pages/NewContact` component includes a form for creating new contacts, and the `Contacts` component includes a list of all contacts with a delete button for each contact.
+
+### Formik
+This boilerplate uses [Formik](https://formik.org/) for form handling and validation in the React application. The `ContactForm` component in `client/pages/NewContact.js` demonstrates how to use Formik to create a form with validation.
+Formik makes it easy to handle form state, validation, and submission in React. It includes built-in hooks like `useFormik` that you can use to manage your form state and handle form submission.
