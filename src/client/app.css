@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+body {
+  margin: auto;
+  font-family: "Roboto", sans-serif;
+}
+
+/* AppHeroIcon.css */
+.icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.light-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 10%;
+  background: rgba(255, 255, 255, 0.8);
+  animation: moveLightBar 2s linear infinite;
+}
+
+@keyframes moveLightBar {
+  0% {
+    left: -10%;
+  }
+  100% {
+    left: 100%;
+  }
+}
