@@ -1,5 +1,23 @@
 # simple-vite-react-express
 
+<p align="center">
+  <img src="./public/template-logo.png" alt="Ganges Logo" height="200">
+</p>
+
+<p align="center">
+    <img src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat-square&logo=Vite&logoColor=white" alt="Vite">
+    <img src="https://img.shields.io/badge/React-61DAFB.svg?style=flat-square&logo=React&logoColor=black" alt="React">
+    <img src="https://img.shields.io/badge/Express-000000.svg?style=flat-square&logo=Express&logoColor=white" alt="Express">
+    <img src="https://img.shields.io/badge/postgresql-4169e1.svg?style=flat-square&logo=PostgreSQL&logoColor=white" alt="PostgreSQL">
+    <img src="https://img.shields.io/badge/Prisma-2D3748.svg?style=flat-square&logo=Prisma&logoColor=white" alt="Prisma">
+    <br>
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat-square&logo=JavaScript&logoColor=black" alt="JavaScript">
+    <img src="https://img.shields.io/badge/HTML5-E34F26.svg?style=flat-square&logo=HTML5&logoColor=white" alt="HTML5">
+    <img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=flat-square&logo=Nodemon&logoColor=white" alt="Nodemon">
+    <img src="https://img.shields.io/badge/Axios-5A29E4.svg?style=flat-square&logo=Axios&logoColor=white" alt="Axios">
+    <img src="https://img.shields.io/badge/JSON-000000.svg?style=flat-square&logo=JSON&logoColor=white" alt="JSON">
+</p>
+
 This is a boilerplate to build a full stack web application using React, Node.js, Express and Vite.
 
 - [simple-vite-react-express](#simple-vite-react-express)
@@ -12,6 +30,11 @@ This is a boilerplate to build a full stack web application using React, Node.js
     - [Vite](#vite)
     - [Nodemon](#nodemon)
     - [Express](#express)
+    - [Postgres](#postgres)
+    - [Prisma](#prisma)
+    - [PostgreSQL and Prisma](#postgresql-and-prisma)
+    - [Express API and React](#express-api-and-react)
+    - [Formik](#formik)
 
 ## Introduction
 
