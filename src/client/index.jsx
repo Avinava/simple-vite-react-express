@@ -9,7 +9,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./app.css";
 // header component
 import Header from "./components/Header";
-import Home from "./pages/Home";
 import NewContact from "./pages/NewContact";
 import Contacts from "./pages/Contacts";
 import ContactDetail from "./pages/ContactDetail";
@@ -49,7 +48,6 @@ if (root !== null) {
               element={<ContactDetail key="contact-detail" />}
               key="contact-detail"
             ></Route>
-            <Route path="/home" element={<Home key="home" />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
