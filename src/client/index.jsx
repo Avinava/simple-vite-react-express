@@ -13,6 +13,7 @@ import NewContact from "./pages/NewContact";
 import Contacts from "./pages/Contacts";
 import ContactDetail from "./pages/ContactDetail";
 import NotFound from "./pages/NotFound";
+import Home from "./pages/Home";
 
 // demonstrates how to create a theme
 const theme = createTheme({
@@ -36,18 +37,10 @@ if (root !== null) {
         <BrowserRouter>
           <Header />
           <Routes>
+            <Route path="/" element={<Home key="home" />} />
             <Route path="/contacts" element={<Contacts key="contacts" />} />
-            <Route path="/" element={<Contacts key="contacts" />} />
-            <Route
-              path="/new-contact"
-              element={<NewContact key="new-contact" />}
-            />
-
-            <Route
-              path="/contact/:id"
-              element={<ContactDetail key="contact-detail" />}
-              key="contact-detail"
-            ></Route>
+            <Route path="/new-contact" element={<NewContact key="new-contact" />} />
+            <Route path="/contact/:id" element={<ContactDetail key="contact-detail" />} key="contact-detail"></Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
