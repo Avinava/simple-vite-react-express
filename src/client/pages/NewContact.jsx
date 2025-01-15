@@ -3,15 +3,15 @@ import { makeStyles } from "@mui/styles";
 import { TextField, Button, Typography, Grid, Box, Container, Card, CardContent } from "@mui/material";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   errorMessage: {
-    color: "red",
+    color: theme.palette.error.main,
     fontSize: "0.8rem",
   },
-});
+}));
 
 const NewContact = () => {
   const classes = useStyles();
@@ -24,16 +24,16 @@ const NewContact = () => {
 
   const handleContactSubmit = async (values) => {
     try {
-      const response = await axios.post('/api/v1/contact/create', {
+      const response = await axios.post("/api/v1/contact/create", {
         firstName: values.firstName,
         lastName: values.lastName,
         email: values.email,
       });
-  
-      toast.success('Contact created successfully');
+
+      toast.success("Contact created successfully");
     } catch (err) {
-      console.error(err);
-      toast.error('An error occurred while creating the contact');
+      console.error("Error creating contact:", err);
+      toast.error("An error occurred while creating the contact");
     }
   };
 
@@ -63,46 +63,16 @@ const NewContact = () => {
                         </Box>
                       </Grid>
                       <Grid item>
-                        <Field
-                          name="firstName"
-                          as={TextField}
-                          label="First Name"
-                          required
-                          fullWidth
-                        />
-                        <ErrorMessage
-                          className={classes.errorMessage}
-                          name="firstName"
-                          component="div"
-                        />
+                        <Field name="firstName" as={TextField} label="First Name" required fullWidth />
+                        <ErrorMessage className={classes.errorMessage} name="firstName" component="div" />
                       </Grid>
                       <Grid item>
-                        <Field
-                          name="lastName"
-                          as={TextField}
-                          label="Last Name"
-                          required
-                          fullWidth
-                        />
-                        <ErrorMessage
-                          className={classes.errorMessage}
-                          name="lastName"
-                          component="div"
-                        />
+                        <Field name="lastName" as={TextField} label="Last Name" required fullWidth />
+                        <ErrorMessage className={classes.errorMessage} name="lastName" component="div" />
                       </Grid>
                       <Grid item>
-                        <Field
-                          name="email"
-                          as={TextField}
-                          label="Email"
-                          required
-                          fullWidth
-                        />
-                        <ErrorMessage
-                          className={classes.errorMessage}
-                          name="email"
-                          component="div"
-                        />
+                        <Field name="email" as={TextField} label="Email" required fullWidth />
+                        <ErrorMessage className={classes.errorMessage} name="email" component="div" />
                       </Grid>
                       <Grid item>
                         <Button variant="contained" color="primary" type="submit">

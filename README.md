@@ -1,7 +1,7 @@
 # simple-vite-react-express
 
 <p align="center">
-  <img src="./public/template-logo.png" alt="Ganges Logo" height="200">
+  <img src="./public/template-logo.png" alt="simple-vite-react-express-logo" height="200">
 </p>
 
 <p align="center">
@@ -35,6 +35,7 @@ This is a boilerplate to build a full stack web application using React, Node.js
     - [PostgreSQL and Prisma](#postgresql-and-prisma)
     - [Express API and React](#express-api-and-react)
     - [Formik](#formik)
+  - [Demo Application: Contact Management System](#demo-application-contact-management-system)
 
 ## Introduction
 
@@ -72,29 +73,71 @@ yarn start (or npm start)
 All the source code will be inside **src** directory. Inside src, there is `client` and `server` directory. All the frontend code (react, css, js and any other assets) will be in client directory. Backend Node.js/Express code will be in the `server` directory.
 
 ### Vite
+
 Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts: a dev server that serves your source files over native ES modules, and a build command that bundles your code for production.
 
 ### Nodemon
+
 Nodemon is a utility that will monitor for any changes in the server source code and it automatically restart the server. This is used in development only.
 
 ### Express
+
 Express is a web application framework for Node.js. It is used to build our backend API's.
 
 ### Postgres
+
 Postgres is a powerful, open source object-relational database system that uses and extends the SQL language combined with many features that safely store and scale the most complicated data workloads. A sample `Contact` schema is created in this application to store contact records.
 
 ### Prisma
+
 Prisma is an open-source database toolkit. It includes a JavaScript/TypeScript ORM for Node.js
 
 ### PostgreSQL and Prisma
+
 This boilerplate uses [PostgreSQL](https://www.postgresql.org/) as its database and [Prisma](https://www.prisma.io/) as its ORM. Prisma makes it easy to perform database operations from your Node.js server.
 To connect to your PostgreSQL database, update the `DATABASE_URL` in the `.env` file with your database credentials. Then, you can use Prisma's [database client](https://www.prisma.io/docs/concepts/components/prisma-client) to perform database operations in your Express routes.
 This boilerplate includes a sample `Contact` model in `prisma/schema.prisma` and corresponding API routes in `server/routes/contact.routes.js` that demonstrate how to create and delete records in your PostgreSQL database using Prisma.
 
 ### Express API and React
+
 This boilerplate includes a simple Express API in `server/index.js` and `server/routes/contact.routes.js`. The API includes routes for creating and deleting contacts.
 The React application components that use these API routes to create and delete contacts. The `pages/NewContact` component includes a form for creating new contacts, and the `Contacts` component includes a list of all contacts with a delete button for each contact.
 
 ### Formik
+
 This boilerplate uses [Formik](https://formik.org/) for form handling and validation in the React application. The `ContactForm` component in `client/pages/NewContact.js` demonstrates how to use Formik to create a form with validation.
 Formik makes it easy to handle form state, validation, and submission in React. It includes built-in hooks like `useFormik` that you can use to manage your form state and handle form submission.
+
+## Demo Application: Contact Management System
+
+This template includes a fully functional contact management system to demonstrate the integration between frontend and backend components. The demo showcases:
+
+### Features
+
+- **CRUD Operations**: Complete Create, Read, Update, and Delete operations for contacts
+- **Form Handling**: Using Formik with validation for contact creation
+- **Data Persistence**: PostgreSQL database integration via Prisma ORM
+- **RESTful API**: Express backend with proper route organization
+- **Modern UI**: Material-UI components with responsive design
+- **Real-time Feedback**: Toast notifications for user actions
+- **Error Handling**: Proper error management and user feedback
+
+### Technical Demonstrations
+
+- React Router for navigation
+- Axios for API calls
+- Component composition and reusability
+- State management with React hooks
+- API route protection and validation
+- Database schema design and relationships
+- Error boundary implementation
+- Loading states and user feedback
+
+You can use this demo application as a reference for:
+
+- Setting up form validation
+- Implementing database operations
+- Structuring API routes
+- Managing application state
+- Handling asynchronous operations
+- Implementing user feedback systems

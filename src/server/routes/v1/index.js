@@ -6,6 +6,10 @@ const router = Router();
 
 router.use("/contact", contactRoutes);
 
+/**
+ * GET /health
+ * Health check endpoint.
+ */
 router.get("/health", (req, res) => {
   res.send("Ok");
 });

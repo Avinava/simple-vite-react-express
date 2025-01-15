@@ -16,12 +16,26 @@ const httpServer = http.createServer(app);
 
 // setup routes
 app.use("/api/v1/", routes);
+
+/**
+ * Redirect root URL to the frontend application.
+ */
 app.get("/", (req, res) => {
   res.redirect("http://localhost:3000");
 });
 
-// need this for react router to work
+/**
+ * Serve the frontend application for any other route.
+ * This is necessary for React Router to work.
+ */
 app.get("*", (req, res) => res.sendFile(path.resolve("dist", "index.html")));
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  res.status(500).send("An unexpected error occurred");
+});
+
 httpServer.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on port ${process.env.PORT}`);
 });

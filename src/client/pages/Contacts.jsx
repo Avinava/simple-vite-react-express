@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import {
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { Box, Button, Container, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -36,7 +24,7 @@ const Contacts = () => {
         const response = await axios.get("/api/v1/contact/list");
         setContacts(response.data);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching contacts:", err);
       } finally {
         setIsLoading(false);
       }
@@ -57,7 +45,7 @@ const Contacts = () => {
       setDeleteDialogOpen(false);
       toast.success("Contact deleted successfully");
     } catch (err) {
-      console.error(err);
+      console.error("Error deleting contact:", err);
       toast.error("An error occurred while deleting the contact");
     }
   };
@@ -79,13 +67,7 @@ const Contacts = () => {
       ) : (
         <Box>
           <Box display="flex" justifyContent="flex-end" marginBottom={2}>
-            <Button
-              variant="contained"
-              color="primary"
-              component={Link}
-              to="/new-contact"
-              startIcon={<AddCircleOutlineIcon />}
-            >
+            <Button variant="contained" color="primary" component={Link} to="/new-contact" startIcon={<AddCircleOutlineIcon />}>
               New Contact
             </Button>
           </Box>
