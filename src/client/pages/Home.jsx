@@ -21,7 +21,7 @@ const Home = () => {
     },
     {
       title: "Modern Frontend Stack",
-      description: "React 18, Vite, Material-UI, and React Router for robust client-side architecture",
+      description: "React 19, Vite, Material-UI, and React Router for robust client-side architecture",
       icon: <ArchitectureIcon sx={{ fontSize: 40 }} />,
       action: null,
     },
@@ -92,7 +92,7 @@ const Home = () => {
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Box textAlign="center" mb={6}>
         <Typography variant="h3" component="h1" gutterBottom>
-          Full-Stack Development Template
+          simple-vite-react-express template
         </Typography>
         <Typography variant="h6" color="text.secondary" paragraph>
           A comprehensive starter kit demonstrating modern web development practices

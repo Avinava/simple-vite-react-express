@@ -1,7 +1,7 @@
 # simple-vite-react-express
 
 <p align="center">
-  <img src="./public/template-logo.png" alt="Ganges Logo" height="200">
+  <img src="./public/template-logo.png" alt="simple-vite-react-express-logo" height="200">
 </p>
 
 <p align="center">
