@@ -3,6 +3,10 @@ import db from "../../services/database.js";
 
 const router = express.Router();
 
+/**
+ * GET /list
+ * Retrieve a list of contacts.
+ */
 router.get("/list", async (req, res) => {
   try {
     const contacts = await db.prisma.contact.findMany();
@@ -13,6 +17,10 @@ router.get("/list", async (req, res) => {
   }
 });
 
+/**
+ * GET /:id
+ * Retrieve a contact by ID.
+ */
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -32,6 +40,10 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+/**
+ * POST /create
+ * Create a new contact.
+ */
 router.post("/create", async (req, res) => {
   const { firstName, lastName, email } = req.body;
 
@@ -47,6 +59,10 @@ router.post("/create", async (req, res) => {
   }
 });
 
+/**
+ * PUT /update/:id
+ * Update an existing contact by ID.
+ */
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, email } = req.body;
@@ -64,6 +80,10 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
+/**
+ * DELETE /delete/:id
+ * Delete a contact by ID.
+ */
 router.delete("/delete/:id", async (req, res) => {
   const { id } = req.params;
 
