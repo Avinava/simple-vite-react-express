@@ -130,8 +130,6 @@ This template includes a fully functional contact management system to demonstra
 - State management with React hooks
 - API route protection and validation
 - Database schema design and relationships
-- Error boundary implementation
-- Loading states and user feedback
 
 You can use this demo application as a reference for:
 
@@ -140,4 +138,3 @@ You can use this demo application as a reference for:
 - Structuring API routes
 - Managing application state
 - Handling asynchronous operations
-- Implementing user feedback systems
