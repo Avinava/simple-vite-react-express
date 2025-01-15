@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  Container,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Card, CardContent, Container, Divider, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
 const ContactDetail = () => {
@@ -23,7 +15,7 @@ const ContactDetail = () => {
         setContact(response.data);
         console.log("ContactDetail.jsx: contact: ", response.data);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching contact details:", err);
       }
     };
 
@@ -46,11 +38,7 @@ const ContactDetail = () => {
               </Typography>
             </Box>
             <Box mt={3}>
-              <Typography
-                variant="subtitle2"
-                fontWeight="bold"
-                color="text.secondary"
-              >
+              <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
                 First Name
               </Typography>
               <Typography variant="subtitle1">{contact.firstName}</Typography>
@@ -58,11 +46,7 @@ const ContactDetail = () => {
             <Divider />
 
             <Box mt={3}>
-              <Typography
-                variant="subtitle2"
-                fontWeight="bold"
-                color="text.secondary"
-              >
+              <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
                 Last Name
               </Typography>
               <Typography variant="subtitle1">{contact.lastName}</Typography>
@@ -70,11 +54,7 @@ const ContactDetail = () => {
             <Divider />
 
             <Box mt={3}>
-              <Typography
-                variant="subtitle2"
-                fontWeight="bold"
-                color="text.secondary"
-              >
+              <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
                 Email
               </Typography>
               <Typography variant="subtitle1">{contact.email}</Typography>
