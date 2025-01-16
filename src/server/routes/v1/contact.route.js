@@ -1,5 +1,7 @@
 import express from "express";
-import db from "../../services/database.js";
+import { contactValidation } from "../../middleware/validate.js";
+import { successResponse, errorResponse } from "../../utils/response.js";
+import contactService from "../../services/contact.service.js";
 
 const router = express.Router();
 
@@ -9,11 +11,11 @@ const router = express.Router();
  */
 router.get("/list", async (req, res) => {
   try {
-    const contacts = await db.prisma.contact.findMany();
-    res.status(200).json(contacts);
+    const contacts = await contactService.findAll();
+    res.status(200).json(successResponse(contacts));
   } catch (err) {
     console.error(err);
-    res.status(500).send("An error occurred while getting the contacts");
+    res.status(500).json(errorResponse("Failed to retrieve contacts"));
   }
 });
 
@@ -25,18 +27,16 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const contact = await db.prisma.contact.findUnique({
-      where: { id: Number(id) },
-    });
+    const contact = await contactService.findById(id);
 
     if (!contact) {
-      return res.status(404).send("Contact not found");
+      return res.status(404).json(errorResponse("Contact not found"));
     }
 
-    res.status(200).json(contact);
+    res.status(200).json(successResponse(contact));
   } catch (err) {
     console.error(err);
-    res.status(500).send("An error occurred while getting the contact");
+    res.status(500).json(errorResponse("Failed to retrieve contact"));
   }
 });
 
@@ -44,18 +44,16 @@ router.get("/:id", async (req, res) => {
  * POST /create
  * Create a new contact.
  */
-router.post("/create", async (req, res) => {
+router.post("/", contactValidation.create, async (req, res) => {
   const { firstName, lastName, email } = req.body;
 
   try {
-    const contact = await db.prisma.contact.create({
-      data: { firstName, lastName, email },
-    });
+    const contact = await contactService.create({ firstName, lastName, email });
 
-    res.status(201).json(contact);
+    res.status(201).json(successResponse(contact));
   } catch (err) {
     console.error(err);
-    res.status(500).send("An error occurred while creating the contact");
+    res.status(500).json(errorResponse("Failed to create contact"));
   }
 });
 
@@ -63,20 +61,17 @@ router.post("/create", async (req, res) => {
  * PUT /update/:id
  * Update an existing contact by ID.
  */
-router.put("/update/:id", async (req, res) => {
+router.put("/:id", contactValidation.update, async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, email } = req.body;
 
   try {
-    const contact = await db.prisma.contact.update({
-      where: { id: Number(id) },
-      data: { firstName, lastName, email },
-    });
+    const contact = await contactService.update(Number(id), { firstName, lastName, email });
 
-    res.status(200).json(contact);
+    res.status(200).json(successResponse(contact));
   } catch (err) {
     console.error(err);
-    res.status(500).send("An error occurred while updating the contact");
+    res.status(500).json(errorResponse("Failed to update contact"));
   }
 });
 
@@ -84,18 +79,16 @@ router.put("/update/:id", async (req, res) => {
  * DELETE /delete/:id
  * Delete a contact by ID.
  */
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const contact = await db.prisma.contact.delete({
-      where: { id: Number(id) },
-    });
+    const contact = await contactService.delete(Number(id));
 
-    res.status(200).json(contact);
+    res.status(200).json(successResponse(contact));
   } catch (err) {
     console.error(err);
-    res.status(500).send("An error occurred while deleting the contact");
+    res.status(500).json(errorResponse("Failed to delete contact"));
   }
 });
 

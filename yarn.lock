@@ -2397,6 +2397,11 @@ execa@^4.0.0:
     signal-exit "^3.0.2"
     strip-final-newline "^2.0.0"
 
+express-rate-limit@^7.5.0:
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-7.5.0.tgz#6a67990a724b4fbbc69119419feef50c51e8b28f"
+  integrity sha512-eB5zbQh5h+VenMPM3fh+nw1YExi5nMr6HUCR62ELSP11huvxm/Uir1H1QEyTkk5QX6A58pX6NmaTMceKZ0Eodg==
+
 express@^4.21.2:
   version "4.21.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.21.2.tgz#cf250e48362174ead6cea4a566abef0162c1ec32"
@@ -2641,6 +2646,11 @@ hasown@^2.0.0, hasown@^2.0.2:
   integrity sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==
   dependencies:
     function-bind "^1.1.2"
+
+helmet@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/helmet/-/helmet-8.0.0.tgz#05370fb1953aa7b81bd0ddfa459221247be6ea5c"
+  integrity sha512-VyusHLEIIO5mjQPUI1wpOAEu+wl6Q0998jzTxqUYGE45xCIcAxy3MsbEK/yyJUJ3ADeMoB6MornPH6GMWAf+Pw==
 
 hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
