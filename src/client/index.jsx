@@ -2,30 +2,17 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme/theme";
 
 import "./app.css";
-// header component
 import Header from "./components/Header";
 import NewContact from "./pages/NewContact";
 import Contacts from "./pages/Contacts";
 import ContactDetail from "./pages/ContactDetail";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
-
-// demonstrates how to create a theme
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#aac7ff",
-    },
-    secondary: {
-      main: "#bec6dc",
-    },
-  },
-});
 
 const root = document.getElementById("root");
 if (root !== null) {

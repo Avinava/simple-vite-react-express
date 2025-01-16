@@ -18,123 +18,261 @@
     <img src="https://img.shields.io/badge/JSON-000000.svg?style=flat-square&logo=JSON&logoColor=white" alt="JSON">
 </p>
 
-This is a boilerplate to build a full stack web application using React, Node.js, Express and Vite.
-
-- [simple-vite-react-express](#simple-vite-react-express)
-  - [Introduction](#introduction)
-    - [Development mode](#development-mode)
-    - [Production mode](#production-mode)
-  - [Quick Start](#quick-start)
-  - [Documentation](#documentation)
-    - [Folder Structure](#folder-structure)
-    - [Vite](#vite)
-    - [Nodemon](#nodemon)
-    - [Express](#express)
-    - [Postgres](#postgres)
-    - [Prisma](#prisma)
-    - [PostgreSQL and Prisma](#postgresql-and-prisma)
-    - [Express API and React](#express-api-and-react)
-    - [Formik](#formik)
-  - [Demo Application: Contact Management System](#demo-application-contact-management-system)
-
-## Introduction
-
-This is a simple full stack [React](https://reactjs.org/) application with a [Node.js](https://nodejs.org/en/) and [Express](https://expressjs.com/) backend. Client side code is written in React and the backend API is written using Express. This application is formatted through [prettier](https://prettier.io/).
-
-### Development mode
-
-In the development mode, we will have 2 servers running. The front end code will be served by the [vite dev server](https://vitejs.dev/guide/) which helps with hot and live reloading. The server side Express code will be served by a node server using [nodemon](https://nodemon.io/) which helps in automatically restarting the server whenever server side code changes.
-
-### Production mode
-
-In the production mode, we will have only 1 server running. All the client side code will be bundled into static files using vite and it will be served by the Node.js/Express application.
+A modern full-stack template using React, Vite, Express, and PostgreSQL.
 
 ## Quick Start
 
 ```bash
-# Clone the repository
-git clone git@github.com:Avinava/simple-vite-react-express.git
-# Go inside the directory
-cd simple-vite-react-express
+# Clone and rename the template
+git clone git@github.com:Avinava/simple-vite-react-express.git your-project-name
+cd your-project-name
+
 # Install dependencies
 yarn (or npm install)
-# Start development server
-yarn dev (or npm run dev)
-# Build for production
-yarn build (or npm run build)
-# Start production server
-yarn start (or npm start)
+
+# Set up your environment
+cp .env.example .env
+
+# Initialize database
+npx prisma migrate dev
+npx prisma generate
+
+# Start development
+yarn dev
 ```
 
-## Documentation
+## Template Structure
 
-### Folder Structure
+```
+src/
+├── client/               # Frontend React application
+│   ├── components/       # Reusable components
+│   ├── pages/            # Page components
+│   └── theme/            # MUI theme customization
+├── server/               # Backend Express application
+│   ├── routes/           # API routes
+│   ├── services/         # Business logic
+│   └── middleware/       # Express middleware
+└── prisma/               # Database schema and migrations
+```
 
-All the source code will be inside **src** directory. Inside src, there is `client` and `server` directory. All the frontend code (react, css, js and any other assets) will be in client directory. Backend Node.js/Express code will be in the `server` directory.
+## First Steps After Cloning (Your Project Launch Checklist)
 
-### Vite
+> Complete these steps in order to transform this template into your application
 
-Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts: a dev server that serves your source files over native ES modules, and a build command that bundles your code for production.
+1. **Update Project Information**
 
-### Nodemon
+   > Set up your project identity and remove template-specific content
 
-Nodemon is a utility that will monitor for any changes in the server source code and it automatically restart the server. This is used in development only.
+   - [ ] Change `name`, `version`, and `description` in `package.json`
+     - Update to reflect your project's identity
+     - Choose a meaningful version number (e.g., 0.1.0)
+   - [ ] Update repository URLs in `package.json`
+     - Point to your own repository
+     - Update homepage and bugs URLs if applicable
+   - [ ] Review and modify LICENSE file
+     - Ensure it matches your project's licensing needs
+     - Update copyright holder information
+   - [ ] Update README.md with your project details
+     - Remove template examples
+     - Add your project-specific documentation
+   - [ ] Remove template-specific documentation
+     - Delete the example contact management system
+     - Remove template feature descriptions
+   - [ ] Update Git remote URL to your repository
+     - `git remote set-url origin your-repo-url`
 
-### Express
+2. **Configure Environment**
 
-Express is a web application framework for Node.js. It is used to build our backend API's.
+   > Set up your development and production environments
 
-### Postgres
+   - [ ] Copy `.env.example` to `.env`
+     - Never commit `.env` file (it's in .gitignore)
+     - Keep sensitive information secure
+   - [ ] Set up PostgreSQL database and update DATABASE_URL
+     - Format: `postgresql://username:password@localhost:5432/dbname`
+     - Create separate databases for development and testing
+   - [ ] Configure PORT (default: 3000)
+     - Ensure it doesn't conflict with other services
+     - Set different ports for development and production
+   - [ ] Set NODE_ENV for different environments
+     - development: for local development
+     - production: for deployment
 
-Postgres is a powerful, open source object-relational database system that uses and extends the SQL language combined with many features that safely store and scale the most complicated data workloads. A sample `Contact` schema is created in this application to store contact records.
+3. **Database Setup**
 
-### Prisma
+   > Configure your data models and initialize the database
 
-Prisma is an open-source database toolkit. It includes a JavaScript/TypeScript ORM for Node.js
+   - [ ] Review and modify `prisma/schema.prisma`
+     - Define your data models
+     - Set up relationships between models
+   - [ ] Remove or modify the example Contact model
+     - Either repurpose it for your needs
+     - Or delete it completely
+   - [ ] Add your own models and relationships
+     - Follow Prisma schema conventions
+     - Define proper indexes and constraints
+   - [ ] Run initial migration: `npx prisma migrate dev`
+     - Creates database tables
+     - Generates Prisma Client
+   - [ ] Create database seed data if needed
+     - Add seed scripts in `prisma/seed.js`
+     - Useful for development and testing
+   - [ ] Test database connections and queries
+     - Use Prisma Studio: `npx prisma studio`
+     - Verify all models work as expected
 
-### PostgreSQL and Prisma
+4. **Frontend Customization**
 
-This boilerplate uses [PostgreSQL](https://www.postgresql.org/) as its database and [Prisma](https://www.prisma.io/) as its ORM. Prisma makes it easy to perform database operations from your Node.js server.
-To connect to your PostgreSQL database, update the `DATABASE_URL` in the `.env` file with your database credentials. Then, you can use Prisma's [database client](https://www.prisma.io/docs/concepts/components/prisma-client) to perform database operations in your Express routes.
-This boilerplate includes a sample `Contact` model in `prisma/schema.prisma` and corresponding API routes in `server/routes/contact.routes.js` that demonstrate how to create and delete records in your PostgreSQL database using Prisma.
+   > Personalize the user interface and setup routes
 
-### Express API and React
+   - [ ] Update title and meta tags in `index.html`
+     - Set your application name
+     - Add proper meta descriptions
+   - [ ] Replace template logo and favicon in `/public`
+     - Use your own branding
+     - Ensure proper image optimization
+   - [ ] Modify theme colors in `src/client/theme/theme.js`
+     - Match your brand colors
+     - Ensure proper contrast ratios
+   - [ ] Update app name in Header component
+     - Replace template name with your app name
+     - Add your own navigation items
+   - [ ] Remove example components or modify for your use
+     - Start with components you need
+     - Remove unused example code
+   - [ ] Review and update route structure
+     - Plan your application routes
+     - Set up proper navigation flow
 
-This boilerplate includes a simple Express API in `server/index.js` and `server/routes/contact.routes.js`. The API includes routes for creating and deleting contacts.
-The React application components that use these API routes to create and delete contacts. The `pages/NewContact` component includes a form for creating new contacts, and the `Contacts` component includes a list of all contacts with a delete button for each contact.
+## Template Features
 
-### Formik
+### Frontend
 
-This boilerplate uses [Formik](https://formik.org/) for form handling and validation in the React application. The `ContactForm` component in `client/pages/NewContact.js` demonstrates how to use Formik to create a form with validation.
-Formik makes it easy to handle form state, validation, and submission in React. It includes built-in hooks like `useFormik` that you can use to manage your form state and handle form submission.
+- ⚡️ Vite for fast development
+- 🎨 Material-UI with theme customization
+- 📝 Form handling with Formik
+- 🚦 React Router for navigation
+- 🔄 Axios for API requests
 
-## Demo Application: Contact Management System
+### Backend
 
-This template includes a fully functional contact management system to demonstrate the integration between frontend and backend components. The demo showcases:
+- 📡 Express with structured routes
+- 🗄️ Prisma ORM for database operations
+- 🔐 Basic error handling setup
+- 📝 API route examples
+- 🔧 Environment configuration
 
-### Features
+### Development
 
-- **CRUD Operations**: Complete Create, Read, Update, and Delete operations for contacts
-- **Form Handling**: Using Formik with validation for contact creation
-- **Data Persistence**: PostgreSQL database integration via Prisma ORM
-- **RESTful API**: Express backend with proper route organization
-- **Modern UI**: Material-UI components with responsive design
-- **Real-time Feedback**: Toast notifications for user actions
-- **Error Handling**: Proper error management and user feedback
+- 🔥 Hot reloading for both frontend and backend
+- 📱 Responsive design ready
+- 🐛 Debug configuration
+- 🧪 Basic test setup
 
-### Technical Demonstrations
+## Example Features
 
-- React Router for navigation
-- Axios for API calls
-- Component composition and reusability
-- State management with React hooks
-- API route protection and validation
-- Database schema design and relationships
+The template includes a basic contact management system demonstrating:
 
-You can use this demo application as a reference for:
+- CRUD operations
+- Form validation
+- Database interactions
+- Error handling
+- Component organization
 
-- Setting up form validation
-- Implementing database operations
-- Structuring API routes
-- Managing application state
-- Handling asynchronous operations
+## Customization Guide
+
+### Adding New Features
+
+1. **Database Model**
+
+   ```prisma
+   // In prisma/schema.prisma
+   model YourModel {
+     id        Int      @id @default(autoincrement())
+     createdAt DateTime @default(now())
+     // Add your fields
+   }
+   ```
+
+2. **API Route Creation**
+
+   ```bash
+   # Create new route file
+   touch src/server/routes/v1/your-model.route.js
+
+   # Add to routes/v1/index.js
+   import yourModelRoutes from './your-model.route.js'
+   router.use('/your-model', yourModelRoutes)
+   ```
+
+3. **Frontend Components**
+
+   ```bash
+   # Create component files
+   mkdir -p src/client/pages/YourModel
+   touch src/client/pages/YourModel/List.jsx
+   touch src/client/pages/YourModel/Detail.jsx
+   touch src/client/pages/YourModel/Form.jsx
+   ```
+
+4. **Add Navigation**
+   - Update `src/client/components/Header.jsx`
+   - Modify `src/client/index.jsx` routes
+
+### Theme Customization
+
+1. **Colors and Typography**
+
+   ```javascript
+   // In src/client/theme/theme.js
+   const theme = createTheme({
+     palette: {
+       primary: {
+         main: "#your-color",
+       },
+     },
+     typography: {
+       fontFamily: "your-font, Arial, sans-serif",
+     },
+   });
+   ```
+
+2. **Component Styling**
+   - Use `sx` prop for direct styling
+   - Create styled components for reuse
+   - Add global styles in theme
+
+### API Development
+
+1. **Route Structure**
+
+   ```javascript
+   // Template for new routes
+   router.get("/list", async (req, res) => {
+     try {
+       // Your logic here
+       const data = await db.prisma.yourModel.findMany();
+       res.json(data);
+     } catch (err) {
+       // Error handling
+     }
+   });
+   ```
+
+2. **Validation**
+
+   ```javascript
+   // Using celebrate/Joi
+   const validate = {
+     body: Joi.object({
+       // Your validation schema
+     }),
+   };
+   router.post("/create", celebrate(validate), async (req, res) => {});
+   ```
+
+3. **Error Handling**
+   - Use try/catch blocks
+   - Implement error middleware
+   - Add logging
