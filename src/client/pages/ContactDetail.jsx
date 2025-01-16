@@ -12,7 +12,7 @@ const ContactDetail = () => {
     const fetchContact = async () => {
       try {
         const response = await axios.get(`/api/v1/contact/${id}`);
-        setContact(response.data);
+        setContact(response.data.data);
         console.log("ContactDetail.jsx: contact: ", response.data);
       } catch (err) {
         console.error("Error fetching contact details:", err);
