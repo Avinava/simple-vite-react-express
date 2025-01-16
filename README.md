@@ -52,7 +52,8 @@ src/
 ├── server/               # Backend Express application
 │   ├── routes/           # API routes
 │   ├── services/         # Business logic
-│   └── middleware/       # Express middleware
+│   ├── middleware/       # Express middleware
+│   └── utils/            # Utility functions
 └── prisma/               # Database schema and migrations
 ```
 
@@ -153,16 +154,86 @@ src/
 
 - 📡 Express with structured routes
 - 🗄️ Prisma ORM for database operations
-- 🔐 Basic error handling setup
-- 📝 API route examples
+- 🔐 Enhanced security with helmet and rate limiting
+- 📝 API route examples with standardized responses
 - 🔧 Environment configuration
+- ✅ Request validation using celebrate/Joi
+- 🚦 Service layer for business logic
+- 📊 Standardized API responses
 
-### Development
+### API Response Format
 
-- 🔥 Hot reloading for both frontend and backend
-- 📱 Responsive design ready
-- 🐛 Debug configuration
-- 🧪 Basic test setup
+All API endpoints return responses in a standardized format:
+
+```javascript
+{
+  "success": boolean,    // Operation status
+  "data": any,          // Response payload
+  "message": string,    // Human-readable message
+  "timestamp": string   // ISO timestamp
+}
+```
+
+### Server Modules
+
+1. **Response Utils (`/server/utils/response.js`)**
+
+   - Standardized API response format
+   - Success and error response helpers
+   - Consistent timestamp inclusion
+
+2. **Service Layer (`/server/services/*.service.js`)**
+
+   - Business logic abstraction
+   - Database operation wrapping
+   - Reusable CRUD operations
+
+3. **Validation Middleware (`/server/middleware/validate.js`)**
+
+   - Request payload validation
+   - Schema-based validation using Joi
+   - Descriptive validation errors
+
+4. **Security Middleware (`/server/middleware/security.js`)**
+   - HTTP header security (helmet)
+   - Rate limiting protection
+   - Request logging
+
+### Development Best Practices
+
+1. **API Response Usage**
+
+   ```javascript
+   // Success response
+   res.json(successResponse(data, "Operation successful"));
+
+   // Error response
+   res.status(400).json(errorResponse("Invalid input"));
+   ```
+
+2. **Service Layer Usage**
+
+   ```javascript
+   // In route handlers
+   const data = await userService.findAll();
+   const item = await userService.create(payload);
+   ```
+
+3. **Validation Usage**
+
+   ```javascript
+   // In route definition
+   router.post("/create", validationSchema.create, async (req, res) => {
+     // Handler code
+   });
+   ```
+
+4. **Security Configuration**
+   ```javascript
+   // In your Express app
+   app.use(securityMiddleware);
+   app.use(requestLogger);
+   ```
 
 ## Example Features
 
