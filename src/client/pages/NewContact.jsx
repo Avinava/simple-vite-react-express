@@ -24,7 +24,7 @@ const NewContact = () => {
     email: Yup.string().email("Invalid email").required("Email is required"),
   });
 
-  const handleContactSubmit = async (values) => {
+  const handleContactSubmit = async (values, { resetForm }) => {
     try {
       const response = await axios.post("/api/v1/contact/create", {
         firstName: values.firstName,
@@ -33,6 +33,7 @@ const NewContact = () => {
       });
 
       toast.success("Contact created successfully");
+      resetForm(); // Reset form after successful creation
     } catch (err) {
       console.error(err);
       toast.error("An error occurred while creating the contact");

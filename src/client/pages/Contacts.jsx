@@ -22,7 +22,7 @@ const Contacts = () => {
       try {
         setIsLoading(true);
         const response = await axios.get("/api/v1/contact/list");
-        setContacts(response.data);
+        setContacts(response.data.data);
       } catch (err) {
         console.error("Error fetching contacts:", err);
       } finally {

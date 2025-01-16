@@ -4,10 +4,16 @@ import { default as cors, default as express } from "express";
 import { errors } from "celebrate";
 import http from "http";
 import routes from "./routes/v1/index.js";
+import { securityMiddleware, requestLogger } from "./middleware/security.js";
 
 dotenv.config();
 
 const app = express();
+
+// Apply security middleware
+app.use(securityMiddleware);
+app.use(requestLogger);
+app.use(express.json());
 
 app.use(cors());
 app.use(express.static("dist"));
@@ -30,10 +36,14 @@ app.get("/", (req, res) => {
  */
 app.get("*", (req, res) => res.sendFile(path.resolve("dist", "index.html")));
 
-// Error handling middleware
+// Improved error handling
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
-  res.status(500).send("An unexpected error occurred");
+  res.status(500).json({
+    success: false,
+    message: process.env.NODE_ENV === "development" ? err.message : "An unexpected error occurred",
+    stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
+  });
 });
 
 httpServer.listen(process.env.PORT || 3000, () => {

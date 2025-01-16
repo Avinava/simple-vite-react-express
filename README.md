@@ -115,12 +115,6 @@ src/
    - [ ] Run initial migration: `npx prisma migrate dev`
      - Creates database tables
      - Generates Prisma Client
-   - [ ] Create database seed data if needed
-     - Add seed scripts in `prisma/seed.js`
-     - Useful for development and testing
-   - [ ] Test database connections and queries
-     - Use Prisma Studio: `npx prisma studio`
-     - Verify all models work as expected
 
 4. **Frontend Customization**
 
