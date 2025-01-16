@@ -341,3 +341,30 @@ The template includes a basic contact management system demonstrating:
    - Use try/catch blocks
    - Implement error middleware
    - Add logging
+
+## Screenshots
+
+<details>
+<summary>📸 View Application Screenshots</summary>
+
+### Homepage
+
+![Homepage](/screenshots/homepage.png)
+
+### Contacts Overview
+
+![Contacts Landing](/screenshots/contacts-landing.png)
+
+### Contact List
+
+![Contacts List](/screenshots/contacts.png)
+
+### Contact Details
+
+![Contact Details](/screenshots/contact-detail.png)
+
+### New Contact Form
+
+![New Contact](/screenshots/new-contacts.png)
+
+</details>
