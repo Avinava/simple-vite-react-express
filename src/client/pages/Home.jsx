@@ -62,6 +62,11 @@ const Home = () => {
               flexDirection: "column",
               border: feature.primary ? 2 : 1,
               borderColor: feature.primary ? "primary.main" : "divider",
+              bgcolor: "background.paper",
+              "&:hover": {
+                bgcolor: "background.default",
+                transition: "0.3s",
+              },
             }}
           >
             <CardContent sx={{ flexGrow: 1, textAlign: "center" }}>

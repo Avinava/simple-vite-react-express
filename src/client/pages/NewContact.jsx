@@ -1,5 +1,6 @@
 import React from "react";
-import { makeStyles } from "@mui/styles";
+import { useTheme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
 import { TextField, Button, Typography, Grid, Box, Container, Card, CardContent } from "@mui/material";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -14,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NewContact = () => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(); // Add this line to use the styles
 
   const ContactSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
@@ -32,7 +34,7 @@ const NewContact = () => {
 
       toast.success("Contact created successfully");
     } catch (err) {
-      console.error("Error creating contact:", err);
+      console.error(err);
       toast.error("An error occurred while creating the contact");
     }
   };
@@ -40,7 +42,7 @@ const NewContact = () => {
   return (
     <Container maxWidth="xl" component="main" sx={{ mt: 2 }}>
       <Box>
-        <Card elevation={3}>
+        <Card elevation={3} sx={{ bgcolor: "background.paper" }}>
           <CardContent>
             <Box p={2}>
               <Formik

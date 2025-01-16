@@ -3,14 +3,7 @@ import { Card, CardContent, Grid, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-const CallToAction = ({
-  heroIcon: HeroIcon,
-  icon: Icon = AddCircleOutlineIcon,
-  title,
-  subtitle,
-  url,
-  buttonName,
-}) => (
+const CallToAction = ({ heroIcon: HeroIcon, icon: Icon = AddCircleOutlineIcon, title, subtitle, url, buttonName }) => (
   <Card
     sx={{
       display: "flex",
@@ -18,8 +11,13 @@ const CallToAction = ({
       alignItems: "center",
       justifyContent: "center",
       height: "80vh",
-      bgcolor: "background.default",
+      bgcolor: "background.paper",
       boxShadow: 3,
+      transition: "0.3s",
+      "&:hover": {
+        boxShadow: 6,
+        bgcolor: "background.default",
+      },
     }}
   >
     <CardContent>
@@ -39,13 +37,7 @@ const CallToAction = ({
         </Grid>
         {url && (
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              component={Link}
-              to={url}
-              startIcon={<Icon />}
-            >
+            <Button variant="contained" color="primary" component={Link} to={url} startIcon={<Icon />}>
               {buttonName}
             </Button>
           </Grid>
