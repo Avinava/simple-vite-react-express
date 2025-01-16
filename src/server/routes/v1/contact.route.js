@@ -44,7 +44,7 @@ router.get("/:id", async (req, res) => {
  * POST /create
  * Create a new contact.
  */
-router.post("/create", contactValidation.create, async (req, res) => {
+router.post("/", contactValidation.create, async (req, res) => {
   const { firstName, lastName, email } = req.body;
 
   try {
@@ -61,7 +61,7 @@ router.post("/create", contactValidation.create, async (req, res) => {
  * PUT /update/:id
  * Update an existing contact by ID.
  */
-router.put("/update/:id", contactValidation.update, async (req, res) => {
+router.put("/:id", contactValidation.update, async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, email } = req.body;
 
@@ -79,7 +79,7 @@ router.put("/update/:id", contactValidation.update, async (req, res) => {
  * DELETE /delete/:id
  * Delete a contact by ID.
  */
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
