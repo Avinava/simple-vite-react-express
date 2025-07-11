@@ -1,4 +1,4 @@
-# Modern Full-Stack Template
+# simple-vite-react-express
 
 <p align="center">
   <img src="./public/template-logo.png" alt="modern-fullstack-template-logo" height="200">
@@ -18,7 +18,7 @@
     <img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=flat-square&logo=Nodemon&logoColor=white" alt="Nodemon">
 </p>
 
-Production-ready full-stack template with modern tooling, best practices, and developer experience optimizations. Built for rapid prototyping and scalable applications.
+Full-stack template with modern tooling, best practices, and developer experience optimizations. Built for rapid prototyping and scalable applications.
 
 ## Quick Start
 
@@ -53,6 +53,7 @@ npm run dev
 ## What's New in 2025
 
 ### Major Updates
+
 - **React 19** - Latest React with concurrent features and improved performance
 - **Vite 6+** - Faster builds, improved HMR, and better dev experience
 - **Material-UI v6** - Latest component library with enhanced theming
@@ -62,11 +63,11 @@ npm run dev
 - **Security Updates** - Latest security middleware and best practices
 
 ### Developer Experience
+
 - **Code Quality** - ESLint + Prettier configuration
 - **Database Tools** - Enhanced Prisma scripts for better workflow
 - **Hot Reload** - Both client and server with automatic restarts
 - **Type Safety** - TypeScript-ready configuration
-- **Deployment Ready** - Docker, Vercel, Railway, Render support
 
 ## Project Structure
 
@@ -99,6 +100,7 @@ npm run dev
 ## Available Scripts
 
 ### Development
+
 ```bash
 npm run dev          # Start both client and server
 npm run client       # Start only frontend (Vite)
@@ -107,6 +109,7 @@ npm run preview      # Preview production build
 ```
 
 ### Database
+
 ```bash
 npm run db:setup     # Initialize database (migrate + generate)
 npm run db:migrate   # Run database migrations
@@ -117,6 +120,7 @@ npm run db:seed      # Seed database with sample data
 ```
 
 ### Code Quality
+
 ```bash
 npm run lint         # Check code quality
 npm run lint:fix     # Fix linting issues
@@ -125,6 +129,7 @@ npm run format:check # Check code formatting
 ```
 
 ### Production
+
 ```bash
 npm run build        # Build for production
 npm start            # Start production server
@@ -133,6 +138,7 @@ npm start            # Start production server
 ## Template Features
 
 ### Frontend
+
 - ⚡️ **Vite 6+** - Lightning fast build tool with HMR
 - ⚛️ **React 19** - Latest React with concurrent features
 - 🎨 **Material-UI v6** - Modern component library with theme customization
@@ -143,6 +149,7 @@ npm start            # Start production server
 - 📱 **Responsive Design** - Mobile-first approach
 
 ### Backend
+
 - 📡 **Express.js** - Fast, minimalist web framework
 - 🗄️ **Prisma ORM** - Type-safe database client with migrations
 - 🔐 **Security First** - Helmet, rate limiting, CORS protection
@@ -155,6 +162,7 @@ npm start            # Start production server
 - 📈 **Performance Optimized** - Compression, caching headers
 
 ### Development & Deployment
+
 - 🔧 **Modern Tooling** - Latest versions of all dependencies
 - 🐳 **Docker Support** - Multi-stage builds for production
 - 🚀 **Platform Ready** - Vercel, Railway, Render, Heroku support
@@ -165,24 +173,28 @@ npm start            # Start production server
 ## First Steps After Cloning
 
 ### 1. Project Setup
+
 - [ ] Update `package.json` (name, version, description, repository)
 - [ ] Update README.md with your project details
 - [ ] Configure Git remote: `git remote set-url origin your-repo-url`
 - [ ] Review and update LICENSE file
 
 ### 2. Environment Configuration
+
 - [ ] Copy `example.env` to `.env`
 - [ ] Set up PostgreSQL database and update `DATABASE_URL`
 - [ ] Configure `PORT` and `NODE_ENV`
 - [ ] Add any additional environment variables
 
 ### 3. Database Setup
+
 - [ ] Review `prisma/schema.prisma`
 - [ ] Modify or remove the example Contact model
 - [ ] Add your own models and relationships
 - [ ] Run `npm run db:setup`
 
 ### 4. Frontend Customization
+
 - [ ] Update title and meta tags in `index.html`
 - [ ] Replace logo and favicon in `/public`
 - [ ] Modify theme in `src/client/theme/theme.js`
@@ -202,33 +214,26 @@ All API endpoints return responses in a standardized format:
 }
 ```
 
-### Quick Deployment
-
-### Platform Deployments
-- **Vercel**: `npx vercel`
-- **Railway**: `railway up`
-- **Render**: Connect GitHub repo
-- **Heroku**: `git push heroku main`
-
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for detailed deployment instructions.
-
 ## Example Features
 
 The template includes a comprehensive project management system demonstrating:
 
 ### 📋 Contact Management
+
 - Full CRUD operations with enhanced contact fields
 - Email uniqueness validation
 - Company and notes tracking
 - Phone number management
 
 ### 📊 Project Management
+
 - Project creation with status tracking
 - Team member assignment with roles
 - Project timeline management
 - Member management (add/remove)
 
 ### ✅ Task Management
+
 - Task creation with priority levels
 - Status workflow (TODO → IN_PROGRESS → REVIEW → DONE)
 - Task assignment to team members
@@ -236,11 +241,13 @@ The template includes a comprehensive project management system demonstrating:
 - Project-based task organization
 
 ### 🔗 Relationship Management
+
 - Many-to-many relationships between contacts and projects
 - One-to-many relationships for task assignments
 - Proper foreign key constraints and cascading deletes
 
 ### 🛠️ Technical Demonstrations
+
 - Advanced Prisma schema with enums and relationships
 - Complex database queries with joins and filtering
 - Service layer architecture for business logic
@@ -286,9 +293,3 @@ The template includes a comprehensive project management system demonstrating:
 ## License
 
 MIT License - see LICENSE file for details.
-
-## Support
-
-- 📚 [Documentation](docs/)
-- 🐛 [Issues](https://github.com/Avinava/simple-vite-react-express/issues)
-- 💬 [Discussions](https://github.com/Avinava/simple-vite-react-express/discussions)
