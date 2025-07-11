@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { 
-  Container, 
-  Typography, 
-  Box, 
-  Button, 
-  Grid, 
-  Card, 
+import React, { useState, useEffect } from 'react';
+import {
+  Container,
+  Typography,
+  Box,
+  Button,
+  Grid,
+  Card,
   CardContent,
   CardActions,
   Chip,
   Alert,
-  CircularProgress
-} from "@mui/material";
-import { 
+  CircularProgress,
+} from '@mui/material';
+import {
   ContactPage as ContactIcon,
   Assignment as TaskIcon,
   Folder as ProjectIcon,
   Rocket as RocketIcon,
   Code as CodeIcon,
-  Security as SecurityIcon
-} from "@mui/icons-material";
-import { Link as RouterLink } from "react-router-dom";
-import axios from "axios";
-import CallToAction from "../components/CallToAction";
-import DatabaseSetupGuide from "../components/DatabaseSetupGuide";
+  Security as SecurityIcon,
+} from '@mui/icons-material';
+import { Link as RouterLink } from 'react-router-dom';
+import axios from 'axios';
+import DatabaseSetupGuide from '../components/DatabaseSetupGuide';
 
 const Home = () => {
   const [dbStatus, setDbStatus] = useState('checking'); // 'checking', 'connected', 'error'
@@ -33,7 +32,7 @@ const Home = () => {
     try {
       setDbStatus('checking');
       console.log('Checking database connection...');
-      
+
       // Try to fetch health endpoint first
       const healthRes = await axios.get('/api/v1/health').catch(() => null);
       if (!healthRes) {
@@ -43,12 +42,14 @@ const Home = () => {
       // Try to fetch some basic data to check if DB is set up
       const contactsRes = await axios.get('/api/v1/contact/list');
       const tasksRes = await axios.get('/api/v1/task/list').catch(() => ({ data: { data: [] } }));
-      const projectsRes = await axios.get('/api/v1/project/list').catch(() => ({ data: { data: [] } }));
+      const projectsRes = await axios
+        .get('/api/v1/project/list')
+        .catch(() => ({ data: { data: [] } }));
 
       setStats({
         contacts: contactsRes.data.data?.length || 0,
         tasks: tasksRes.data.data?.length || 0,
-        projects: projectsRes.data.data?.length || 0
+        projects: projectsRes.data.data?.length || 0,
       });
       setDbStatus('connected');
       console.log('Database connection successful');
@@ -86,46 +87,49 @@ const Home = () => {
   const features = [
     {
       icon: <ContactIcon fontSize="large" color="primary" />,
-      title: "Contact Management",
-      description: "Manage your contacts with detailed information, company details, and notes.",
-      link: "/contacts",
+      title: 'Contact Management',
+      description: 'Manage your contacts with detailed information, company details, and notes.',
+      link: '/contacts',
       count: stats?.contacts || 0,
-      color: "primary"
+      color: 'primary',
     },
     {
       icon: <TaskIcon fontSize="large" color="secondary" />,
-      title: "Task Management", 
-      description: "Track tasks with priorities, status workflows, and team assignments.",
-      link: "/tasks",
+      title: 'Task Management',
+      description: 'Track tasks with priorities, status workflows, and team assignments.',
+      link: '/tasks',
       count: stats?.tasks || 0,
-      color: "secondary"
+      color: 'secondary',
     },
     {
       icon: <ProjectIcon fontSize="large" color="success" />,
-      title: "Project Management",
-      description: "Organize projects with team members, timelines, and progress tracking.",
-      link: "/projects", 
+      title: 'Project Management',
+      description: 'Organize projects with team members, timelines, and progress tracking.',
+      link: '/projects',
       count: stats?.projects || 0,
-      color: "success"
-    }
+      color: 'success',
+    },
   ];
 
   const techFeatures = [
     {
       icon: <CodeIcon />,
-      title: "Modern Stack",
-      description: "React 19, Vite 6+, Express.js, PostgreSQL, and Prisma ORM with the latest best practices."
+      title: 'Modern Stack',
+      description:
+        'React 19, Vite 6+, Express.js, PostgreSQL, and Prisma ORM with the latest best practices.',
     },
     {
       icon: <RocketIcon />,
-      title: "Developer Experience", 
-      description: "Hot reload, ESLint, Prettier, comprehensive scripts, and structured architecture."
+      title: 'Developer Experience',
+      description:
+        'Hot reload, ESLint, Prettier, comprehensive scripts, and structured architecture.',
     },
     {
       icon: <SecurityIcon />,
-      title: "Production Ready",
-      description: "Security middleware, input validation, error handling, and deployment configurations."
-    }
+      title: 'Production Ready',
+      description:
+        'Security middleware, input validation, error handling, and deployment configurations.',
+    },
   ];
 
   return (
@@ -138,7 +142,7 @@ const Home = () => {
         <Typography variant="h5" color="text.secondary" paragraph>
           A production-ready project management system built with React, Express, and PostgreSQL
         </Typography>
-        
+
         {stats && (stats.contacts > 0 || stats.tasks > 0 || stats.projects > 0) && (
           <Alert severity="success" sx={{ mt: 2, mb: 2, maxWidth: 600, mx: 'auto' }}>
             <Typography variant="body2">
@@ -172,30 +176,24 @@ const Home = () => {
       <Typography variant="h4" component="h2" textAlign="center" gutterBottom mb={4}>
         What's Included
       </Typography>
-      
+
       <Grid container spacing={4} mb={6}>
         {features.map((feature, index) => (
           <Grid item xs={12} md={4} key={index}>
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
-                <Box mb={2}>
-                  {feature.icon}
-                </Box>
+                <Box mb={2}>{feature.icon}</Box>
                 <Typography variant="h5" component="h3" gutterBottom>
                   {feature.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
                   {feature.description}
                 </Typography>
-                <Chip 
-                  label={`${feature.count} items`} 
-                  color={feature.color}
-                  size="small"
-                />
+                <Chip label={`${feature.count} items`} color={feature.color} size="small" />
               </CardContent>
               <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
-                <Button 
-                  component={RouterLink} 
+                <Button
+                  component={RouterLink}
                   to={feature.link}
                   variant="outlined"
                   color={feature.color}
@@ -212,7 +210,7 @@ const Home = () => {
       <Typography variant="h4" component="h2" textAlign="center" gutterBottom mb={4}>
         Technical Features
       </Typography>
-      
+
       <Grid container spacing={4} mb={6}>
         {techFeatures.map((feature, index) => (
           <Grid item xs={12} md={4} key={index}>
@@ -232,8 +230,6 @@ const Home = () => {
           </Grid>
         ))}
       </Grid>
-
-      <CallToAction />
     </Container>
   );
 };

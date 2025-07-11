@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 /**
  * Database class to handle Prisma client instance.
@@ -13,7 +13,7 @@ class Database {
      * @type {PrismaClient}
      */
     this.prisma = new PrismaClient({
-      errorFormat: "minimal",
+      errorFormat: 'minimal',
     });
     Database.instance = this;
   }
