@@ -1,167 +1,195 @@
-# simple-vite-react-express
+# Modern Full-Stack Template
 
 <p align="center">
-  <img src="./public/template-logo.png" alt="simple-vite-react-express-logo" height="200">
+  <img src="./public/template-logo.png" alt="modern-fullstack-template-logo" height="200">
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat-square&logo=Vite&logoColor=white" alt="Vite">
-    <img src="https://img.shields.io/badge/React-61DAFB.svg?style=flat-square&logo=React&logoColor=black" alt="React">
+    <img src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat-square&logo=Vite&logoColor=white" alt="Vite 6+">
+    <img src="https://img.shields.io/badge/React-61DAFB.svg?style=flat-square&logo=React&logoColor=black" alt="React 19">
     <img src="https://img.shields.io/badge/Express-000000.svg?style=flat-square&logo=Express&logoColor=white" alt="Express">
     <img src="https://img.shields.io/badge/postgresql-4169e1.svg?style=flat-square&logo=PostgreSQL&logoColor=white" alt="PostgreSQL">
     <img src="https://img.shields.io/badge/Prisma-2D3748.svg?style=flat-square&logo=Prisma&logoColor=white" alt="Prisma">
     <br>
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat-square&logo=JavaScript&logoColor=black" alt="JavaScript">
-    <img src="https://img.shields.io/badge/HTML5-E34F26.svg?style=flat-square&logo=HTML5&logoColor=white" alt="HTML5">
+    <img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=flat-square&logo=TypeScript&logoColor=white" alt="TypeScript Ready">
+    <img src="https://img.shields.io/badge/Material--UI-007FFF.svg?style=flat-square&logo=MUI&logoColor=white" alt="Material-UI">
+    <img src="https://img.shields.io/badge/ESLint-4B32C3.svg?style=flat-square&logo=ESLint&logoColor=white" alt="ESLint">
+    <img src="https://img.shields.io/badge/Prettier-F7B93E.svg?style=flat-square&logo=Prettier&logoColor=black" alt="Prettier">
     <img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style=flat-square&logo=Nodemon&logoColor=white" alt="Nodemon">
-    <img src="https://img.shields.io/badge/Axios-5A29E4.svg?style=flat-square&logo=Axios&logoColor=white" alt="Axios">
-    <img src="https://img.shields.io/badge/JSON-000000.svg?style=flat-square&logo=JSON&logoColor=white" alt="JSON">
 </p>
 
-A modern full-stack template using React, Vite, Express, and PostgreSQL.
+Production-ready full-stack template with modern tooling, best practices, and developer experience optimizations. Built for rapid prototyping and scalable applications.
 
 ## Quick Start
 
 ```bash
-# Clone and rename the template
+# Clone and setup your project
 git clone git@github.com:Avinava/simple-vite-react-express.git your-project-name
 cd your-project-name
 
-# Install dependencies
-yarn (or npm install)
+# Install dependencies (npm, yarn, or pnpm)
+npm install
+# or
+yarn install
+# or
+pnpm install
 
-# Set up your environment
-cp .env.example .env
+# Environment setup
+cp example.env .env
+# Edit .env with your database credentials
 
-# Initialize database
-npx prisma migrate dev
-npx prisma generate
+# Database initialization
+npm run db:setup
+# or manually:
+# npx prisma migrate dev
+# npx prisma generate
 
-# Start development
-yarn dev
+# Start development servers
+npm run dev
 ```
 
-## Template Structure
+> Ready in 2 minutes! The template includes hot reload, database setup, and example CRUD operations.
+
+## What's New in 2025
+
+### Major Updates
+- **React 19** - Latest React with concurrent features and improved performance
+- **Vite 6+** - Faster builds, improved HMR, and better dev experience
+- **Material-UI v6** - Latest component library with enhanced theming
+- **Modern Tooling** - ESLint 8+, Prettier 3+, updated dependencies
+- **Docker Support** - Production-ready containerization
+- **Enhanced Scripts** - Better DX with comprehensive npm scripts
+- **Security Updates** - Latest security middleware and best practices
+
+### Developer Experience
+- **Code Quality** - ESLint + Prettier configuration
+- **Database Tools** - Enhanced Prisma scripts for better workflow
+- **Hot Reload** - Both client and server with automatic restarts
+- **Type Safety** - TypeScript-ready configuration
+- **Deployment Ready** - Docker, Vercel, Railway, Render support
+
+## Project Structure
 
 ```
-src/
-├── client/               # Frontend React application
-│   ├── components/       # Reusable components
-│   ├── pages/            # Page components
-│   └── theme/            # MUI theme customization
-├── server/               # Backend Express application
-│   ├── routes/           # API routes
-│   ├── services/         # Business logic
-│   ├── middleware/       # Express middleware
-│   └── utils/            # Utility functions
-└── prisma/               # Database schema and migrations
+├── src/
+│   ├── client/              # Frontend (React + Vite)
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Route-based page components
+│   │   ├── hooks/           # Custom React hooks
+│   │   ├── utils/           # Client-side utilities
+│   │   └── theme/           # Material-UI theme config
+│   │
+│   └── server/              # Backend (Express + Node.js)
+│       ├── routes/          # API route definitions
+│       ├── services/        # Business logic layer
+│       ├── middleware/      # Express middleware
+│       ├── utils/           # Server utilities
+│       └── config/          # Configuration files
+│
+├── prisma/                  # Database (Prisma ORM)
+│   ├── schema.prisma        # Database schema
+│   ├── migrations/          # Database migrations
+│   └── seed.js              # Database seeding
+│
+├── docs/                    # Documentation
+├── public/                  # Static assets
+└── scripts/                 # Build & deployment scripts
 ```
 
-## First Steps After Cloning (Your Project Launch Checklist)
+## Available Scripts
 
-> Complete these steps in order to transform this template into your application
+### Development
+```bash
+npm run dev          # Start both client and server
+npm run client       # Start only frontend (Vite)
+npm run server       # Start only backend (Nodemon)
+npm run preview      # Preview production build
+```
 
-1. **Update Project Information**
+### Database
+```bash
+npm run db:setup     # Initialize database (migrate + generate)
+npm run db:migrate   # Run database migrations
+npm run db:generate  # Generate Prisma client
+npm run db:studio    # Open Prisma Studio
+npm run db:reset     # Reset database
+npm run db:seed      # Seed database with sample data
+```
 
-   > Set up your project identity and remove template-specific content
+### Code Quality
+```bash
+npm run lint         # Check code quality
+npm run lint:fix     # Fix linting issues
+npm run format       # Format code with Prettier
+npm run format:check # Check code formatting
+```
 
-   - [ ] Change `name`, `version`, and `description` in `package.json`
-     - Update to reflect your project's identity
-     - Choose a meaningful version number (e.g., 0.1.0)
-   - [ ] Update repository URLs in `package.json`
-     - Point to your own repository
-     - Update homepage and bugs URLs if applicable
-   - [ ] Review and modify LICENSE file
-     - Ensure it matches your project's licensing needs
-     - Update copyright holder information
-   - [ ] Update README.md with your project details
-     - Remove template examples
-     - Add your project-specific documentation
-   - [ ] Remove template-specific documentation
-     - Delete the example contact management system
-     - Remove template feature descriptions
-   - [ ] Update Git remote URL to your repository
-     - `git remote set-url origin your-repo-url`
-
-2. **Configure Environment**
-
-   > Set up your development and production environments
-
-   - [ ] Copy `.env.example` to `.env`
-     - Never commit `.env` file (it's in .gitignore)
-     - Keep sensitive information secure
-   - [ ] Set up PostgreSQL database and update DATABASE_URL
-     - Format: `postgresql://username:password@localhost:5432/dbname`
-     - Create separate databases for development and testing
-   - [ ] Configure PORT (default: 3000)
-     - Ensure it doesn't conflict with other services
-     - Set different ports for development and production
-   - [ ] Set NODE_ENV for different environments
-     - development: for local development
-     - production: for deployment
-
-3. **Database Setup**
-
-   > Configure your data models and initialize the database
-
-   - [ ] Review and modify `prisma/schema.prisma`
-     - Define your data models
-     - Set up relationships between models
-   - [ ] Remove or modify the example Contact model
-     - Either repurpose it for your needs
-     - Or delete it completely
-   - [ ] Add your own models and relationships
-     - Follow Prisma schema conventions
-     - Define proper indexes and constraints
-   - [ ] Run initial migration: `npx prisma migrate dev`
-     - Creates database tables
-     - Generates Prisma Client
-
-4. **Frontend Customization**
-
-   > Personalize the user interface and setup routes
-
-   - [ ] Update title and meta tags in `index.html`
-     - Set your application name
-     - Add proper meta descriptions
-   - [ ] Replace template logo and favicon in `/public`
-     - Use your own branding
-     - Ensure proper image optimization
-   - [ ] Modify theme colors in `src/client/theme/theme.js`
-     - Match your brand colors
-     - Ensure proper contrast ratios
-   - [ ] Update app name in Header component
-     - Replace template name with your app name
-     - Add your own navigation items
-   - [ ] Remove example components or modify for your use
-     - Start with components you need
-     - Remove unused example code
-   - [ ] Review and update route structure
-     - Plan your application routes
-     - Set up proper navigation flow
+### Production
+```bash
+npm run build        # Build for production
+npm start            # Start production server
+```
 
 ## Template Features
 
 ### Frontend
-
-- ⚡️ Vite for fast development
-- 🎨 Material-UI with theme customization
-- 📝 Form handling with Formik
-- 🚦 React Router for navigation
-- 🔄 Axios for API requests
+- ⚡️ **Vite 6+** - Lightning fast build tool with HMR
+- ⚛️ **React 19** - Latest React with concurrent features
+- 🎨 **Material-UI v6** - Modern component library with theme customization
+- 📝 **Formik + Yup** - Robust form handling and validation
+- 🚦 **React Router v7** - Client-side routing with data loading
+- 🔄 **Axios** - Promise-based HTTP client
+- 🎯 **ESLint + Prettier** - Code quality and formatting
+- 📱 **Responsive Design** - Mobile-first approach
 
 ### Backend
+- 📡 **Express.js** - Fast, minimalist web framework
+- 🗄️ **Prisma ORM** - Type-safe database client with migrations
+- 🔐 **Security First** - Helmet, rate limiting, CORS protection
+- 📝 **Structured Architecture** - Routes, services, middleware separation
+- 🔧 **Environment Config** - Secure configuration management
+- ✅ **Input Validation** - Celebrate/Joi schema validation
+- 🚦 **Service Layer** - Clean business logic separation
+- 📊 **Standardized Responses** - Consistent API response format
+- 🔄 **Hot Reload** - Automatic server restart with Nodemon
+- 📈 **Performance Optimized** - Compression, caching headers
 
-- 📡 Express with structured routes
-- 🗄️ Prisma ORM for database operations
-- 🔐 Enhanced security with helmet and rate limiting
-- 📝 API route examples with standardized responses
-- 🔧 Environment configuration
-- ✅ Request validation using celebrate/Joi
-- 🚦 Service layer for business logic
-- 📊 Standardized API responses
+### Development & Deployment
+- 🔧 **Modern Tooling** - Latest versions of all dependencies
+- 🐳 **Docker Support** - Multi-stage builds for production
+- 🚀 **Platform Ready** - Vercel, Railway, Render, Heroku support
+- 📊 **Database Seeding** - Sample data for quick development
+- 🔍 **Code Quality** - ESLint, Prettier, and best practices
+- 📚 **Documentation** - Comprehensive guides and examples
 
-### API Response Format
+## First Steps After Cloning
+
+### 1. Project Setup
+- [ ] Update `package.json` (name, version, description, repository)
+- [ ] Update README.md with your project details
+- [ ] Configure Git remote: `git remote set-url origin your-repo-url`
+- [ ] Review and update LICENSE file
+
+### 2. Environment Configuration
+- [ ] Copy `example.env` to `.env`
+- [ ] Set up PostgreSQL database and update `DATABASE_URL`
+- [ ] Configure `PORT` and `NODE_ENV`
+- [ ] Add any additional environment variables
+
+### 3. Database Setup
+- [ ] Review `prisma/schema.prisma`
+- [ ] Modify or remove the example Contact model
+- [ ] Add your own models and relationships
+- [ ] Run `npm run db:setup`
+
+### 4. Frontend Customization
+- [ ] Update title and meta tags in `index.html`
+- [ ] Replace logo and favicon in `/public`
+- [ ] Modify theme in `src/client/theme/theme.js`
+- [ ] Update Header component with your app name
+- [ ] Plan and implement your route structure
+
+## API Response Format
 
 All API endpoints return responses in a standardized format:
 
@@ -174,173 +202,51 @@ All API endpoints return responses in a standardized format:
 }
 ```
 
-### Server Modules
+### Quick Deployment
 
-1. **Response Utils (`/server/utils/response.js`)**
+### Platform Deployments
+- **Vercel**: `npx vercel`
+- **Railway**: `railway up`
+- **Render**: Connect GitHub repo
+- **Heroku**: `git push heroku main`
 
-   - Standardized API response format
-   - Success and error response helpers
-   - Consistent timestamp inclusion
-
-2. **Service Layer (`/server/services/*.service.js`)**
-
-   - Business logic abstraction
-   - Database operation wrapping
-   - Reusable CRUD operations
-
-3. **Validation Middleware (`/server/middleware/validate.js`)**
-
-   - Request payload validation
-   - Schema-based validation using Joi
-   - Descriptive validation errors
-
-4. **Security Middleware (`/server/middleware/security.js`)**
-   - HTTP header security (helmet)
-   - Rate limiting protection
-   - Request logging
-
-### Development Best Practices
-
-1. **API Response Usage**
-
-   ```javascript
-   // Success response
-   res.json(successResponse(data, "Operation successful"));
-
-   // Error response
-   res.status(400).json(errorResponse("Invalid input"));
-   ```
-
-2. **Service Layer Usage**
-
-   ```javascript
-   // In route handlers
-   const data = await userService.findAll();
-   const item = await userService.create(payload);
-   ```
-
-3. **Validation Usage**
-
-   ```javascript
-   // In route definition
-   router.post("/create", validationSchema.create, async (req, res) => {
-     // Handler code
-   });
-   ```
-
-4. **Security Configuration**
-   ```javascript
-   // In your Express app
-   app.use(securityMiddleware);
-   app.use(requestLogger);
-   ```
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for detailed deployment instructions.
 
 ## Example Features
 
-The template includes a basic contact management system demonstrating:
+The template includes a comprehensive project management system demonstrating:
 
-- CRUD operations
-- Form validation
-- Database interactions
-- Error handling
-- Component organization
+### 📋 Contact Management
+- Full CRUD operations with enhanced contact fields
+- Email uniqueness validation
+- Company and notes tracking
+- Phone number management
 
-## Customization Guide
+### 📊 Project Management
+- Project creation with status tracking
+- Team member assignment with roles
+- Project timeline management
+- Member management (add/remove)
 
-### Adding New Features
+### ✅ Task Management
+- Task creation with priority levels
+- Status workflow (TODO → IN_PROGRESS → REVIEW → DONE)
+- Task assignment to team members
+- Due date tracking and filtering
+- Project-based task organization
 
-1. **Database Model**
+### 🔗 Relationship Management
+- Many-to-many relationships between contacts and projects
+- One-to-many relationships for task assignments
+- Proper foreign key constraints and cascading deletes
 
-   ```prisma
-   // In prisma/schema.prisma
-   model YourModel {
-     id        Int      @id @default(autoincrement())
-     createdAt DateTime @default(now())
-     // Add your fields
-   }
-   ```
-
-2. **API Route Creation**
-
-   ```bash
-   # Create new route file
-   touch src/server/routes/v1/your-model.route.js
-
-   # Add to routes/v1/index.js
-   import yourModelRoutes from './your-model.route.js'
-   router.use('/your-model', yourModelRoutes)
-   ```
-
-3. **Frontend Components**
-
-   ```bash
-   # Create component files
-   mkdir -p src/client/pages/YourModel
-   touch src/client/pages/YourModel/List.jsx
-   touch src/client/pages/YourModel/Detail.jsx
-   touch src/client/pages/YourModel/Form.jsx
-   ```
-
-4. **Add Navigation**
-   - Update `src/client/components/Header.jsx`
-   - Modify `src/client/index.jsx` routes
-
-### Theme Customization
-
-1. **Colors and Typography**
-
-   ```javascript
-   // In src/client/theme/theme.js
-   const theme = createTheme({
-     palette: {
-       primary: {
-         main: "#your-color",
-       },
-     },
-     typography: {
-       fontFamily: "your-font, Arial, sans-serif",
-     },
-   });
-   ```
-
-2. **Component Styling**
-   - Use `sx` prop for direct styling
-   - Create styled components for reuse
-   - Add global styles in theme
-
-### API Development
-
-1. **Route Structure**
-
-   ```javascript
-   // Template for new routes
-   router.get("/list", async (req, res) => {
-     try {
-       // Your logic here
-       const data = await db.prisma.yourModel.findMany();
-       res.json(data);
-     } catch (err) {
-       // Error handling
-     }
-   });
-   ```
-
-2. **Validation**
-
-   ```javascript
-   // Using celebrate/Joi
-   const validate = {
-     body: Joi.object({
-       // Your validation schema
-     }),
-   };
-   router.post("/create", celebrate(validate), async (req, res) => {});
-   ```
-
-3. **Error Handling**
-   - Use try/catch blocks
-   - Implement error middleware
-   - Add logging
+### 🛠️ Technical Demonstrations
+- Advanced Prisma schema with enums and relationships
+- Complex database queries with joins and filtering
+- Service layer architecture for business logic
+- Comprehensive input validation with Joi
+- Standardized API responses
+- Error handling and edge cases
 
 ## Screenshots
 
@@ -368,3 +274,21 @@ The template includes a basic contact management system demonstrating:
 ![New Contact](/screenshots/new-contacts.png)
 
 </details>
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and linting
+5. Submit a pull request
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Support
+
+- 📚 [Documentation](docs/)
+- 🐛 [Issues](https://github.com/Avinava/simple-vite-react-express/issues)
+- 💬 [Discussions](https://github.com/Avinava/simple-vite-react-express/discussions)

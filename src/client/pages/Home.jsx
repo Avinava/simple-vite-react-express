@@ -1,118 +1,239 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Typography, Grid, Card, CardContent, CardActions, Button, Box, Divider } from "@mui/material";
-import ContactsIcon from "@mui/icons-material/Contacts";
-import ArchitectureIcon from "@mui/icons-material/Architecture";
-import StorageIcon from "@mui/icons-material/Storage";
-import IntegrationInstructionsIcon from "@mui/icons-material/IntegrationInstructions";
-import ApiIcon from "@mui/icons-material/Api";
-import SchemaIcon from "@mui/icons-material/Schema";
+import React, { useState, useEffect } from "react";
+import { 
+  Container, 
+  Typography, 
+  Box, 
+  Button, 
+  Grid, 
+  Card, 
+  CardContent,
+  CardActions,
+  Chip,
+  Alert,
+  CircularProgress
+} from "@mui/material";
+import { 
+  ContactPage as ContactIcon,
+  Assignment as TaskIcon,
+  Folder as ProjectIcon,
+  Rocket as RocketIcon,
+  Code as CodeIcon,
+  Security as SecurityIcon
+} from "@mui/icons-material";
+import { Link as RouterLink } from "react-router-dom";
+import axios from "axios";
+import CallToAction from "../components/CallToAction";
+import DatabaseSetupGuide from "../components/DatabaseSetupGuide";
 
 const Home = () => {
-  const navigate = useNavigate();
+  const [dbStatus, setDbStatus] = useState('checking'); // 'checking', 'connected', 'error'
+  const [stats, setStats] = useState(null);
 
-  const mainFeatures = [
+  const checkDatabaseConnection = async () => {
+    try {
+      setDbStatus('checking');
+      console.log('Checking database connection...');
+      
+      // Try to fetch health endpoint first
+      const healthRes = await axios.get('/api/v1/health').catch(() => null);
+      if (!healthRes) {
+        throw new Error('Server not responding');
+      }
+
+      // Try to fetch some basic data to check if DB is set up
+      const contactsRes = await axios.get('/api/v1/contact/list');
+      const tasksRes = await axios.get('/api/v1/task/list').catch(() => ({ data: { data: [] } }));
+      const projectsRes = await axios.get('/api/v1/project/list').catch(() => ({ data: { data: [] } }));
+
+      setStats({
+        contacts: contactsRes.data.data?.length || 0,
+        tasks: tasksRes.data.data?.length || 0,
+        projects: projectsRes.data.data?.length || 0
+      });
+      setDbStatus('connected');
+      console.log('Database connection successful');
+    } catch (error) {
+      console.error('Database connection error:', error);
+      setDbStatus('error');
+    }
+  };
+
+  useEffect(() => {
+    checkDatabaseConnection();
+  }, []);
+
+  if (dbStatus === 'error') {
+    return (
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <DatabaseSetupGuide onRetry={checkDatabaseConnection} />
+      </Container>
+    );
+  }
+
+  if (dbStatus === 'checking') {
+    return (
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Box textAlign="center" py={8}>
+          <CircularProgress size={60} />
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            Checking database connection...
+          </Typography>
+        </Box>
+      </Container>
+    );
+  }
+
+  const features = [
     {
-      title: "Contacts Management Demo",
-      description: "Full CRUD application showcasing form handling, data persistence, and REST API integration",
-      icon: <ContactsIcon sx={{ fontSize: 40 }} />,
-      action: () => navigate("/contacts"),
-      primary: true,
+      icon: <ContactIcon fontSize="large" color="primary" />,
+      title: "Contact Management",
+      description: "Manage your contacts with detailed information, company details, and notes.",
+      link: "/contacts",
+      count: stats?.contacts || 0,
+      color: "primary"
     },
     {
-      title: "Modern Frontend Stack",
-      description: "React 19, Vite, Material-UI, and React Router for robust client-side architecture",
-      icon: <ArchitectureIcon sx={{ fontSize: 40 }} />,
-      action: null,
+      icon: <TaskIcon fontSize="large" color="secondary" />,
+      title: "Task Management", 
+      description: "Track tasks with priorities, status workflows, and team assignments.",
+      link: "/tasks",
+      count: stats?.tasks || 0,
+      color: "secondary"
     },
     {
-      title: "Backend Infrastructure",
-      description: "Express.js with Prisma ORM featuring structured routes and middleware patterns",
-      icon: <StorageIcon sx={{ fontSize: 40 }} />,
-      action: null,
-    },
+      icon: <ProjectIcon fontSize="large" color="success" />,
+      title: "Project Management",
+      description: "Organize projects with team members, timelines, and progress tracking.",
+      link: "/projects", 
+      count: stats?.projects || 0,
+      color: "success"
+    }
   ];
 
-  const technicalFeatures = [
+  const techFeatures = [
     {
-      title: "Design Patterns",
-      description: "Component composition, HOCs, custom hooks, and state management examples",
-      icon: <SchemaIcon sx={{ fontSize: 40 }} />,
+      icon: <CodeIcon />,
+      title: "Modern Stack",
+      description: "React 19, Vite 6+, Express.js, PostgreSQL, and Prisma ORM with the latest best practices."
     },
     {
-      title: "API Integration",
-      description: "Axios interceptors, error handling, and RESTful endpoint organization",
-      icon: <ApiIcon sx={{ fontSize: 40 }} />,
+      icon: <RocketIcon />,
+      title: "Developer Experience", 
+      description: "Hot reload, ESLint, Prettier, comprehensive scripts, and structured architecture."
     },
     {
-      title: "Development Tools",
-      description: "Hot reloading, debugging setup, and development/production configurations",
-      icon: <IntegrationInstructionsIcon sx={{ fontSize: 40 }} />,
-    },
+      icon: <SecurityIcon />,
+      title: "Production Ready",
+      description: "Security middleware, input validation, error handling, and deployment configurations."
+    }
   ];
-
-  const renderFeatureCards = (features) => (
-    <Grid container spacing={4}>
-      {features.map((feature, index) => (
-        <Grid item xs={12} md={features.length === 3 ? 4 : 6} key={index}>
-          <Card
-            sx={{
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              border: feature.primary ? 2 : 1,
-              borderColor: feature.primary ? "primary.main" : "divider",
-              bgcolor: "background.paper",
-              "&:hover": {
-                bgcolor: "background.default",
-                transition: "0.3s",
-              },
-            }}
-          >
-            <CardContent sx={{ flexGrow: 1, textAlign: "center" }}>
-              <Box mb={2} color={feature.primary ? "primary.main" : "text.secondary"}>
-                {feature.icon}
-              </Box>
-              <Typography gutterBottom variant="h5" component="h2">
-                {feature.title}
-              </Typography>
-              <Typography color="text.secondary" variant="body2">
-                {feature.description}
-              </Typography>
-            </CardContent>
-            {feature.action && (
-              <CardActions sx={{ justifyContent: "center", pb: 2 }}>
-                <Button variant={feature.primary ? "contained" : "outlined"} onClick={feature.action} size="large">
-                  Explore Demo
-                </Button>
-              </CardActions>
-            )}
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
-  );
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      {/* Hero Section */}
       <Box textAlign="center" mb={6}>
-        <Typography variant="h3" component="h1" gutterBottom>
-          simple-vite-react-express template
+        <Typography variant="h2" component="h1" gutterBottom>
+          Modern Full-Stack Template
         </Typography>
-        <Typography variant="h6" color="text.secondary" paragraph>
-          A comprehensive starter kit demonstrating modern web development practices
+        <Typography variant="h5" color="text.secondary" paragraph>
+          A production-ready project management system built with React, Express, and PostgreSQL
         </Typography>
+        
+        {stats && (stats.contacts > 0 || stats.tasks > 0 || stats.projects > 0) && (
+          <Alert severity="success" sx={{ mt: 2, mb: 2, maxWidth: 600, mx: 'auto' }}>
+            <Typography variant="body2">
+              🎉 Database is set up with sample data! Explore the features below.
+            </Typography>
+          </Alert>
+        )}
+
+        <Button
+          variant="contained"
+          size="large"
+          component={RouterLink}
+          to="/contacts"
+          sx={{ mt: 2, mr: 2 }}
+        >
+          Explore Features
+        </Button>
+        <Button
+          variant="outlined"
+          size="large"
+          href="https://github.com/Avinava/simple-vite-react-express"
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{ mt: 2 }}
+        >
+          View on GitHub
+        </Button>
       </Box>
 
-      {renderFeatureCards(mainFeatures)}
+      {/* Feature Cards */}
+      <Typography variant="h4" component="h2" textAlign="center" gutterBottom mb={4}>
+        What's Included
+      </Typography>
+      
+      <Grid container spacing={4} mb={6}>
+        {features.map((feature, index) => (
+          <Grid item xs={12} md={4} key={index}>
+            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
+                <Box mb={2}>
+                  {feature.icon}
+                </Box>
+                <Typography variant="h5" component="h3" gutterBottom>
+                  {feature.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" paragraph>
+                  {feature.description}
+                </Typography>
+                <Chip 
+                  label={`${feature.count} items`} 
+                  color={feature.color}
+                  size="small"
+                />
+              </CardContent>
+              <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
+                <Button 
+                  component={RouterLink} 
+                  to={feature.link}
+                  variant="outlined"
+                  color={feature.color}
+                >
+                  Explore {feature.title}
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
 
-      <Box my={6}>
-        <Divider />
-        <Typography variant="h4" component="h2" textAlign="center" my={4}>
-          Technical Demonstrations
-        </Typography>
-        {renderFeatureCards(technicalFeatures)}
-      </Box>
+      {/* Technical Features */}
+      <Typography variant="h4" component="h2" textAlign="center" gutterBottom mb={4}>
+        Technical Features
+      </Typography>
+      
+      <Grid container spacing={4} mb={6}>
+        {techFeatures.map((feature, index) => (
+          <Grid item xs={12} md={4} key={index}>
+            <Card sx={{ height: '100%' }}>
+              <CardContent>
+                <Box display="flex" alignItems="center" mb={2}>
+                  {feature.icon}
+                  <Typography variant="h6" component="h3" ml={1}>
+                    {feature.title}
+                  </Typography>
+                </Box>
+                <Typography variant="body2" color="text.secondary">
+                  {feature.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+
+      <CallToAction />
     </Container>
   );
 };

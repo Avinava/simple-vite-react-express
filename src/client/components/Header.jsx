@@ -25,6 +25,12 @@ const Header = () => {
           <Button component={RouterLink} to="/contacts" color="inherit">
             Contacts
           </Button>
+          <Button component={RouterLink} to="/tasks" color="inherit">
+            Tasks
+          </Button>
+          <Button component={RouterLink} to="/projects" color="inherit">
+            Projects
+          </Button>
         </Toolbar>
       </AppBar>
     </div>

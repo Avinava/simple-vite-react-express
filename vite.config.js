@@ -1,6 +1,6 @@
 // vite.config.js
 import { defineConfig } from "vite";
-import reactRefresh from "@vitejs/plugin-react-refresh";
+import react from "@vitejs/plugin-react";
 import path from "path";
 import { fileURLToPath } from "url";
 import { minify } from "terser";
@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig({
-  plugins: [reactRefresh()],
+  plugins: [react()],
   build: {
     outDir: path.resolve(__dirname, "dist"),
     assetsDir: "",

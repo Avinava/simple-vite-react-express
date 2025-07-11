@@ -9,8 +9,77 @@ generator client {
 }
 
 model Contact {
-  id        Int           @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   firstName String
   lastName  String
-  email     String
+  email     String   @unique
+  phone     String?
+  company   String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  tasks     Task[]
+  projects  ProjectMember[]
+}
+
+model Task {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?
+  status      TaskStatus @default(TODO)
+  priority    Priority   @default(MEDIUM)
+  dueDate     DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relationships
+  assigneeId Int?
+  assignee   Contact? @relation(fields: [assigneeId], references: [id])
+  projectId  Int?
+  project    Project? @relation(fields: [projectId], references: [id])
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  status      String   @default("active")
+  startDate   DateTime @default(now())
+  endDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  tasks   Task[]
+  members ProjectMember[]
+}
+
+model ProjectMember {
+  id        Int     @id @default(autoincrement())
+  role      String  @default("member")
+  joinedAt  DateTime @default(now())
+
+  // Relationships
+  contactId Int
+  contact   Contact @relation(fields: [contactId], references: [id])
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@unique([contactId, projectId])
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  REVIEW
+  DONE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
 }
