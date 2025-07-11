@@ -123,6 +123,18 @@ const Tasks = () => {
             // Navigate to new task form
             toast.info('New task form - to be implemented');
           }}
+          sx={{
+            fontWeight: 600,
+            textTransform: 'none',
+            px: 3,
+            py: 1,
+            boxShadow: 2,
+            '&:hover': {
+              boxShadow: 4,
+              transform: 'translateY(-1px)',
+            },
+            transition: 'all 0.2s ease-in-out'
+          }}
         >
           New Task
         </Button>

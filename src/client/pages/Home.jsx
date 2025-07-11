@@ -156,7 +156,21 @@ const Home = () => {
           size="large"
           component={RouterLink}
           to="/contacts"
-          sx={{ mt: 2, mr: 2 }}
+          sx={{
+            mt: 2,
+            mr: 2,
+            px: 4,
+            py: 1.5,
+            fontSize: '1.1rem',
+            fontWeight: 600,
+            textTransform: 'none',
+            boxShadow: 3,
+            '&:hover': {
+              boxShadow: 6,
+              transform: 'translateY(-2px)',
+            },
+            transition: 'all 0.2s ease-in-out',
+          }}
         >
           Explore Features
         </Button>
@@ -166,7 +180,20 @@ const Home = () => {
           href="https://github.com/Avinava/simple-vite-react-express"
           target="_blank"
           rel="noopener noreferrer"
-          sx={{ mt: 2 }}
+          sx={{
+            mt: 2,
+            px: 4,
+            py: 1.5,
+            fontSize: '1.1rem',
+            fontWeight: 600,
+            textTransform: 'none',
+            borderWidth: 2,
+            '&:hover': {
+              borderWidth: 2,
+              transform: 'translateY(-2px)',
+            },
+            transition: 'all 0.2s ease-in-out',
+          }}
         >
           View on GitHub
         </Button>
@@ -195,8 +222,20 @@ const Home = () => {
                 <Button
                   component={RouterLink}
                   to={feature.link}
-                  variant="outlined"
+                  variant="contained"
                   color={feature.color}
+                  size="medium"
+                  sx={{
+                    minWidth: 160,
+                    fontWeight: 600,
+                    textTransform: 'none',
+                    boxShadow: 2,
+                    '&:hover': {
+                      boxShadow: 4,
+                      transform: 'translateY(-1px)',
+                    },
+                    transition: 'all 0.2s ease-in-out',
+                  }}
                 >
                   Explore {feature.title}
                 </Button>
