@@ -5,7 +5,6 @@ import {
   Box,
   Card,
   CardContent,
-  Grid,
   Chip,
   Button,
   LinearProgress,
@@ -13,6 +12,7 @@ import {
   AvatarGroup,
   IconButton,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import {
   Add as AddIcon,
   Edit as EditIcon,
@@ -114,7 +114,7 @@ const Projects = () => {
       {/* Projects Grid */}
       <Grid container spacing={3}>
         {projects.map((project) => (
-          <Grid item xs={12} md={6} lg={4} key={project.id}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} key={project.id}>
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flexGrow: 1 }}>
                 <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>

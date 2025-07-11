@@ -4,7 +4,6 @@ import {
   Typography,
   Box,
   Button,
-  Grid,
   Card,
   CardContent,
   CardActions,
@@ -12,6 +11,7 @@ import {
   Alert,
   CircularProgress,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import {
   ContactPage as ContactIcon,
   Assignment as TaskIcon,
@@ -177,9 +177,9 @@ const Home = () => {
         What's Included
       </Typography>
 
-      <Grid container spacing={4} mb={6}>
+      <Grid container spacing={4} sx={{ mb: 6 }}>
         {features.map((feature, index) => (
-          <Grid item xs={12} md={4} key={index}>
+          <Grid size={{ xs: 12, md: 4 }} key={index}>
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
                 <Box mb={2}>{feature.icon}</Box>
@@ -211,9 +211,9 @@ const Home = () => {
         Technical Features
       </Typography>
 
-      <Grid container spacing={4} mb={6}>
+      <Grid container spacing={4} sx={{ mb: 6 }}>
         {techFeatures.map((feature, index) => (
-          <Grid item xs={12} md={4} key={index}>
+          <Grid size={{ xs: 12, md: 4 }} key={index}>
             <Card sx={{ height: '100%' }}>
               <CardContent>
                 <Box display="flex" alignItems="center" mb={2}>
