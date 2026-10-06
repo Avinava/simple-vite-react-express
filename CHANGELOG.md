@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Banner, CI badge and a short successor-template callout in the README
 - `docs/` (getting started, architecture, API, troubleshooting, migration guide)
 - `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `CLAUDE.md`
-- GitHub Actions CI (lint, format check, test, build on Node 22 and 24), Dependabot, issue and PR templates
+- GitHub Actions CI (lint, format check, test, build on Node 22 and 24), issue and PR templates
 
 ### Changed
 
@@ -55,6 +55,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Routes no longer wrap handlers in try/catch; Express 5 forwards errors to `middleware/error.js`
 - Validation schemas live next to their routes (removed `middleware/validate.js`)
+
+### Security
+
+- `npm audit` is clean (was 18+ advisories): lockfile refreshed, `celebrate` 16 and `concurrently` 10 (majors), and `overrides` in `package.json` for transitive `deepmerge-ts`, `mysql2`, `lodash` and `shell-quote` pinned by Prisma/Formik. Drop an override once its parent ships the fix.
 
 ### Removed
 
