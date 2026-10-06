@@ -71,6 +71,8 @@ export default [
 
       // React Hooks rules
       ...reactHooks.configs.recommended.rules,
+      // Fetch-on-mount in custom hooks is this template's teaching pattern
+      'react-hooks/set-state-in-effect': 'off',
 
       // React Refresh rules (for Vite HMR)
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],

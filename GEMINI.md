@@ -48,7 +48,7 @@ Prisma 7 uses the **driver adapter pattern** (`@prisma/adapter-pg`). Database co
 | Command | Purpose |
 |---------|---------|
 | `npm run dev` | Start client + server concurrently |
-| `npm run server` | Start Express with nodemon |
+| `npm run server` | Start Express with `node --watch` |
 | `npm run client` | Start Vite dev server |
 | `npm test` | Run tests in watch mode |
 | `npm run test:run` | Run tests once (CI) |

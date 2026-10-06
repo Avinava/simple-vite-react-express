@@ -16,12 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Dependencies bumped within current majors (Prisma 7.10, MUI 7.3.11, React 19.3, Express middleware, tooling)
+- `react-router-dom` replaced by `react-router` (v7 ships the DOM bindings there)
+- `npm run server` uses `node --watch` instead of nodemon
 - README rewritten: correct versions, Node requirement and API routes; Quick Start now includes `db:setup`
 - `example.env` documents `CORS_ORIGIN` and drops the unsupported `?schema=` suffix
 - `.gitignore` trimmed to what this project uses
 
 ### Removed
 
+- `nodemon` dependency and `nodemon.json`
 - `yarn.lock` (npm is the package manager) and committed `.DS_Store` files
 
 ## [2.1.0] - 2026-02-15

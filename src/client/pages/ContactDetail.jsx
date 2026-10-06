@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import axios from 'axios';
 import { Avatar, Box, Card, CardContent, Container, Divider, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';

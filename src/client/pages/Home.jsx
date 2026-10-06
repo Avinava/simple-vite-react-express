@@ -19,7 +19,7 @@ import {
   Code as CodeIcon,
   Security as SecurityIcon,
 } from '@mui/icons-material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import DatabaseSetupGuide from '../components/DatabaseSetupGuide';
 import { useHealthCheck } from '../hooks';
 
