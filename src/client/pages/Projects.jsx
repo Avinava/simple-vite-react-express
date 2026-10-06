@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Container,
   Typography,
@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   Chip,
-  Button,
   LinearProgress,
   Avatar,
   AvatarGroup,
@@ -14,63 +13,32 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
   Delete as DeleteIcon,
   Folder as ProjectIcon,
   People as PeopleIcon,
   Assignment as TaskIcon,
 } from '@mui/icons-material';
-import { toast } from 'react-toastify';
-import axios from 'axios';
+import { useProjects } from '../hooks';
+import ConfirmationDialog from '../components/ConfirmationDialog';
+import { CardGridSkeleton, EmptyState, ErrorState } from '../components/PageState';
+
+const statusColors = {
+  active: 'success',
+  planning: 'warning',
+  completed: 'primary',
+  on_hold: 'default',
+};
 
 const Projects = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [projectToDelete, setProjectToDelete] = useState(null);
 
-  const statusColors = {
-    active: 'success',
-    planning: 'warning',
-    completed: 'primary',
-    on_hold: 'default',
-  };
+  // Data access goes through the hook (hook -> service -> axios)
+  const { projects, isLoading, error, refresh, deleteProject } = useProjects();
 
-  const fetchProjects = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get('/api/v1/project/list');
-      if (response.data.success) {
-        setProjects(response.data.data);
-      }
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-      toast.error('Failed to fetch projects');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const handleDeleteProject = async (projectId) => {
-    if (
-      window.confirm(
-        'Are you sure you want to delete this project? This will also delete all associated tasks.'
-      )
-    ) {
-      try {
-        const response = await axios.delete(`/api/v1/project/${projectId}`);
-        if (response.data.success) {
-          toast.success('Project deleted successfully');
-          fetchProjects();
-        }
-      } catch (error) {
-        console.error('Error deleting project:', error);
-        toast.error('Failed to delete project');
-      }
-    }
+  const handleConfirmDelete = async () => {
+    const id = projectToDelete;
+    setProjectToDelete(null);
+    await deleteProject(id).catch(() => {}); // the API layer already shows an error toast
   };
 
   const formatDate = (dateString) => {
@@ -88,44 +56,17 @@ const Projects = () => {
     return `${firstName?.charAt(0) || ''}${lastName?.charAt(0) || ''}`.toUpperCase();
   };
 
-  if (loading) {
-    return (
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Typography>Loading projects...</Typography>
-      </Container>
-    );
-  }
-
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box mb={3}>
         <Typography variant="h4" component="h1">
           <ProjectIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
           Projects
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => {
-            // Navigate to new project form
-            toast.info('New project form - to be implemented');
-          }}
-          sx={{
-            fontWeight: 600,
-            textTransform: 'none',
-            px: 3,
-            py: 1,
-            boxShadow: 2,
-            '&:hover': {
-              boxShadow: 4,
-              transform: 'translateY(-1px)',
-            },
-            transition: 'all 0.2s ease-in-out',
-          }}
-        >
-          New Project
-        </Button>
       </Box>
+
+      {error && <ErrorState message="Could not load projects." onRetry={refresh} />}
+      {isLoading && <CardGridSkeleton />}
 
       {/* Projects Grid */}
       <Grid container spacing={3}>
@@ -140,14 +81,9 @@ const Projects = () => {
                   <Box>
                     <IconButton
                       size="small"
-                      onClick={() => toast.info('Edit project - to be implemented')}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
                       color="error"
-                      onClick={() => handleDeleteProject(project.id)}
+                      aria-label={`Delete project ${project.name}`}
+                      onClick={() => setProjectToDelete(project.id)}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -162,7 +98,7 @@ const Projects = () => {
 
                 <Box mb={2}>
                   <Chip
-                    label={project.status.replace('_', ' ').toUpperCase()}
+                    label={project.status.replaceAll('_', ' ').toUpperCase()}
                     color={statusColors[project.status] || 'default'}
                     size="small"
                   />
@@ -230,16 +166,19 @@ const Projects = () => {
         ))}
       </Grid>
 
-      {projects.length === 0 && (
-        <Box textAlign="center" mt={4}>
-          <Typography variant="h6" color="text.secondary">
-            No projects found
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Create your first project to get started
-          </Typography>
-        </Box>
+      {!isLoading && !error && projects.length === 0 && (
+        <EmptyState title="No projects found">
+          Run `npm run db:seed` for sample data, or POST to /api/v1/project/create.
+        </EmptyState>
       )}
+
+      <ConfirmationDialog
+        open={projectToDelete !== null}
+        title="Delete project?"
+        message="This cannot be undone and removes the project's memberships."
+        onClose={() => setProjectToDelete(null)}
+        onConfirm={handleConfirmDelete}
+      />
     </Container>
   );
 };

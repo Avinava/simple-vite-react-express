@@ -33,6 +33,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `NODE_ENV` now defaults to `production` when unset; `TRUST_PROXY` supported for rate limiting behind proxies
 - `npm run db:seed` is idempotent and `prisma migrate reset` runs the seed
 
+### Added (client)
+
+- Dark mode: header toggle, persisted preference, defaults to the system setting
+- Mobile navigation menu, active-route highlight, `aria-label`s on icon buttons
+- `ErrorBoundary`, shared loading skeletons / error / empty states, `useContact` hook
+- 404 page has a "Back home" button
+
+### Fixed (client)
+
+- Tasks, Projects and Contact detail pages no longer call axios directly; they use hooks and services
+- `tasksService.create` / `projectsService.create` pointed at routes that don't exist (`/task`, `/project`)
+- Deleting uses `ConfirmationDialog` instead of `window.confirm`
+- Removed "to be implemented" stub buttons; legacy `<Grid item>` props (removed in MUI 7) migrated to `size`
+
 ### Changed (server)
 
 - Routes no longer wrap handlers in try/catch; Express 5 forwards errors to `middleware/error.js`

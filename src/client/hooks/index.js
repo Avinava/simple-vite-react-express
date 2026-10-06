@@ -15,6 +15,7 @@
 
 // Data hooks
 export { useContacts } from './useContacts';
+export { useContact } from './useContact';
 export { useTasks } from './useTasks';
 export { useProjects } from './useProjects';
 

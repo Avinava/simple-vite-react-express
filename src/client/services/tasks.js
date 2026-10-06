@@ -82,7 +82,7 @@ export const tasksService = {
    * @param {number} [data.projectId] - Project ID to associate
    * @returns {Promise<{success: boolean, data: Task}>}
    */
-  create: (data) => api.post('/task', data),
+  create: (data) => api.post('/task/create', data),
 
   /**
    * Update an existing task
@@ -98,6 +98,13 @@ export const tasksService = {
    * @returns {Promise<{success: boolean, data: Task}>}
    */
   delete: (id) => api.delete(`/task/${id}`),
+
+  /**
+   * Change only the status of a task
+   * @param {number|string} id - Task ID
+   * @param {string} status - One of TaskStatus
+   */
+  updateStatus: (id, status) => api.patch(`/task/${id}/status`, { status }),
 };
 
 export default tasksService;

@@ -32,10 +32,11 @@ import { tasksService, TaskStatus } from '../services';
  * @param {boolean} [options.autoFetch=true] - Whether to fetch on mount
  * @param {number} [options.projectId] - Filter tasks by project ID
  * @param {string} [options.status] - Filter tasks by status
+ * @param {string} [options.priority] - Filter tasks by priority
  * @returns {Object} Tasks state and operations
  */
 export function useTasks(options = {}) {
-  const { autoFetch = true, projectId, status } = options;
+  const { autoFetch = true, projectId, status, priority } = options;
 
   // State management
   const [tasks, setTasks] = useState([]);
@@ -76,8 +77,13 @@ export function useTasks(options = {}) {
       result = result.filter((task) => task.status === status);
     }
 
+    // Filter by priority if specified
+    if (priority) {
+      result = result.filter((task) => task.priority === priority);
+    }
+
     return result;
-  }, [tasks, projectId, status]);
+  }, [tasks, projectId, status, priority]);
 
   /**
    * Create a new task
@@ -119,7 +125,17 @@ export function useTasks(options = {}) {
    * @returns {Promise<Object>} Updated task
    */
   const updateTaskStatus = async (id, newStatus) => {
-    return updateTask(id, { status: newStatus });
+    try {
+      const response = await tasksService.updateStatus(id, newStatus);
+      setTasks((prev) =>
+        prev.map((task) => (task.id === Number(id) ? { ...task, status: newStatus } : task))
+      );
+      toast.success('Task status updated');
+      return response.data;
+    } catch (err) {
+      await fetchTasks();
+      throw err;
+    }
   };
 
   /**

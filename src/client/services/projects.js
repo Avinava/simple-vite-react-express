@@ -66,7 +66,7 @@ export const projectsService = {
    * @param {string} [data.endDate] - End date ISO string
    * @returns {Promise<{success: boolean, data: Project}>}
    */
-  create: (data) => api.post('/project', data),
+  create: (data) => api.post('/project/create', data),
 
   /**
    * Update an existing project

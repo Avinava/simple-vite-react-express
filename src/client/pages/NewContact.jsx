@@ -66,7 +66,7 @@ const NewContact = () => {
             {({ handleSubmit, isSubmitting }) => (
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <Field
                       name="firstName"
                       as={TextField}
@@ -82,7 +82,7 @@ const NewContact = () => {
                       {(msg) => <Box sx={errorMessageSx}>{msg}</Box>}
                     </ErrorMessage>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <Field
                       name="lastName"
                       as={TextField}
@@ -98,7 +98,7 @@ const NewContact = () => {
                       {(msg) => <Box sx={errorMessageSx}>{msg}</Box>}
                     </ErrorMessage>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid size={12}>
                     <Field
                       name="email"
                       as={TextField}
@@ -114,7 +114,7 @@ const NewContact = () => {
                       {(msg) => <Box sx={errorMessageSx}>{msg}</Box>}
                     </ErrorMessage>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid size={12}>
                     <Button
                       variant="contained"
                       color="primary"

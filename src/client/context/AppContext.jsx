@@ -4,7 +4,7 @@
  *
  * Global application context for shared state across components.
  * Currently handles:
- * - Theme mode (light/dark) - prepared for future dark mode support
+ * - Theme mode (light/dark), persisted and defaulting to the system preference
  * - App-wide configuration
  *
  * This context is designed to be extended as the app grows.
@@ -24,23 +24,9 @@
 import { createContext, useContext, useState, useMemo, useCallback } from 'react';
 
 /**
- * Default context values
- * @type {Object}
+ * Create the context. `undefined` default lets useAppContext detect a missing provider.
  */
-const defaultContextValue = {
-  // Theme
-  isDarkMode: false,
-  toggleTheme: () => {},
-
-  // App config
-  appName: 'Simple Vite React Express',
-  version: '2.1.0',
-};
-
-/**
- * Create the context with default values
- */
-const AppContext = createContext(defaultContextValue);
+const AppContext = createContext(undefined);
 
 /**
  * Custom hook to use the app context
@@ -64,37 +50,38 @@ export function useAppContext() {
  * @returns {React.ReactElement}
  */
 export function AppProvider({ children }) {
-  // Theme state - can be extended to persist in localStorage
+  // Theme state, persisted in localStorage
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Check for saved preference in localStorage
-    const saved = localStorage.getItem('theme');
-    if (saved) {
-      return saved === 'dark';
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        return saved === 'dark';
+      }
+    } catch {
+      // localStorage can be unavailable (private mode); fall back to system preference
     }
     // Check system preference
     return window.matchMedia?.('(prefers-color-scheme: dark)').matches || false;
   });
 
   /**
-   * Toggle between light and dark theme
-   * Persists preference to localStorage
-   */
-  const toggleTheme = useCallback(() => {
-    setIsDarkMode((prev) => {
-      const newValue = !prev;
-      localStorage.setItem('theme', newValue ? 'dark' : 'light');
-      return newValue;
-    });
-  }, []);
-
-  /**
-   * Set a specific theme mode
+   * Set a specific theme mode and persist the preference
    * @param {boolean} dark - Whether to enable dark mode
    */
   const setTheme = useCallback((dark) => {
     setIsDarkMode(dark);
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try {
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    } catch {
+      // Persisting is best-effort
+    }
   }, []);
+
+  /**
+   * Toggle between light and dark theme
+   */
+  const toggleTheme = useCallback(() => setTheme(!isDarkMode), [isDarkMode, setTheme]);
 
   // Memoize context value to prevent unnecessary re-renders
   const contextValue = useMemo(

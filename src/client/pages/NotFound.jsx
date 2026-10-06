@@ -1,10 +1,10 @@
-import { Container, Card, CardContent, Typography, Box } from '@mui/material';
+import { Container, Card, CardContent, Typography, Box, Button } from '@mui/material';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import AppHeroIcon from '../components/AppHeroIcon';
+import { Link as RouterLink } from 'react-router';
 
 const NotFound = () => {
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="md">
       <Card>
         <CardContent>
           <Box
@@ -12,16 +12,19 @@ const NotFound = () => {
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
-            height="50vh"
+            gap={1}
+            minHeight="40vh"
           >
-            <AppHeroIcon />
-            <SentimentVeryDissatisfiedIcon style={{ fontSize: 100 }} />
-            <Typography variant="h4" align="center">
+            <SentimentVeryDissatisfiedIcon sx={{ fontSize: 100 }} color="action" />
+            <Typography variant="h4" component="h1" align="center">
               404
             </Typography>
-            <Typography variant="subtitle1" align="center">
-              The page you're looking for cannot be found.
+            <Typography variant="subtitle1" align="center" color="text.secondary">
+              The page you&apos;re looking for cannot be found.
             </Typography>
+            <Button component={RouterLink} to="/" variant="contained" sx={{ mt: 2 }}>
+              Back home
+            </Button>
           </Box>
         </CardContent>
       </Card>
