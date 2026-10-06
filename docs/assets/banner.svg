@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="t d">
+  <title id="t">Simple Vite React Express</title>
+  <desc id="d">React 19, Vite 7, Express 5 and PostgreSQL via Prisma 7, in one simple full-stack starter.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#61dafb"/>
+      <stop offset="0.5" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#646cff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" rx="20" fill="url(#bg)"/>
+  <rect x="60" y="196" width="120" height="5" rx="2.5" fill="url(#accent)"/>
+  <text x="60" y="130" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="58" font-weight="800" fill="#f8fafc">Simple Vite React Express</text>
+  <text x="60" y="170" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="24" fill="#cbd5e1">A full-stack starter with working CRUD, not empty folders.</text>
+  <g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="18" fill="#0f172a" font-weight="700">
+    <rect x="60" y="226" width="110" height="34" rx="17" fill="#61dafb"/><text x="115" y="248" text-anchor="middle">React 19</text>
+    <rect x="182" y="226" width="100" height="34" rx="17" fill="#a5b4fc"/><text x="232" y="248" text-anchor="middle">Vite 7</text>
+    <rect x="294" y="226" width="120" height="34" rx="17" fill="#e2e8f0"/><text x="354" y="248" text-anchor="middle">Express 5</text>
+    <rect x="426" y="226" width="116" height="34" rx="17" fill="#93c5fd"/><text x="484" y="248" text-anchor="middle">Prisma 7</text>
+    <rect x="554" y="226" width="150" height="34" rx="17" fill="#c4b5fd"/><text x="629" y="248" text-anchor="middle">PostgreSQL</text>
+  </g>
+  <g transform="translate(980 60)" fill="none" stroke="url(#accent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="0" y="0" width="140" height="44" rx="10"/>
+    <rect x="0" y="68" width="140" height="44" rx="10"/>
+    <rect x="0" y="136" width="140" height="44" rx="10"/>
+    <path d="M70 44v24M70 112v24"/>
+  </g>
+</svg>

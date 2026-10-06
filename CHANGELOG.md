@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Banner, CI badge and a short successor-template callout in the README
+- `docs/` (getting started, architecture, API, troubleshooting, migration guide)
+- `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `CLAUDE.md`
+- GitHub Actions CI (lint, format check, test, build on Node 22 and 24), Dependabot, issue and PR templates
+
+### Changed
+
+- README rewritten: correct versions, Node requirement and API routes; Quick Start now includes `db:setup`
+- `example.env` documents `CORS_ORIGIN` and drops the unsupported `?schema=` suffix
+- `.gitignore` trimmed to what this project uses
+
+### Removed
+
+- `yarn.lock` (npm is the package manager) and committed `.DS_Store` files
+
 ## [2.1.0] - 2026-02-15
 
 ### Added
