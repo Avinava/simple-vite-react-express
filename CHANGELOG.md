@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-10-06
+
 ### Added
 
 - Banner, CI badge and a short successor-template callout in the README
@@ -27,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - API: CORS now honors `CORS_ORIGIN`; unknown `/api/*` paths return a JSON 404 instead of the SPA's HTML
-- API: `/health` checks the database (503 when down) and is exempt from rate limiting
+- API: `/health` checks the database (503 when down) and is exempt from rate limiting. **Note:** it now returns the JSON envelope instead of plain text `Ok`
 - API: Prisma errors map to 404 (missing record) / 409 (duplicate or still-referenced record) instead of 500
 - API: contact routes validate `:id`, accept `phone`/`company`/`notes`; request body limited to 100kb
 - Server closes the Prisma client and pg pool on shutdown; pool errors are logged, not fatal
@@ -164,3 +166,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Material-UI components
 - Prisma ORM with migrations and seeding
 - ESLint and Prettier configuration
+
+[Unreleased]: https://github.com/Avinava/simple-vite-react-express/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/Avinava/simple-vite-react-express/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/Avinava/simple-vite-react-express/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/Avinava/simple-vite-react-express/releases/tag/v2.0.0

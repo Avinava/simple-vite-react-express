@@ -1,6 +1,6 @@
 {
   "name": "simple-vite-react-express",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Production-ready full-stack template with React 19, Vite 7, Express 5, and PostgreSQL",
   "main": "src/server/index.js",
   "type": "module",

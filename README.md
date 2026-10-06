@@ -19,7 +19,7 @@
 A full-stack starter with **working examples**, not empty folders: real CRUD, database relationships,
 forms with validation, and a clean layered structure you can read in an afternoon.
 
-**Version 2.1** · [Changelog](CHANGELOG.md) · [Docs](docs/getting-started.md)
+**Version 2.2** · [Changelog](CHANGELOG.md) · [Docs](docs/getting-started.md)
 
 ## Quick Start
 

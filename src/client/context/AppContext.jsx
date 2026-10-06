@@ -93,7 +93,7 @@ export function AppProvider({ children }) {
 
       // App config
       appName: 'Simple Vite React Express',
-      version: '2.1.0',
+      version: '2.2.0',
     }),
     [isDarkMode, toggleTheme, setTheme]
   );
