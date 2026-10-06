@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import * as taskService from '../../services/task.service.js';
-import { successResponse, errorResponse } from '../../utils/response.js';
+import { successResponse } from '../../utils/response.js';
+import { httpError } from '../../middleware/error.js';
 
 const router = Router();
 
@@ -36,93 +37,59 @@ const taskIdSchema = {
   }),
 };
 
-// Routes
-router.get('/list', async (req, res) => {
-  try {
-    const { status, priority, assigneeId, projectId } = req.query;
-    const filters = {};
-    
-    if (status) filters.status = status;
-    if (priority) filters.priority = priority;
-    if (assigneeId) filters.assigneeId = parseInt(assigneeId);
-    if (projectId) filters.projectId = parseInt(projectId);
-
-    const tasks = await taskService.findAll(filters);
-    res.json(successResponse(tasks, 'Tasks retrieved successfully'));
-  } catch (error) {
-    console.error('Error fetching tasks:', error);
-    res.status(500).json(errorResponse('Failed to fetch tasks'));
-  }
-});
-
-router.get('/:id', celebrate(taskIdSchema), async (req, res) => {
-  try {
-    const task = await taskService.findById(parseInt(req.params.id));
-    if (!task) {
-      return res.status(404).json(errorResponse('Task not found'));
-    }
-    res.json(successResponse(task, 'Task retrieved successfully'));
-  } catch (error) {
-    console.error('Error fetching task:', error);
-    res.status(500).json(errorResponse('Failed to fetch task'));
-  }
-});
-
-router.post('/create', celebrate(createTaskSchema), async (req, res) => {
-  try {
-    const task = await taskService.create(req.body);
-    res.status(201).json(successResponse(task, 'Task created successfully'));
-  } catch (error) {
-    console.error('Error creating task:', error);
-    res.status(500).json(errorResponse('Failed to create task'));
-  }
-});
-
-router.put('/:id', celebrate({ ...taskIdSchema, ...updateTaskSchema }), async (req, res) => {
-  try {
-    const task = await taskService.update(parseInt(req.params.id), req.body);
-    if (!task) {
-      return res.status(404).json(errorResponse('Task not found'));
-    }
-    res.json(successResponse(task, 'Task updated successfully'));
-  } catch (error) {
-    console.error('Error updating task:', error);
-    res.status(500).json(errorResponse('Failed to update task'));
-  }
-});
-
-router.delete('/:id', celebrate(taskIdSchema), async (req, res) => {
-  try {
-    const deleted = await taskService.remove(parseInt(req.params.id));
-    if (!deleted) {
-      return res.status(404).json(errorResponse('Task not found'));
-    }
-    res.json(successResponse(null, 'Task deleted successfully'));
-  } catch (error) {
-    console.error('Error deleting task:', error);
-    res.status(500).json(errorResponse('Failed to delete task'));
-  }
-});
-
-// Update task status
-router.patch('/:id/status', celebrate({
-  [Segments.PARAMS]: Joi.object({
-    id: Joi.number().integer().positive().required(),
-  }),
+const taskStatusSchema = {
   [Segments.BODY]: Joi.object({
     status: Joi.string().valid('TODO', 'IN_PROGRESS', 'REVIEW', 'DONE').required(),
   }),
-}), async (req, res) => {
-  try {
-    const task = await taskService.updateStatus(parseInt(req.params.id), req.body.status);
-    if (!task) {
-      return res.status(404).json(errorResponse('Task not found'));
-    }
-    res.json(successResponse(task, 'Task status updated successfully'));
-  } catch (error) {
-    console.error('Error updating task status:', error);
-    res.status(500).json(errorResponse('Failed to update task status'));
-  }
+};
+
+// Routes: validate, call the service, send the envelope.
+// Errors (including Prisma ones) are handled by middleware/error.js.
+router.get('/list', async (req, res) => {
+  const { status, priority, assigneeId, projectId } = req.query;
+  const filters = {};
+
+  if (status) filters.status = status;
+  if (priority) filters.priority = priority;
+  if (assigneeId) filters.assigneeId = parseInt(assigneeId);
+  if (projectId) filters.projectId = parseInt(projectId);
+
+  const tasks = await taskService.findAll(filters);
+  res.json(successResponse(tasks, 'Tasks retrieved successfully'));
 });
+
+router.get('/:id', celebrate(taskIdSchema), async (req, res) => {
+  const task = await taskService.findById(parseInt(req.params.id));
+  if (!task) throw httpError(404, 'Task not found');
+  res.json(successResponse(task, 'Task retrieved successfully'));
+});
+
+router.post('/create', celebrate(createTaskSchema), async (req, res) => {
+  const task = await taskService.create(req.body);
+  res.status(201).json(successResponse(task, 'Task created successfully'));
+});
+
+router.put('/:id', celebrate({ ...taskIdSchema, ...updateTaskSchema }), async (req, res) => {
+  const task = await taskService.update(parseInt(req.params.id), req.body);
+  if (!task) throw httpError(404, 'Task not found');
+  res.json(successResponse(task, 'Task updated successfully'));
+});
+
+router.delete('/:id', celebrate(taskIdSchema), async (req, res) => {
+  const deleted = await taskService.remove(parseInt(req.params.id));
+  if (!deleted) throw httpError(404, 'Task not found');
+  res.json(successResponse(null, 'Task deleted successfully'));
+});
+
+// Update task status
+router.patch(
+  '/:id/status',
+  celebrate({ ...taskIdSchema, ...taskStatusSchema }),
+  async (req, res) => {
+    const task = await taskService.updateStatus(parseInt(req.params.id), req.body.status);
+    if (!task) throw httpError(404, 'Task not found');
+    res.json(successResponse(task, 'Task status updated successfully'));
+  }
+);
 
 export default router;

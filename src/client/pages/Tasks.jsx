@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Container,
   Typography,
@@ -14,130 +14,61 @@ import {
   IconButton,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Assignment as TaskIcon,
-} from '@mui/icons-material';
-import { toast } from 'react-toastify';
-import axios from 'axios';
+import { Delete as DeleteIcon, Assignment as TaskIcon } from '@mui/icons-material';
+import { useTasks } from '../hooks';
+import ConfirmationDialog from '../components/ConfirmationDialog';
+import { CardGridSkeleton, EmptyState, ErrorState } from '../components/PageState';
+
+const statusColors = {
+  TODO: 'default',
+  IN_PROGRESS: 'primary',
+  REVIEW: 'warning',
+  DONE: 'success',
+};
+
+const priorityColors = {
+  LOW: 'success',
+  MEDIUM: 'warning',
+  HIGH: 'error',
+  URGENT: 'error',
+};
+
+const STATUS_ACTIONS = [
+  { status: 'TODO', label: 'To Do' },
+  { status: 'IN_PROGRESS', label: 'In Progress' },
+  { status: 'REVIEW', label: 'Review' },
+  { status: 'DONE', label: 'Done', color: 'success' },
+];
+
+const formatDate = (dateString) => {
+  if (!dateString) return 'No due date';
+  return new Date(dateString).toLocaleDateString();
+};
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState('');
   const [priorityFilter, setPriorityFilter] = useState('');
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
-  const statusColors = {
-    TODO: 'default',
-    IN_PROGRESS: 'primary',
-    REVIEW: 'warning',
-    DONE: 'success',
+  // Data access goes through the hook (hook -> service -> axios)
+  const { tasks, isLoading, error, refresh, updateTaskStatus, deleteTask } = useTasks({
+    status: statusFilter || undefined,
+    priority: priorityFilter || undefined,
+  });
+
+  const handleConfirmDelete = async () => {
+    const id = taskToDelete;
+    setTaskToDelete(null);
+    await deleteTask(id).catch(() => {}); // the API layer already shows an error toast
   };
-
-  const priorityColors = {
-    LOW: 'success',
-    MEDIUM: 'warning',
-    HIGH: 'error',
-    URGENT: 'error',
-  };
-
-  const fetchTasks = async () => {
-    try {
-      setLoading(true);
-      const params = new URLSearchParams();
-      if (statusFilter) params.append('status', statusFilter);
-      if (priorityFilter) params.append('priority', priorityFilter);
-
-      const response = await axios.get(`/api/v1/task/list?${params}`);
-      if (response.data.success) {
-        setTasks(response.data.data);
-      }
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-      toast.error('Failed to fetch tasks');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTasks();
-  }, [statusFilter, priorityFilter]);
-
-  const handleStatusChange = async (taskId, newStatus) => {
-    try {
-      const response = await axios.patch(`/api/v1/task/${taskId}/status`, {
-        status: newStatus,
-      });
-      if (response.data.success) {
-        toast.success('Task status updated successfully');
-        fetchTasks();
-      }
-    } catch (error) {
-      console.error('Error updating task status:', error);
-      toast.error('Failed to update task status');
-    }
-  };
-
-  const handleDeleteTask = async (taskId) => {
-    if (window.confirm('Are you sure you want to delete this task?')) {
-      try {
-        const response = await axios.delete(`/api/v1/task/${taskId}`);
-        if (response.data.success) {
-          toast.success('Task deleted successfully');
-          fetchTasks();
-        }
-      } catch (error) {
-        console.error('Error deleting task:', error);
-        toast.error('Failed to delete task');
-      }
-    }
-  };
-
-  const formatDate = (dateString) => {
-    if (!dateString) return 'No due date';
-    return new Date(dateString).toLocaleDateString();
-  };
-
-  if (loading) {
-    return (
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Typography>Loading tasks...</Typography>
-      </Container>
-    );
-  }
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box mb={3}>
         <Typography variant="h4" component="h1">
           <TaskIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
           Tasks
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => {
-            // Navigate to new task form
-            toast.info('New task form - to be implemented');
-          }}
-          sx={{
-            fontWeight: 600,
-            textTransform: 'none',
-            px: 3,
-            py: 1,
-            boxShadow: 2,
-            '&:hover': {
-              boxShadow: 4,
-              transform: 'translateY(-1px)',
-            },
-            transition: 'all 0.2s ease-in-out'
-          }}
-        >
-          New Task
-        </Button>
       </Box>
 
       {/* Filters */}
@@ -173,6 +104,9 @@ const Tasks = () => {
         </FormControl>
       </Box>
 
+      {error && <ErrorState message="Could not load tasks." onRetry={refresh} />}
+      {isLoading && <CardGridSkeleton />}
+
       {/* Tasks Grid */}
       <Grid container spacing={3}>
         {tasks.map((task) => (
@@ -186,14 +120,9 @@ const Tasks = () => {
                   <Box>
                     <IconButton
                       size="small"
-                      onClick={() => toast.info('Edit task - to be implemented')}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
                       color="error"
-                      onClick={() => handleDeleteTask(task.id)}
+                      aria-label={`Delete task ${task.title}`}
+                      onClick={() => setTaskToDelete(task.id)}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -208,7 +137,7 @@ const Tasks = () => {
 
                 <Box display="flex" gap={1} mb={2}>
                   <Chip
-                    label={task.status.replace('_', ' ')}
+                    label={task.status.replaceAll('_', ' ')}
                     color={statusColors[task.status]}
                     size="small"
                   />
@@ -238,42 +167,18 @@ const Tasks = () => {
 
                 {/* Status Update Buttons */}
                 <Box display="flex" gap={1} flexWrap="wrap">
-                  {task.status !== 'TODO' && (
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      onClick={() => handleStatusChange(task.id, 'TODO')}
-                    >
-                      To Do
-                    </Button>
-                  )}
-                  {task.status !== 'IN_PROGRESS' && (
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      onClick={() => handleStatusChange(task.id, 'IN_PROGRESS')}
-                    >
-                      In Progress
-                    </Button>
-                  )}
-                  {task.status !== 'REVIEW' && (
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      onClick={() => handleStatusChange(task.id, 'REVIEW')}
-                    >
-                      Review
-                    </Button>
-                  )}
-                  {task.status !== 'DONE' && (
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      color="success"
-                      onClick={() => handleStatusChange(task.id, 'DONE')}
-                    >
-                      Done
-                    </Button>
+                  {STATUS_ACTIONS.filter((action) => action.status !== task.status).map(
+                    (action) => (
+                      <Button
+                        key={action.status}
+                        size="small"
+                        variant="outlined"
+                        color={action.color}
+                        onClick={() => updateTaskStatus(task.id, action.status).catch(() => {})}
+                      >
+                        {action.label}
+                      </Button>
+                    )
                   )}
                 </Box>
               </CardContent>
@@ -282,16 +187,21 @@ const Tasks = () => {
         ))}
       </Grid>
 
-      {tasks.length === 0 && (
-        <Box textAlign="center" mt={4}>
-          <Typography variant="h6" color="text.secondary">
-            No tasks found
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Create your first task to get started
-          </Typography>
-        </Box>
+      {!isLoading && !error && tasks.length === 0 && (
+        <EmptyState title="No tasks found">
+          {statusFilter || priorityFilter
+            ? 'Try clearing the filters.'
+            : 'Run `npm run db:seed` for sample data, or POST to /api/v1/task/create.'}
+        </EmptyState>
       )}
+
+      <ConfirmationDialog
+        open={taskToDelete !== null}
+        title="Delete task?"
+        message="This cannot be undone."
+        onClose={() => setTaskToDelete(null)}
+        onConfirm={handleConfirmDelete}
+      />
     </Container>
   );
 };

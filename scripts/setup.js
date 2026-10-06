@@ -106,10 +106,11 @@ async function setup() {
   console.log('\n─'.repeat(45));
   console.log('\n📋 Next Steps:\n');
   console.log('  1. Update DATABASE_URL in .env with your PostgreSQL credentials');
-  console.log('  2. Run "npm run db:setup" to initialize the database');
+  console.log('     (the database itself must exist: createdb simple-vite-db)');
+  console.log('  2. Run "npm run db:setup" to create tables (required before first run)');
   console.log('  3. Run "npm run db:seed" to add sample data (optional)');
   console.log('  4. Run "npm run dev" to start development servers');
-  console.log('\n🌐 Open http://localhost:3000 when ready!\n');
+  console.log('\n🌐 Open http://localhost:3000 when ready! Stuck? See docs/troubleshooting.md\n');
 }
 
 setup().catch(console.error);

@@ -5,6 +5,69 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [2.2.0] - 2026-10-06
+
+### Added
+
+- Banner, CI badge and a short successor-template callout in the README
+- Agent docs: `AGENTS.md` is the single source of truth; `CLAUDE.md` and `GEMINI.md` import it; `.agent/workflows/` refreshed
+- `docs/` (getting started, architecture, API, troubleshooting, migration guide)
+- `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `CLAUDE.md`
+- GitHub Actions CI (lint, format check, test, build on Node 22 and 24), issue and PR templates
+
+### Changed
+
+- Dependencies bumped within current majors (Prisma 7.10, MUI 7.3.11, React 19.3, Express middleware, tooling)
+- `react-router-dom` replaced by `react-router` (v7 ships the DOM bindings there)
+- `npm run server` uses `node --watch` instead of nodemon
+- README rewritten: correct versions, Node requirement and API routes; Quick Start now includes `db:setup`
+- `example.env` documents `CORS_ORIGIN` and drops the unsupported `?schema=` suffix
+- `.gitignore` trimmed to what this project uses
+
+### Fixed
+
+- API: CORS now honors `CORS_ORIGIN`; unknown `/api/*` paths return a JSON 404 instead of the SPA's HTML
+- API: `/health` checks the database (503 when down) and is exempt from rate limiting. **Note:** it now returns the JSON envelope instead of plain text `Ok`
+- API: Prisma errors map to 404 (missing record) / 409 (duplicate or still-referenced record) instead of 500
+- API: contact routes validate `:id`, accept `phone`/`company`/`notes`; request body limited to 100kb
+- Server closes the Prisma client and pg pool on shutdown; pool errors are logged, not fatal
+- `NODE_ENV` now defaults to `production` when unset; `TRUST_PROXY` supported for rate limiting behind proxies
+- `npm run db:seed` is idempotent and `prisma migrate reset` runs the seed
+
+### Added (client)
+
+- Dark mode: header toggle, persisted preference, defaults to the system setting
+- Mobile navigation menu, active-route highlight, `aria-label`s on icon buttons
+- `ErrorBoundary`, shared loading skeletons / error / empty states, `useContact` hook
+- 404 page has a "Back home" button
+
+### Fixed (client)
+
+- Tasks, Projects and Contact detail pages no longer call axios directly; they use hooks and services
+- `tasksService.create` / `projectsService.create` pointed at routes that don't exist (`/task`, `/project`)
+- Deleting uses `ConfirmationDialog` instead of `window.confirm`
+- Removed "to be implemented" stub buttons; legacy `<Grid item>` props (removed in MUI 7) migrated to `size`
+
+### Tests
+
+- 28 tests (was 7): `useTasks`, `useContact`, service URLs vs. API routes, `ErrorBoundary`, `NotFound`, `AppContext`, theme toggle, server error middleware
+
+### Changed (server)
+
+- Routes no longer wrap handlers in try/catch; Express 5 forwards errors to `middleware/error.js`
+- Validation schemas live next to their routes (removed `middleware/validate.js`)
+
+### Security
+
+- `npm audit` is clean (was 18+ advisories): lockfile refreshed, `celebrate` 16 and `concurrently` 10 (majors), and `overrides` in `package.json` for transitive `deepmerge-ts`, `mysql2`, `lodash` and `shell-quote` pinned by Prisma/Formik. Drop an override once its parent ships the fix.
+
+### Removed
+
+- `nodemon` dependency and `nodemon.json`
+- `yarn.lock` (npm is the package manager) and committed `.DS_Store` files
+
 ## [2.1.0] - 2026-02-15
 
 ### Added
@@ -103,3 +166,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Material-UI components
 - Prisma ORM with migrations and seeding
 - ESLint and Prettier configuration
+
+[Unreleased]: https://github.com/Avinava/simple-vite-react-express/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/Avinava/simple-vite-react-express/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/Avinava/simple-vite-react-express/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/Avinava/simple-vite-react-express/releases/tag/v2.0.0

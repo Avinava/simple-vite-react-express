@@ -21,9 +21,9 @@
  *   } = useProjects();
  */
 
-import { useState, useEffect, useCallback } from "react";
-import { toast } from "react-toastify";
-import { projectsService } from "../services";
+import { useState, useEffect, useCallback } from 'react';
+import { toast } from 'react-toastify';
+import { projectsService } from '../services';
 
 /**
  * Hook for managing projects state and operations
@@ -50,7 +50,7 @@ export function useProjects(options = {}) {
       setProjects(response.data || []);
     } catch (err) {
       setError(err);
-      console.error("Error fetching projects:", err);
+      console.error('Error fetching projects:', err);
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +66,7 @@ export function useProjects(options = {}) {
       const response = await projectsService.getById(id);
       return response.data;
     } catch (err) {
-      console.error("Error fetching project:", err);
+      console.error('Error fetching project:', err);
       throw err;
     }
   };
@@ -79,7 +79,7 @@ export function useProjects(options = {}) {
   const createProject = async (data) => {
     const response = await projectsService.create(data);
     await fetchProjects();
-    toast.success("Project created successfully");
+    toast.success('Project created successfully');
     return response.data;
   };
 
@@ -93,11 +93,9 @@ export function useProjects(options = {}) {
     try {
       const response = await projectsService.update(id, data);
       setProjects((prev) =>
-        prev.map((project) =>
-          project.id === Number(id) ? { ...project, ...data } : project
-        )
+        prev.map((project) => (project.id === Number(id) ? { ...project, ...data } : project))
       );
-      toast.success("Project updated successfully");
+      toast.success('Project updated successfully');
       return response.data;
     } catch (err) {
       await fetchProjects();
@@ -114,7 +112,7 @@ export function useProjects(options = {}) {
     try {
       await projectsService.delete(id);
       setProjects((prev) => prev.filter((project) => project.id !== Number(id)));
-      toast.success("Project deleted successfully");
+      toast.success('Project deleted successfully');
     } catch (err) {
       await fetchProjects();
       throw err;
@@ -128,9 +126,9 @@ export function useProjects(options = {}) {
    * @param {string} [role='member'] - Member's role
    * @returns {Promise<Object>} Created membership
    */
-  const addMember = async (projectId, contactId, role = "member") => {
+  const addMember = async (projectId, contactId, role = 'member') => {
     const response = await projectsService.addMember(projectId, contactId, role);
-    toast.success("Member added successfully");
+    toast.success('Member added successfully');
     // Refresh to get updated member list
     await fetchProjects();
     return response.data;
@@ -144,7 +142,7 @@ export function useProjects(options = {}) {
    */
   const removeMember = async (projectId, contactId) => {
     await projectsService.removeMember(projectId, contactId);
-    toast.success("Member removed successfully");
+    toast.success('Member removed successfully');
     await fetchProjects();
   };
 

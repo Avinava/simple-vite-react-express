@@ -22,9 +22,9 @@
  *   await updateTaskStatus(taskId, 'IN_PROGRESS');
  */
 
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { toast } from "react-toastify";
-import { tasksService, TaskStatus } from "../services";
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { toast } from 'react-toastify';
+import { tasksService, TaskStatus } from '../services';
 
 /**
  * Hook for managing tasks state and operations
@@ -32,10 +32,11 @@ import { tasksService, TaskStatus } from "../services";
  * @param {boolean} [options.autoFetch=true] - Whether to fetch on mount
  * @param {number} [options.projectId] - Filter tasks by project ID
  * @param {string} [options.status] - Filter tasks by status
+ * @param {string} [options.priority] - Filter tasks by priority
  * @returns {Object} Tasks state and operations
  */
 export function useTasks(options = {}) {
-  const { autoFetch = true, projectId, status } = options;
+  const { autoFetch = true, projectId, status, priority } = options;
 
   // State management
   const [tasks, setTasks] = useState([]);
@@ -53,7 +54,7 @@ export function useTasks(options = {}) {
       setTasks(response.data || []);
     } catch (err) {
       setError(err);
-      console.error("Error fetching tasks:", err);
+      console.error('Error fetching tasks:', err);
     } finally {
       setIsLoading(false);
     }
@@ -76,8 +77,13 @@ export function useTasks(options = {}) {
       result = result.filter((task) => task.status === status);
     }
 
+    // Filter by priority if specified
+    if (priority) {
+      result = result.filter((task) => task.priority === priority);
+    }
+
     return result;
-  }, [tasks, projectId, status]);
+  }, [tasks, projectId, status, priority]);
 
   /**
    * Create a new task
@@ -87,7 +93,7 @@ export function useTasks(options = {}) {
   const createTask = async (data) => {
     const response = await tasksService.create(data);
     await fetchTasks();
-    toast.success("Task created successfully");
+    toast.success('Task created successfully');
     return response.data;
   };
 
@@ -102,11 +108,9 @@ export function useTasks(options = {}) {
       const response = await tasksService.update(id, data);
       // Optimistic update
       setTasks((prev) =>
-        prev.map((task) =>
-          task.id === Number(id) ? { ...task, ...data } : task
-        )
+        prev.map((task) => (task.id === Number(id) ? { ...task, ...data } : task))
       );
-      toast.success("Task updated successfully");
+      toast.success('Task updated successfully');
       return response.data;
     } catch (err) {
       await fetchTasks();
@@ -121,7 +125,17 @@ export function useTasks(options = {}) {
    * @returns {Promise<Object>} Updated task
    */
   const updateTaskStatus = async (id, newStatus) => {
-    return updateTask(id, { status: newStatus });
+    try {
+      const response = await tasksService.updateStatus(id, newStatus);
+      setTasks((prev) =>
+        prev.map((task) => (task.id === Number(id) ? { ...task, status: newStatus } : task))
+      );
+      toast.success('Task status updated');
+      return response.data;
+    } catch (err) {
+      await fetchTasks();
+      throw err;
+    }
   };
 
   /**
@@ -133,7 +147,7 @@ export function useTasks(options = {}) {
     try {
       await tasksService.delete(id);
       setTasks((prev) => prev.filter((task) => task.id !== Number(id)));
-      toast.success("Task deleted successfully");
+      toast.success('Task deleted successfully');
     } catch (err) {
       await fetchTasks();
       throw err;

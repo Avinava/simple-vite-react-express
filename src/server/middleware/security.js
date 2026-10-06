@@ -1,5 +1,7 @@
-import helmet from "helmet";
-import rateLimit from "express-rate-limit";
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import config from '../config/index.js';
+import { errorResponse } from '../utils/response.js';
 
 /**
  * Array of security middleware functions
@@ -10,11 +12,15 @@ export const securityMiddleware = [
   // Helmet middleware for securing HTTP headers
   helmet(),
 
-  // Rate limiting to prevent abuse
+  // Rate limiting to prevent abuse (limits live in config/index.js)
   rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
-    message: "Too many requests from this IP, please try again later",
+    windowMs: config.security.rateLimitWindowMs,
+    limit: config.security.rateLimitMax,
+    standardHeaders: 'draft-8',
+    legacyHeaders: false,
+    // Health checks (load balancers, uptime monitors) should never be throttled
+    skip: (req) => req.originalUrl.startsWith('/api/v1/health'),
+    message: errorResponse('Too many requests from this IP, please try again later'),
   }),
 ];
 

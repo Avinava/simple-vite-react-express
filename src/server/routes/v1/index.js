@@ -1,37 +1,32 @@
-import { Router } from "express";
-import { errors } from "celebrate";
-import contactRoutes from "./contact.route.js";
-import taskRoutes from "./task.route.js";
-import projectRoutes from "./project.route.js";
+import { Router } from 'express';
+import { errors } from 'celebrate';
+import contactRoutes from './contact.route.js';
+import taskRoutes from './task.route.js';
+import projectRoutes from './project.route.js';
+import db from '../../services/database.js';
+import { successResponse, errorResponse } from '../../utils/response.js';
 
 const router = Router();
 
-router.use("/contact", contactRoutes);
-router.use("/task", taskRoutes);
-router.use("/project", projectRoutes);
+router.use('/contact', contactRoutes);
+router.use('/task', taskRoutes);
+router.use('/project', projectRoutes);
 
 /**
  * GET /health
- * Health check endpoint.
+ * Liveness + database check. Returns 503 when the database is unreachable.
  */
-router.get("/health", (req, res) => {
-  res.send("Ok");
+router.get('/health', async (req, res) => {
+  try {
+    await db.prisma.$queryRaw`SELECT 1`;
+    res.json(successResponse({ status: 'ok', database: 'connected' }));
+  } catch (err) {
+    console.error('Health check failed:', err.message);
+    res.status(503).json(errorResponse('Database unavailable', { status: 'error' }));
+  }
 });
 
-// Handle Celebrate/Joi validation errors
+// Turn Celebrate/Joi validation failures into 400 responses
 router.use(errors());
 
-// General error handling middleware
-router.use((err, req, res, _next) => {
-  const status = err.status || err.statusCode || 500;
-  const message = err.message || "Internal Server Error";
-
-  res.status(status).json({
-    success: false,
-    message,
-    ...(process.env.NODE_ENV !== "production" && { stack: err.stack }),
-  });
-});
-
 export default router;
-

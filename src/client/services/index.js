@@ -14,10 +14,10 @@
  */
 
 // API instance (for direct API calls if needed)
-export { default as api } from "./api";
+export { default as api } from './api';
 
 // Domain services
-export { contactsService } from "./contacts";
-export { tasksService, TaskStatus, Priority } from "./tasks";
-export { projectsService } from "./projects";
-export { healthService } from "./health";
+export { contactsService } from './contacts';
+export { tasksService, TaskStatus, Priority } from './tasks';
+export { projectsService } from './projects';
+export { healthService } from './health';

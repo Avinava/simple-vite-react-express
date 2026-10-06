@@ -15,7 +15,7 @@
  *   await projectsService.addMember(projectId, contactId, 'developer');
  */
 
-import api from "./api";
+import api from './api';
 
 /**
  * Project data shape (for reference):
@@ -47,7 +47,7 @@ export const projectsService = {
    * Fetch all projects
    * @returns {Promise<{success: boolean, data: Project[]}>}
    */
-  getAll: () => api.get("/project/list"),
+  getAll: () => api.get('/project/list'),
 
   /**
    * Fetch a single project by ID (includes members and tasks)
@@ -66,7 +66,7 @@ export const projectsService = {
    * @param {string} [data.endDate] - End date ISO string
    * @returns {Promise<{success: boolean, data: Project}>}
    */
-  create: (data) => api.post("/project", data),
+  create: (data) => api.post('/project/create', data),
 
   /**
    * Update an existing project
@@ -90,7 +90,7 @@ export const projectsService = {
    * @param {string} [role='member'] - Member's role
    * @returns {Promise<{success: boolean, data: ProjectMember}>}
    */
-  addMember: (projectId, contactId, role = "member") =>
+  addMember: (projectId, contactId, role = 'member') =>
     api.post(`/project/${projectId}/members`, { contactId, role }),
 
   /**
@@ -99,8 +99,7 @@ export const projectsService = {
    * @param {number|string} contactId - Contact ID to remove
    * @returns {Promise<{success: boolean}>}
    */
-  removeMember: (projectId, contactId) =>
-    api.delete(`/project/${projectId}/members/${contactId}`),
+  removeMember: (projectId, contactId) => api.delete(`/project/${projectId}/members/${contactId}`),
 };
 
 export default projectsService;

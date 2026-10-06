@@ -1,6 +1,5 @@
-import React from 'react';
 import { Card, CardContent, Grid, Typography, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const CallToAction = ({
@@ -30,20 +29,20 @@ const CallToAction = ({
     <CardContent>
       <Grid container direction="column" alignItems="center" spacing={2}>
         {HeroIcon && (
-          <Grid item>
+          <Grid>
             <HeroIcon sx={{ fontSize: 50 }} />
           </Grid>
         )}
-        <Grid item>
+        <Grid>
           <Typography variant="h5" component="div">
             {title}
           </Typography>
         </Grid>
-        <Grid item>
+        <Grid>
           <Typography variant="body2">{subtitle}</Typography>
         </Grid>
         {url && (
-          <Grid item>
+          <Grid>
             <Button
               variant="contained"
               color="primary"

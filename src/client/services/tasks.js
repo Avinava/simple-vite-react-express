@@ -15,7 +15,7 @@
  *   await tasksService.update(taskId, { status: 'IN_PROGRESS' });
  */
 
-import api from "./api";
+import api from './api';
 
 /**
  * Task status enum values
@@ -23,10 +23,10 @@ import api from "./api";
  * @enum {string}
  */
 export const TaskStatus = {
-  TODO: "TODO",
-  IN_PROGRESS: "IN_PROGRESS",
-  REVIEW: "REVIEW",
-  DONE: "DONE",
+  TODO: 'TODO',
+  IN_PROGRESS: 'IN_PROGRESS',
+  REVIEW: 'REVIEW',
+  DONE: 'DONE',
 };
 
 /**
@@ -35,10 +35,10 @@ export const TaskStatus = {
  * @enum {string}
  */
 export const Priority = {
-  LOW: "LOW",
-  MEDIUM: "MEDIUM",
-  HIGH: "HIGH",
-  URGENT: "URGENT",
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT',
 };
 
 /**
@@ -61,7 +61,7 @@ export const tasksService = {
    * Fetch all tasks
    * @returns {Promise<{success: boolean, data: Task[]}>}
    */
-  getAll: () => api.get("/task/list"),
+  getAll: () => api.get('/task/list'),
 
   /**
    * Fetch a single task by ID
@@ -82,7 +82,7 @@ export const tasksService = {
    * @param {number} [data.projectId] - Project ID to associate
    * @returns {Promise<{success: boolean, data: Task}>}
    */
-  create: (data) => api.post("/task", data),
+  create: (data) => api.post('/task/create', data),
 
   /**
    * Update an existing task
@@ -98,6 +98,13 @@ export const tasksService = {
    * @returns {Promise<{success: boolean, data: Task}>}
    */
   delete: (id) => api.delete(`/task/${id}`),
+
+  /**
+   * Change only the status of a task
+   * @param {number|string} id - Task ID
+   * @param {string} status - One of TaskStatus
+   */
+  updateStatus: (id, status) => api.patch(`/task/${id}/status`, { status }),
 };
 
 export default tasksService;

@@ -1,354 +1,104 @@
-# Simple Vite React Express
-
 <p align="center">
-  <img src="./public/template-logo.png" alt="Simple Vite React Express" height="180">
+  <img src="./docs/assets/banner.svg" alt="Simple Vite React Express: a full-stack starter with working CRUD" width="100%">
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Vite-646CFF.svg?style=flat-square&logo=Vite&logoColor=white" alt="Vite 6">
-  <img src="https://img.shields.io/badge/React-61DAFB.svg?style=flat-square&logo=React&logoColor=black" alt="React 19">
-  <img src="https://img.shields.io/badge/Express-000000.svg?style=flat-square&logo=Express&logoColor=white" alt="Express">
+  <a href="https://github.com/Avinava/simple-vite-react-express/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Avinava/simple-vite-react-express/ci.yml?branch=master&style=flat-square&label=CI" alt="CI"></a>
+  <img src="https://img.shields.io/badge/Node-22%2B-5FA04E.svg?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node 22+">
+  <img src="https://img.shields.io/badge/React-19-61DAFB.svg?style=flat-square&logo=React&logoColor=black" alt="React 19">
+  <img src="https://img.shields.io/badge/Vite-7-646CFF.svg?style=flat-square&logo=Vite&logoColor=white" alt="Vite 7">
+  <img src="https://img.shields.io/badge/Express-5-000000.svg?style=flat-square&logo=Express&logoColor=white" alt="Express 5">
+  <img src="https://img.shields.io/badge/Prisma-7-2D3748.svg?style=flat-square&logo=Prisma&logoColor=white" alt="Prisma 7">
   <img src="https://img.shields.io/badge/PostgreSQL-4169e1.svg?style=flat-square&logo=PostgreSQL&logoColor=white" alt="PostgreSQL">
-  <img src="https://img.shields.io/badge/Prisma-2D3748.svg?style=flat-square&logo=Prisma&logoColor=white" alt="Prisma">
   <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT License">
 </p>
 
-A production-ready full-stack template with working examples. Unlike most starter templates that provide empty files, this one includes actual CRUD operations, database relationships, and form handling patterns.
-
-**Version 2.0** | [Changelog](CHANGELOG.md)
-
 > [!TIP]
-> **There's a successor for the agentic era: [`agentic-react-express-ts`](https://github.com/Avinava/agentic-react-express-ts)** — the same stack ported to TypeScript end-to-end with tRPC, pre-wired guardrails (Lefthook + ESLint + Knip + Vitest + Gitleaks on every commit), and agent skill files. Use it for new projects, or have your AI coding agent migrate this repo for you.
->
-> **Paste this exact line to Claude Code, Codex, Cursor, Copilot, or Gemini CLI** (run it from this repo's root):
->
-> ```
-> Fetch and follow these in order:
->   1. https://raw.githubusercontent.com/Avinava/agentic-react-express-ts/main/AGENTS.md
->   2. https://raw.githubusercontent.com/Avinava/agentic-react-express-ts/main/skills/onboard-an-agent/SKILL.md
->   3. https://raw.githubusercontent.com/Avinava/agentic-react-express-ts/main/skills/add-resource/SKILL.md
->   4. https://raw.githubusercontent.com/Avinava/agentic-react-express-ts/main/skills/remove-demo-code/SKILL.md
->   5. https://raw.githubusercontent.com/Avinava/agentic-react-express-ts/main/skills/self-correcting-loop/SKILL.md
-> Then interview me about migrating this simple-vite-react-express project to the TypeScript + tRPC + guardrails template. Propose a step-by-step plan and confirm with me before any destructive change. Implement the migration in order: TS configs and guardrails first (eslint.config.js, lefthook.yml, knip.json, commitlint.config.ts, tsconfig*.json), then the Prisma schema and tRPC routers (replacing src/server/routes/v1 with tRPC routers in src/server/routers and Zod schemas in src/shared/schemas), then the React client (porting src/client to TSX with the tRPC + TanStack Query hooks), then verify with `npm run typecheck && npm run lint && npm run lint:unused && npm run test:run && npm run build` before committing. Never use --no-verify.
-> ```
+> **Starting something new?** The successor, [`agentic-react-express-ts`](https://github.com/Avinava/agentic-react-express-ts), is this stack in TypeScript with tRPC and pre-wired guardrails. This repo stays maintained as the simple JavaScript version. [Migration guide](docs/migrating-to-agentic.md).
 
----
+A full-stack starter with **working examples**, not empty folders: real CRUD, database relationships,
+forms with validation, and a clean layered structure you can read in an afternoon.
 
-## Table of Contents
-
-- [Quick Start](#quick-start)
-- [Using as a Template](#using-as-a-template)
-- [Project Structure](#project-structure)
-- [Available Scripts](#available-scripts)
-- [Architecture](#architecture)
-- [API Reference](#api-reference)
-- [Screenshots](#screenshots)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
-
----
+**Version 2.2** · [Changelog](CHANGELOG.md) · [Docs](docs/getting-started.md)
 
 ## Quick Start
 
-**Prerequisites:** Node.js 20+, PostgreSQL
+You need **Node.js 22+** and a running **PostgreSQL** ([no Postgres? see options](docs/getting-started.md#1-prerequisites)).
 
 ```bash
-# Clone the repository
-git clone git@github.com:Avinava/simple-vite-react-express.git my-project
-cd my-project
-
-# Install dependencies
-npm install
-
-# Run interactive setup
-npm run setup
-
-# Start development servers
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view the application.
-
-The template includes a demo CRM with:
-- Contact management with CRUD operations
-- Task tracking with status workflows
-- Project organization with team assignments
-- PostgreSQL database with relationships
-
----
-
-## Using as a Template
-
-### Starting a New Project
-
-```bash
-# Clone without git history
 npx degit Avinava/simple-vite-react-express my-project
 cd my-project
-
-# Initialize git
-git init
-git add .
-git commit -m "Initial commit"
-
-# Setup and run
 npm install
-npm run setup
+
+cp example.env .env        # then set DATABASE_URL in .env
+createdb simple-vite-db    # skip if the database already exists
+npm run db:setup           # migrations + Prisma client
+npm run db:seed            # optional sample data
 npm run dev
 ```
 
-### Customization Steps
+Open <http://localhost:3000>. The API runs on <http://localhost:8080/api/v1>.
 
-1. Update `package.json` with your project name and details
-2. Replace `/public/template-logo.png` with your logo
-3. Update the title in `index.html`
-4. Modify `src/client/theme/theme.js` for your color scheme
+Something not working? See [Troubleshooting](docs/troubleshooting.md).
 
-### Removing Demo Code
+## What's inside
 
-| Component | Location | Action |
-|-----------|----------|--------|
-| Database schema | `prisma/schema.prisma` | Replace with your models |
-| API routes | `src/server/routes/v1/` | Replace with your routes |
-| Business logic | `src/server/services/` | Replace with your services |
-| Pages | `src/client/pages/` | Replace with your pages |
-| Hooks | `src/client/hooks/` | Customize for your data |
-| Services | `src/client/services/` | Customize for your API |
+A small CRM that shows the patterns you'll reuse:
 
----
-
-## Project Structure
+- **Contacts**: full CRUD with Formik + Yup forms
+- **Tasks**: status workflow, assigned to contacts
+- **Projects**: many-to-many team membership
+- **Plumbing**: health check, toasts, error handling, security headers, rate limiting, tests
 
 ```
-src/
-├── client/                    # Frontend (React + Vite)
-│   ├── components/            # Reusable UI components
-│   ├── context/               # React contexts
-│   ├── hooks/                 # Custom hooks (useContacts, useTasks, etc.)
-│   ├── pages/                 # Route components
-│   ├── services/              # API service layer
-│   ├── theme/                 # Material-UI theme
-│   └── __tests__/             # Client tests
-│
-└── server/                    # Backend (Express)
-    ├── config/                # Centralized configuration
-    ├── middleware/            # Security, validation
-    ├── routes/                # API route definitions
-    ├── services/              # Business logic
-    └── utils/                 # Utilities
-
-prisma/                        # Database
-├── schema.prisma              # Schema definition
-├── migrations/                # Migration history
-└── seed.js                    # Sample data
-
-scripts/                       # Setup utilities
+Browser ─► React 19 + MUI 7 ─► Express 5 ─► Prisma 7 ─► PostgreSQL
+Client: Pages → Hooks → Services → Axios      Server: Routes → Services → Prisma
 ```
 
----
+More in [Architecture](docs/architecture.md) and the [API reference](docs/api.md).
 
-## Available Scripts
+## Scripts
 
-### Development
+| Command | What it does |
+|---------|--------------|
+| `npm run dev` | Client and server together |
+| `npm run build` / `npm start` | Production build / run |
+| `npm run db:setup` | Migrate + generate Prisma client |
+| `npm run db:seed` | Load sample data |
+| `npm run db:studio` | Prisma Studio GUI |
+| `npm run db:reset` | Drop and re-create the database schema |
+| `npm run test:run` | Tests once (`npm test` for watch) |
+| `npm run lint` / `npm run format` | ESLint / Prettier |
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start client and server concurrently |
-| `npm run client` | Start Vite dev server only |
-| `npm run server` | Start Express with Nodemon |
-| `npm run server:debug` | Start with Node inspector |
-| `npm run setup` | Interactive project setup |
-| `npm run clean` | Clear build artifacts |
+## Tech stack
 
-### Database
-
-| Command | Description |
-|---------|-------------|
-| `npm run db:setup` | Run migrations and generate client |
-| `npm run db:migrate` | Run pending migrations |
-| `npm run db:generate` | Regenerate Prisma client |
-| `npm run db:studio` | Open Prisma Studio GUI |
-| `npm run db:reset` | Reset database |
-| `npm run db:seed` | Seed with sample data |
-
-### Testing
-
-| Command | Description |
-|---------|-------------|
-| `npm test` | Run tests in watch mode |
-| `npm run test:run` | Run tests once |
-| `npm run test:coverage` | Generate coverage report |
-
-### Code Quality
-
-| Command | Description |
-|---------|-------------|
-| `npm run lint` | Check for linting issues |
-| `npm run lint:fix` | Auto-fix linting issues |
-| `npm run format` | Format with Prettier |
-| `npm run format:check` | Check formatting |
-
-### Production
-
-| Command | Description |
-|---------|-------------|
-| `npm run build` | Build for production |
-| `npm start` | Start production server |
-| `npm run preview` | Preview production build |
-
----
-
-## Architecture
-
-### Frontend Stack
-
-- **Vite 6** - Build tooling with hot module replacement
-- **React 19** - UI library with latest features
-- **Material-UI 6** - Component library with theming
-- **React Router 7** - Client-side routing
-- **Formik + Yup** - Form handling and validation
-- **Axios** - HTTP client with interceptors
-
-### Backend Stack
-
-- **Express 5** - Web framework
-- **Prisma 7** - Type-safe ORM with adapter pattern
-- **PostgreSQL** - Database
-- **Celebrate/Joi** - Input validation
-- **Helmet** - Security headers
-- **Rate Limiting** - Request throttling
-
-### Code Quality
-
-- **ESLint 9** - Linting with flat config
-- **Prettier** - Code formatting
-- **Vitest** - Testing framework
-- **React Testing Library** - Component testing
-
----
-
-## API Reference
-
-All endpoints are prefixed with `/api/v1/`.
-
-### Contacts
-
-```
-GET    /contact/list     List all contacts
-GET    /contact/:id      Get contact by ID
-POST   /contact          Create contact
-PUT    /contact/:id      Update contact
-DELETE /contact/:id      Delete contact
-```
-
-### Tasks
-
-```
-GET    /task/list        List all tasks
-GET    /task/:id         Get task by ID
-POST   /task             Create task
-PUT    /task/:id         Update task
-DELETE /task/:id         Delete task
-```
-
-### Projects
-
-```
-GET    /project/list     List all projects
-GET    /project/:id      Get project by ID
-POST   /project          Create project
-PUT    /project/:id      Update project
-DELETE /project/:id      Delete project
-```
-
-### Response Format
-
-```json
-{
-  "success": true,
-  "data": {},
-  "message": "Success",
-  "timestamp": "2026-01-18T12:00:00.000Z"
-}
-```
-
----
+| Layer | Tools |
+|-------|-------|
+| Client | React 19, Vite 7, MUI 7, React Router 7, Formik + Yup, Axios, react-toastify |
+| Server | Express 5, Prisma 7 (pg adapter), celebrate/Joi, Helmet, express-rate-limit |
+| Quality | ESLint 9 (flat config), Prettier, Vitest 4, React Testing Library, GitHub Actions CI |
 
 ## Screenshots
 
 <div align="center">
-
-**Homepage**
-
-<img src="screenshots/homepage.png" alt="Homepage" height="350">
-
-**Contact Management**
-
-<img src="screenshots/contacts.png" alt="Contacts" height="350">
-
-**Task Tracking**
-
-<img src="screenshots/tasks.png" alt="Tasks" height="350">
-
-**Project Overview**
-
-<img src="screenshots/projects.png" alt="Projects" height="350">
-
+  <img src="screenshots/homepage.png" alt="Homepage" width="48%">
+  <img src="screenshots/contacts.png" alt="Contacts" width="48%">
+  <img src="screenshots/tasks.png" alt="Tasks" width="48%">
+  <img src="screenshots/projects.png" alt="Projects" width="48%">
 </div>
 
----
+## Using it as your own project
 
-## Troubleshooting
+Rename the project, swap the logo and theme, replace the demo models, then delete what you don't need.
+The checklist lives in [Getting Started](docs/getting-started.md#make-it-yours) and
+[Architecture](docs/architecture.md#removing-the-demo).
 
-### Database Connection Failed
-
-1. Verify PostgreSQL is running: `pg_isready -h localhost -p 5432`
-2. Check `DATABASE_URL` in `.env` file
-3. Run migrations: `npm run db:setup`
-4. Verify database exists: `psql -l`
-
-### Port Already in Use
-
-```bash
-# Kill processes on ports 3000 and 8080
-lsof -ti:3000 | xargs kill -9
-lsof -ti:8080 | xargs kill -9
-```
-
-### Hot Reload Not Working
-
-1. Increase file watcher limit (Linux): 
-   ```bash
-   echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
-   ```
-2. Restart the dev server
-
-### Build Issues
-
-```bash
-npm run clean
-npm run build
-```
-
----
+Using an AI coding agent? [AGENTS.md](AGENTS.md) describes the conventions.
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Make your changes
-4. Run tests: `npm run test:run && npm run lint`
-5. Submit a pull request
-
----
+Small, focused PRs welcome. See [CONTRIBUTING.md](CONTRIBUTING.md). Security issues: [SECURITY.md](SECURITY.md).
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
-
----
-
-<p align="center">
-  <sub>Built with <a href="https://withAntigravity.com">Antigravity</a></sub>
-</p>
+[MIT](LICENSE)

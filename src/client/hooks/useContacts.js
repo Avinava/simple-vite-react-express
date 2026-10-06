@@ -23,9 +23,9 @@
  *   } = useContacts();
  */
 
-import { useState, useEffect, useCallback } from "react";
-import { toast } from "react-toastify";
-import { contactsService } from "../services";
+import { useState, useEffect, useCallback } from 'react';
+import { toast } from 'react-toastify';
+import { contactsService } from '../services';
 
 /**
  * Hook for managing contacts state and operations
@@ -53,7 +53,7 @@ export function useContacts(options = {}) {
       setContacts(response.data || []);
     } catch (err) {
       setError(err);
-      console.error("Error fetching contacts:", err);
+      console.error('Error fetching contacts:', err);
     } finally {
       setIsLoading(false);
     }
@@ -68,7 +68,7 @@ export function useContacts(options = {}) {
     const response = await contactsService.create(data);
     // Refresh the list to include the new contact
     await fetchContacts();
-    toast.success("Contact created successfully");
+    toast.success('Contact created successfully');
     return response.data;
   };
 
@@ -83,11 +83,9 @@ export function useContacts(options = {}) {
       const response = await contactsService.update(id, data);
       // Optimistic update - update local state immediately
       setContacts((prev) =>
-        prev.map((contact) =>
-          contact.id === Number(id) ? { ...contact, ...data } : contact
-        )
+        prev.map((contact) => (contact.id === Number(id) ? { ...contact, ...data } : contact))
       );
-      toast.success("Contact updated successfully");
+      toast.success('Contact updated successfully');
       return response.data;
     } catch (err) {
       // Revert optimistic update on error
@@ -106,7 +104,7 @@ export function useContacts(options = {}) {
       await contactsService.delete(id);
       // Optimistic update - remove from local state
       setContacts((prev) => prev.filter((contact) => contact.id !== Number(id)));
-      toast.success("Contact deleted successfully");
+      toast.success('Contact deleted successfully');
     } catch (err) {
       // Revert optimistic update on error
       await fetchContacts();

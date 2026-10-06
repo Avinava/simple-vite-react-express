@@ -14,9 +14,10 @@
  */
 
 // Data hooks
-export { useContacts } from "./useContacts";
-export { useTasks } from "./useTasks";
-export { useProjects } from "./useProjects";
+export { useContacts } from './useContacts';
+export { useContact } from './useContact';
+export { useTasks } from './useTasks';
+export { useProjects } from './useProjects';
 
 // Utility hooks
-export { useHealthCheck, ConnectionStatus } from "./useHealthCheck";
+export { useHealthCheck, ConnectionStatus } from './useHealthCheck';

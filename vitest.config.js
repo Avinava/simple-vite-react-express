@@ -14,7 +14,6 @@
  *
  * Run tests:
  *   npm test          # Run tests in watch mode
- *   npm run test:ui   # Open Vitest UI
  *   npm run test:coverage  # Generate coverage report
  */
 

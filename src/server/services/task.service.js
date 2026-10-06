@@ -20,11 +20,7 @@ export const findAll = async (filters = {}) => {
         },
       },
     },
-    orderBy: [
-      { priority: 'desc' },
-      { dueDate: 'asc' },
-      { createdAt: 'desc' },
-    ],
+    orderBy: [{ priority: 'desc' }, { dueDate: 'asc' }, { createdAt: 'desc' }],
   });
 };
 
@@ -164,10 +160,7 @@ export const findByProject = async (projectId) => {
         },
       },
     },
-    orderBy: [
-      { priority: 'desc' },
-      { dueDate: 'asc' },
-    ],
+    orderBy: [{ priority: 'desc' }, { dueDate: 'asc' }],
   });
 };
 
@@ -183,9 +176,6 @@ export const findByAssignee = async (assigneeId) => {
         },
       },
     },
-    orderBy: [
-      { priority: 'desc' },
-      { dueDate: 'asc' },
-    ],
+    orderBy: [{ priority: 'desc' }, { dueDate: 'asc' }],
   });
 };

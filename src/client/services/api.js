@@ -14,18 +14,18 @@
  *   const data = await api.get('/contact/list');
  */
 
-import axios from "axios";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 /**
  * Create axios instance with default configuration
  * All API calls will use this instance for consistency
  */
 const api = axios.create({
-  baseURL: "/api/v1",
+  baseURL: '/api/v1',
   timeout: 10000, // 10 second timeout
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
@@ -71,16 +71,14 @@ api.interceptors.response.use(
   (error) => {
     // Extract error message from response or use default
     const message =
-      error.response?.data?.message ||
-      error.message ||
-      "An unexpected error occurred";
+      error.response?.data?.message || error.message || 'An unexpected error occurred';
 
     // Show error toast to user
     toast.error(message);
 
     // Development logging
     if (import.meta.env.DEV) {
-      console.error("❌ API Error:", {
+      console.error('❌ API Error:', {
         url: error.config?.url,
         status: error.response?.status,
         message,

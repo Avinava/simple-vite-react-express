@@ -11,14 +11,14 @@
  *   const isConnected = await healthService.checkDatabase();
  */
 
-import api from "./api";
+import api from './api';
 
 export const healthService = {
   /**
    * Check if the server is responding
    * @returns {Promise<{success: boolean, data: {status: string}}>}
    */
-  check: () => api.get("/health"),
+  check: () => api.get('/health'),
 
   /**
    * Check database connectivity by attempting to fetch data
@@ -27,8 +27,8 @@ export const healthService = {
    */
   checkDatabase: async () => {
     try {
-      await api.get("/health");
-      await api.get("/contact/list");
+      await api.get('/health');
+      await api.get('/contact/list');
       return true;
     } catch {
       return false;

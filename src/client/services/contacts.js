@@ -19,7 +19,7 @@
  *   });
  */
 
-import api from "./api";
+import api from './api';
 
 /**
  * Contact data shape (for reference):
@@ -40,7 +40,7 @@ export const contactsService = {
    * Fetch all contacts
    * @returns {Promise<{success: boolean, data: Contact[]}>}
    */
-  getAll: () => api.get("/contact/list"),
+  getAll: () => api.get('/contact/list'),
 
   /**
    * Fetch a single contact by ID
@@ -60,7 +60,7 @@ export const contactsService = {
    * @param {string} [data.notes] - Notes
    * @returns {Promise<{success: boolean, data: Contact}>}
    */
-  create: (data) => api.post("/contact", data),
+  create: (data) => api.post('/contact', data),
 
   /**
    * Update an existing contact
