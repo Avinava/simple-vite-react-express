@@ -48,7 +48,7 @@ npm run test:coverage # With coverage report
 ```
 
 - Framework: Vitest 4 + React Testing Library
-- Test files: `src/client/__tests__/`
+- Test files: `src/client/__tests__/` and `src/server/__tests__/`
 - Setup file: `src/client/__tests__/setup.js`
 
 ## Linting & Formatting

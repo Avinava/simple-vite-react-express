@@ -47,6 +47,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Deleting uses `ConfirmationDialog` instead of `window.confirm`
 - Removed "to be implemented" stub buttons; legacy `<Grid item>` props (removed in MUI 7) migrated to `size`
 
+### Tests
+
+- 28 tests (was 7): `useTasks`, `useContact`, service URLs vs. API routes, `ErrorBoundary`, `NotFound`, `AppContext`, theme toggle, server error middleware
+
 ### Changed (server)
 
 - Routes no longer wrap handlers in try/catch; Express 5 forwards errors to `middleware/error.js`
