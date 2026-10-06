@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Banner, CI badge and a short successor-template callout in the README
+- Agent docs: `AGENTS.md` is the single source of truth; `CLAUDE.md` and `GEMINI.md` import it; `.agent/workflows/` refreshed
 - `docs/` (getting started, architecture, API, troubleshooting, migration guide)
 - `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `CLAUDE.md`
 - GitHub Actions CI (lint, format check, test, build on Node 22 and 24), issue and PR templates
