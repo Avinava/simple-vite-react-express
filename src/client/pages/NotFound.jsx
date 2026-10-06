@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Card, CardContent, Typography, Box } from '@mui/material';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import AppHeroIcon from '../components/AppHeroIcon';

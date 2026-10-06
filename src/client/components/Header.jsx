@@ -1,4 +1,3 @@
-import React from 'react';
 import { Toolbar, Box } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Alert, Box, Typography, Paper, Button } from '@mui/material';
 import {
   Storage as DatabaseIcon,
