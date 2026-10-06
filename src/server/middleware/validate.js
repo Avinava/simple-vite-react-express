@@ -1,4 +1,4 @@
-import { celebrate, Joi } from "celebrate";
+import { celebrate, Joi } from 'celebrate';
 
 /**
  * Validation schemas for contact-related requests
@@ -23,12 +23,12 @@ export const contactValidation = {
    */
   update: celebrate({
     params: Joi.object({
-      id: Joi.number().required().description("Contact ID"),
+      id: Joi.number().required().description('Contact ID'),
     }),
     body: Joi.object({
-      firstName: Joi.string().description("Updated first name"),
-      lastName: Joi.string().description("Updated last name"),
-      email: Joi.string().email().description("Updated email address"),
+      firstName: Joi.string().description('Updated first name'),
+      lastName: Joi.string().description('Updated last name'),
+      email: Joi.string().email().description('Updated email address'),
     }),
   }),
 };

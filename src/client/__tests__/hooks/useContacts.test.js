@@ -9,12 +9,12 @@
  * - Testing async state updates
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { renderHook, waitFor, act } from "@testing-library/react";
-import { useContacts } from "../../hooks/useContacts";
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { renderHook, waitFor, act } from '@testing-library/react';
+import { useContacts } from '../../hooks/useContacts';
 
 // Mock the contacts service
-vi.mock("../../services", () => ({
+vi.mock('../../services', () => ({
   contactsService: {
     getAll: vi.fn(),
     create: vi.fn(),
@@ -24,7 +24,7 @@ vi.mock("../../services", () => ({
 }));
 
 // Mock react-toastify
-vi.mock("react-toastify", () => ({
+vi.mock('react-toastify', () => ({
   toast: {
     success: vi.fn(),
     error: vi.fn(),
@@ -32,13 +32,13 @@ vi.mock("react-toastify", () => ({
 }));
 
 // Import mocked service after mock setup
-import { contactsService } from "../../services";
+import { contactsService } from '../../services';
 
-describe("useContacts Hook", () => {
+describe('useContacts Hook', () => {
   // Sample contact data
   const mockContacts = [
-    { id: 1, firstName: "John", lastName: "Doe", email: "john@example.com" },
-    { id: 2, firstName: "Jane", lastName: "Smith", email: "jane@example.com" },
+    { id: 1, firstName: 'John', lastName: 'Doe', email: 'john@example.com' },
+    { id: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane@example.com' },
   ];
 
   beforeEach(() => {
@@ -52,7 +52,7 @@ describe("useContacts Hook", () => {
   /**
    * Test initial data fetching
    */
-  it("fetches contacts on mount", async () => {
+  it('fetches contacts on mount', async () => {
     const { result } = renderHook(() => useContacts());
 
     // Initially loading
@@ -71,7 +71,7 @@ describe("useContacts Hook", () => {
   /**
    * Test auto-fetch can be disabled
    */
-  it("does not fetch when autoFetch is false", () => {
+  it('does not fetch when autoFetch is false', () => {
     renderHook(() => useContacts({ autoFetch: false }));
 
     expect(contactsService.getAll).not.toHaveBeenCalled();
@@ -80,11 +80,11 @@ describe("useContacts Hook", () => {
   /**
    * Test error handling
    */
-  it("handles fetch errors", async () => {
+  it('handles fetch errors', async () => {
     // Suppress expected console.error for this test
-    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => { });
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-    const error = new Error("Network error");
+    const error = new Error('Network error');
     contactsService.getAll.mockRejectedValue(error);
 
     const { result } = renderHook(() => useContacts());
@@ -102,7 +102,7 @@ describe("useContacts Hook", () => {
   /**
    * Test delete operation
    */
-  it("deletes a contact and updates state", async () => {
+  it('deletes a contact and updates state', async () => {
     contactsService.delete.mockResolvedValue({ success: true });
 
     const { result } = renderHook(() => useContacts());

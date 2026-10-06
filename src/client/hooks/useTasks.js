@@ -22,9 +22,9 @@
  *   await updateTaskStatus(taskId, 'IN_PROGRESS');
  */
 
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { toast } from "react-toastify";
-import { tasksService, TaskStatus } from "../services";
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { toast } from 'react-toastify';
+import { tasksService, TaskStatus } from '../services';
 
 /**
  * Hook for managing tasks state and operations
@@ -53,7 +53,7 @@ export function useTasks(options = {}) {
       setTasks(response.data || []);
     } catch (err) {
       setError(err);
-      console.error("Error fetching tasks:", err);
+      console.error('Error fetching tasks:', err);
     } finally {
       setIsLoading(false);
     }
@@ -87,7 +87,7 @@ export function useTasks(options = {}) {
   const createTask = async (data) => {
     const response = await tasksService.create(data);
     await fetchTasks();
-    toast.success("Task created successfully");
+    toast.success('Task created successfully');
     return response.data;
   };
 
@@ -102,11 +102,9 @@ export function useTasks(options = {}) {
       const response = await tasksService.update(id, data);
       // Optimistic update
       setTasks((prev) =>
-        prev.map((task) =>
-          task.id === Number(id) ? { ...task, ...data } : task
-        )
+        prev.map((task) => (task.id === Number(id) ? { ...task, ...data } : task))
       );
-      toast.success("Task updated successfully");
+      toast.success('Task updated successfully');
       return response.data;
     } catch (err) {
       await fetchTasks();
@@ -133,7 +131,7 @@ export function useTasks(options = {}) {
     try {
       await tasksService.delete(id);
       setTasks((prev) => prev.filter((task) => task.id !== Number(id)));
-      toast.success("Task deleted successfully");
+      toast.success('Task deleted successfully');
     } catch (err) {
       await fetchTasks();
       throw err;

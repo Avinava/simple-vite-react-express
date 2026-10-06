@@ -64,10 +64,7 @@ export const findById = async (id) => {
             },
           },
         },
-        orderBy: [
-          { priority: 'desc' },
-          { dueDate: 'asc' },
-        ],
+        orderBy: [{ priority: 'desc' }, { dueDate: 'asc' }],
       },
     },
   });

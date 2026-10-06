@@ -1,24 +1,24 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#aac7ff",
-      light: "#dde5ff",
-      dark: "#7b9cff",
+      main: '#aac7ff',
+      light: '#dde5ff',
+      dark: '#7b9cff',
     },
     secondary: {
-      main: "#bec6dc",
-      light: "#eef1f8",
-      dark: "#929ab3",
+      main: '#bec6dc',
+      light: '#eef1f8',
+      dark: '#929ab3',
     },
     background: {
-      default: "#f5f5f5",
-      paper: "#ffffff",
+      default: '#f5f5f5',
+      paper: '#ffffff',
     },
     text: {
-      primary: "rgba(0, 0, 0, 0.87)",
-      secondary: "rgba(0, 0, 0, 0.6)",
+      primary: 'rgba(0, 0, 0, 0.87)',
+      secondary: 'rgba(0, 0, 0, 0.6)',
     },
   },
   typography: {
@@ -27,10 +27,10 @@ const theme = createTheme({
       fontWeight: 500,
     },
     subtitle1: {
-      fontSize: "1rem",
+      fontSize: '1rem',
     },
     subtitle2: {
-      fontSize: "0.875rem",
+      fontSize: '0.875rem',
     },
   },
   transitions: {
@@ -45,22 +45,22 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: "none",
+          textTransform: 'none',
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "#aac7ff",
-          color: "#000",
+          backgroundColor: '#aac7ff',
+          color: '#000',
         },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
-          transition: "0.3s",
+          transition: '0.3s',
         },
       },
     },

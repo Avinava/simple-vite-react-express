@@ -44,7 +44,7 @@ router.get('/list', async (req, res) => {
   try {
     const { status } = req.query;
     const filters = {};
-    
+
     if (status) filters.status = status;
 
     const projects = await projectService.findAll(filters);
@@ -105,19 +105,23 @@ router.delete('/:id', celebrate(projectIdSchema), async (req, res) => {
 });
 
 // Project members management
-router.post('/:id/members', celebrate({ ...projectIdSchema, ...addMemberSchema }), async (req, res) => {
-  try {
-    const member = await projectService.addMember(parseInt(req.params.id), req.body);
-    res.status(201).json(successResponse(member, 'Member added to project successfully'));
-  } catch (error) {
-    console.error('Error adding member to project:', error);
-    if (error.code === 'P2002') {
-      res.status(400).json(errorResponse('Contact is already a member of this project'));
-    } else {
-      res.status(500).json(errorResponse('Failed to add member to project'));
+router.post(
+  '/:id/members',
+  celebrate({ ...projectIdSchema, ...addMemberSchema }),
+  async (req, res) => {
+    try {
+      const member = await projectService.addMember(parseInt(req.params.id), req.body);
+      res.status(201).json(successResponse(member, 'Member added to project successfully'));
+    } catch (error) {
+      console.error('Error adding member to project:', error);
+      if (error.code === 'P2002') {
+        res.status(400).json(errorResponse('Contact is already a member of this project'));
+      } else {
+        res.status(500).json(errorResponse('Failed to add member to project'));
+      }
     }
   }
-});
+);
 
 router.get('/:id/members', celebrate(projectIdSchema), async (req, res) => {
   try {
@@ -129,25 +133,29 @@ router.get('/:id/members', celebrate(projectIdSchema), async (req, res) => {
   }
 });
 
-router.delete('/:id/members/:contactId', celebrate({
-  [Segments.PARAMS]: Joi.object({
-    id: Joi.number().integer().positive().required(),
-    contactId: Joi.number().integer().positive().required(),
+router.delete(
+  '/:id/members/:contactId',
+  celebrate({
+    [Segments.PARAMS]: Joi.object({
+      id: Joi.number().integer().positive().required(),
+      contactId: Joi.number().integer().positive().required(),
+    }),
   }),
-}), async (req, res) => {
-  try {
-    const removed = await projectService.removeMember(
-      parseInt(req.params.id),
-      parseInt(req.params.contactId)
-    );
-    if (!removed) {
-      return res.status(404).json(errorResponse('Member not found in project'));
+  async (req, res) => {
+    try {
+      const removed = await projectService.removeMember(
+        parseInt(req.params.id),
+        parseInt(req.params.contactId)
+      );
+      if (!removed) {
+        return res.status(404).json(errorResponse('Member not found in project'));
+      }
+      res.json(successResponse(null, 'Member removed from project successfully'));
+    } catch (error) {
+      console.error('Error removing member from project:', error);
+      res.status(500).json(errorResponse('Failed to remove member from project'));
     }
-    res.json(successResponse(null, 'Member removed from project successfully'));
-  } catch (error) {
-    console.error('Error removing member from project:', error);
-    res.status(500).json(errorResponse('Failed to remove member from project'));
   }
-});
+);
 
 export default router;

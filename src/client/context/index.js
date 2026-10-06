@@ -9,4 +9,4 @@
  *   import { AppProvider, useAppContext } from '@/client/context';
  */
 
-export { AppContext, AppProvider, useAppContext } from "./AppContext";
+export { AppContext, AppProvider, useAppContext } from './AppContext';

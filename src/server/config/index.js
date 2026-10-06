@@ -16,7 +16,7 @@
  *   console.log(config.port); // 8080
  */
 
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -41,7 +41,7 @@ const _requireEnv = (name) => {
  * @param {string} defaultValue - Default value if not set
  * @returns {string} The value or default
  */
-const getEnv = (name, defaultValue = "") => {
+const getEnv = (name, defaultValue = '') => {
   return process.env[name] || defaultValue;
 };
 
@@ -54,34 +54,34 @@ const config = {
    * Server port
    * Default: 8080
    */
-  port: parseInt(getEnv("PORT", "8080"), 10),
+  port: parseInt(getEnv('PORT', '8080'), 10),
 
   /**
    * Node environment
    * Values: 'development', 'production', 'test'
    */
-  nodeEnv: getEnv("NODE_ENV", "development"),
+  nodeEnv: getEnv('NODE_ENV', 'development'),
 
   /**
    * Check if running in development mode
    */
-  isDevelopment: getEnv("NODE_ENV", "development") === "development",
+  isDevelopment: getEnv('NODE_ENV', 'development') === 'development',
 
   /**
    * Check if running in production mode
    */
-  isProduction: getEnv("NODE_ENV") === "production",
+  isProduction: getEnv('NODE_ENV') === 'production',
 
   /**
    * Check if running in test mode
    */
-  isTest: getEnv("NODE_ENV") === "test",
+  isTest: getEnv('NODE_ENV') === 'test',
 
   /**
    * Database configuration
    */
   database: {
-    url: getEnv("DATABASE_URL"),
+    url: getEnv('DATABASE_URL'),
   },
 
   /**
@@ -103,7 +103,7 @@ const config = {
    * CORS configuration
    */
   cors: {
-    origin: getEnv("CORS_ORIGIN", "*"),
+    origin: getEnv('CORS_ORIGIN', '*'),
   },
 };
 

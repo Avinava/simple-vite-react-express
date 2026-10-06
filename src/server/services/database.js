@@ -6,14 +6,14 @@
  * Prisma 7 uses the adapter pattern for direct database connections.
  */
 
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 
-import pkg from "@prisma/client";
+import pkg from '@prisma/client';
 const { PrismaClient } = pkg;
 
-import { PrismaPg } from "@prisma/adapter-pg";
-import pg from "pg";
+import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
 
 const { Pool } = pg;
 
@@ -38,7 +38,7 @@ class Database {
      * Initialize PrismaClient with the PostgreSQL adapter
      */
     this.prisma = new PrismaClient({
-      errorFormat: "minimal",
+      errorFormat: 'minimal',
       adapter,
     });
     Database.instance = this;
@@ -46,5 +46,3 @@ class Database {
 }
 
 export default new Database();
-
-

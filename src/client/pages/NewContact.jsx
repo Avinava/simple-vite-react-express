@@ -1,22 +1,31 @@
-import { TextField, Button, Typography, Grid, Box, Container, Card, CardContent } from "@mui/material";
-import { Formik, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { toast } from "react-toastify";
-import { AccountCircle, Email, Person, PersonAdd, SaveAlt } from "@mui/icons-material";
-import { contactsService } from "../services";
+import {
+  TextField,
+  Button,
+  Typography,
+  Grid,
+  Box,
+  Container,
+  Card,
+  CardContent,
+} from '@mui/material';
+import { Formik, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+import { AccountCircle, Email, Person, PersonAdd, SaveAlt } from '@mui/icons-material';
+import { contactsService } from '../services';
 
 const errorMessageSx = {
-  color: "error.main",
-  fontSize: "0.75rem",
+  color: 'error.main',
+  fontSize: '0.75rem',
   mt: 0.5,
   ml: 1.5,
 };
 
 const NewContact = () => {
   const ContactSchema = Yup.object().shape({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    firstName: Yup.string().required('First name is required'),
+    lastName: Yup.string().required('Last name is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
   });
 
   const handleContactSubmit = async (values, { resetForm }) => {
@@ -27,11 +36,11 @@ const NewContact = () => {
         email: values.email,
       });
 
-      toast.success("Contact created successfully");
+      toast.success('Contact created successfully');
       resetForm();
     } catch (err) {
       console.error(err);
-      toast.error("An error occurred while creating the contact");
+      toast.error('An error occurred while creating the contact');
     }
   };
 
@@ -40,16 +49,16 @@ const NewContact = () => {
       <Card elevation={2} sx={{ borderRadius: 2 }}>
         <CardContent sx={{ p: 4 }}>
           <Box display="flex" alignItems="center" mb={4}>
-            <PersonAdd sx={{ fontSize: 32, color: "primary.main", mr: 2 }} />
+            <PersonAdd sx={{ fontSize: 32, color: 'primary.main', mr: 2 }} />
             <Typography variant="h4" component="h1" gutterBottom fontWeight="medium">
               New Contact
             </Typography>
           </Box>
           <Formik
             initialValues={{
-              firstName: "",
-              lastName: "",
-              email: "",
+              firstName: '',
+              lastName: '',
+              email: '',
             }}
             validationSchema={ContactSchema}
             onSubmit={handleContactSubmit}
@@ -66,7 +75,7 @@ const NewContact = () => {
                       fullWidth
                       variant="outlined"
                       InputProps={{
-                        startAdornment: <Person sx={{ mr: 1, color: "action.active" }} />,
+                        startAdornment: <Person sx={{ mr: 1, color: 'action.active' }} />,
                       }}
                     />
                     <ErrorMessage name="firstName">
@@ -82,7 +91,7 @@ const NewContact = () => {
                       fullWidth
                       variant="outlined"
                       InputProps={{
-                        startAdornment: <AccountCircle sx={{ mr: 1, color: "action.active" }} />,
+                        startAdornment: <AccountCircle sx={{ mr: 1, color: 'action.active' }} />,
                       }}
                     />
                     <ErrorMessage name="lastName">
@@ -98,7 +107,7 @@ const NewContact = () => {
                       fullWidth
                       variant="outlined"
                       InputProps={{
-                        startAdornment: <Email sx={{ mr: 1, color: "action.active" }} />,
+                        startAdornment: <Email sx={{ mr: 1, color: 'action.active' }} />,
                       }}
                     />
                     <ErrorMessage name="email">
@@ -134,4 +143,3 @@ const NewContact = () => {
 };
 
 export default NewContact;
-

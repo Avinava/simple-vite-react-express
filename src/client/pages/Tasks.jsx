@@ -133,7 +133,7 @@ const Tasks = () => {
               boxShadow: 4,
               transform: 'translateY(-1px)',
             },
-            transition: 'all 0.2s ease-in-out'
+            transition: 'all 0.2s ease-in-out',
           }}
         >
           New Task

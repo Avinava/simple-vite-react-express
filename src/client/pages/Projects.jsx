@@ -55,7 +55,11 @@ const Projects = () => {
   }, []);
 
   const handleDeleteProject = async (projectId) => {
-    if (window.confirm('Are you sure you want to delete this project? This will also delete all associated tasks.')) {
+    if (
+      window.confirm(
+        'Are you sure you want to delete this project? This will also delete all associated tasks.'
+      )
+    ) {
       try {
         const response = await axios.delete(`/api/v1/project/${projectId}`);
         if (response.data.success) {
@@ -76,7 +80,7 @@ const Projects = () => {
 
   const calculateProgress = (tasks) => {
     if (!tasks || tasks.length === 0) return 0;
-    const completedTasks = tasks.filter(task => task.status === 'DONE').length;
+    const completedTasks = tasks.filter((task) => task.status === 'DONE').length;
     return Math.round((completedTasks / tasks.length) * 100);
   };
 
@@ -116,7 +120,7 @@ const Projects = () => {
               boxShadow: 4,
               transform: 'translateY(-1px)',
             },
-            transition: 'all 0.2s ease-in-out'
+            transition: 'all 0.2s ease-in-out',
           }}
         >
           New Project
@@ -168,15 +172,11 @@ const Projects = () => {
                 <Box display="flex" justifyContent="space-between" mb={2}>
                   <Box display="flex" alignItems="center" gap={1}>
                     <TaskIcon fontSize="small" />
-                    <Typography variant="body2">
-                      {project._count?.tasks || 0} tasks
-                    </Typography>
+                    <Typography variant="body2">{project._count?.tasks || 0} tasks</Typography>
                   </Box>
                   <Box display="flex" alignItems="center" gap={1}>
                     <PeopleIcon fontSize="small" />
-                    <Typography variant="body2">
-                      {project._count?.members || 0} members
-                    </Typography>
+                    <Typography variant="body2">{project._count?.members || 0} members</Typography>
                   </Box>
                 </Box>
 
@@ -185,9 +185,7 @@ const Projects = () => {
                   <Box mb={2}>
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
                       <Typography variant="body2">Progress</Typography>
-                      <Typography variant="body2">
-                        {calculateProgress(project.tasks)}%
-                      </Typography>
+                      <Typography variant="body2">{calculateProgress(project.tasks)}%</Typography>
                     </Box>
                     <LinearProgress
                       variant="determinate"
@@ -200,7 +198,9 @@ const Projects = () => {
                 {/* Team Members */}
                 {project.members && project.members.length > 0 && (
                   <Box mb={2}>
-                    <Typography variant="body2" mb={1}>Team</Typography>
+                    <Typography variant="body2" mb={1}>
+                      Team
+                    </Typography>
                     <AvatarGroup max={4} sx={{ justifyContent: 'flex-start' }}>
                       {project.members.map((member) => (
                         <Avatar

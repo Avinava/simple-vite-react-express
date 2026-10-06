@@ -1,4 +1,4 @@
-import db from "./database.js";
+import db from './database.js';
 
 /**
  * Service class for handling contact-related business logic

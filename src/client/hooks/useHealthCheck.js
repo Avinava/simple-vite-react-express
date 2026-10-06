@@ -19,8 +19,8 @@
  *   }
  */
 
-import { useState, useEffect, useCallback } from "react";
-import { healthService, contactsService, tasksService, projectsService } from "../services";
+import { useState, useEffect, useCallback } from 'react';
+import { healthService, contactsService, tasksService, projectsService } from '../services';
 
 /**
  * Connection status enum
@@ -28,9 +28,9 @@ import { healthService, contactsService, tasksService, projectsService } from ".
  * @enum {string}
  */
 export const ConnectionStatus = {
-  CHECKING: "checking",
-  CONNECTED: "connected",
-  ERROR: "error",
+  CHECKING: 'checking',
+  CONNECTED: 'connected',
+  ERROR: 'error',
 };
 
 /**
@@ -52,7 +52,7 @@ export function useHealthCheck() {
       // First check if server is responding
       const healthResponse = await healthService.check().catch(() => null);
       if (!healthResponse) {
-        throw new Error("Server not responding");
+        throw new Error('Server not responding');
       }
 
       // Try to fetch data to verify database connection
@@ -71,7 +71,7 @@ export function useHealthCheck() {
 
       setStatus(ConnectionStatus.CONNECTED);
     } catch (error) {
-      console.error("Database connection error:", error);
+      console.error('Database connection error:', error);
       setStatus(ConnectionStatus.ERROR);
       setStats(null);
     }

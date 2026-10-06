@@ -5,7 +5,7 @@
  * @param {string} message - A message describing the response
  * @returns {Object} Standardized response object
  */
-export const createResponse = (success, data = null, message = "") => ({
+export const createResponse = (success, data = null, message = '') => ({
   success,
   data,
   message,
@@ -18,7 +18,7 @@ export const createResponse = (success, data = null, message = "") => ({
  * @param {string} message - Optional success message
  * @returns {Object} Success response object
  */
-export const successResponse = (data, message = "Success") => createResponse(true, data, message);
+export const successResponse = (data, message = 'Success') => createResponse(true, data, message);
 
 /**
  * Creates an error response
@@ -26,4 +26,5 @@ export const successResponse = (data, message = "Success") => createResponse(tru
  * @param {*} data - Optional error details
  * @returns {Object} Error response object
  */
-export const errorResponse = (message = "Error", data = null) => createResponse(false, data, message);
+export const errorResponse = (message = 'Error', data = null) =>
+  createResponse(false, data, message);

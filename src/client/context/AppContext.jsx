@@ -21,20 +21,20 @@
  *   </AppProvider>
  */
 
-import { createContext, useContext, useState, useMemo, useCallback } from "react";
+import { createContext, useContext, useState, useMemo, useCallback } from 'react';
 
 /**
  * Default context values
  * @type {Object}
  */
 const defaultContextValue = {
-    // Theme
-    isDarkMode: false,
-    toggleTheme: () => { },
+  // Theme
+  isDarkMode: false,
+  toggleTheme: () => {},
 
-    // App config
-    appName: "Simple Vite React Express",
-    version: "2.1.0",
+  // App config
+  appName: 'Simple Vite React Express',
+  version: '2.1.0',
 };
 
 /**
@@ -48,11 +48,11 @@ const AppContext = createContext(defaultContextValue);
  * @returns {Object} App context value
  */
 export function useAppContext() {
-    const context = useContext(AppContext);
-    if (context === undefined) {
-        throw new Error("useAppContext must be used within an AppProvider");
-    }
-    return context;
+  const context = useContext(AppContext);
+  if (context === undefined) {
+    throw new Error('useAppContext must be used within an AppProvider');
+  }
+  return context;
 }
 
 /**
@@ -64,58 +64,54 @@ export function useAppContext() {
  * @returns {React.ReactElement}
  */
 export function AppProvider({ children }) {
-    // Theme state - can be extended to persist in localStorage
-    const [isDarkMode, setIsDarkMode] = useState(() => {
-        // Check for saved preference in localStorage
-        const saved = localStorage.getItem("theme");
-        if (saved) {
-            return saved === "dark";
-        }
-        // Check system preference
-        return window.matchMedia?.("(prefers-color-scheme: dark)").matches || false;
+  // Theme state - can be extended to persist in localStorage
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Check for saved preference in localStorage
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      return saved === 'dark';
+    }
+    // Check system preference
+    return window.matchMedia?.('(prefers-color-scheme: dark)').matches || false;
+  });
+
+  /**
+   * Toggle between light and dark theme
+   * Persists preference to localStorage
+   */
+  const toggleTheme = useCallback(() => {
+    setIsDarkMode((prev) => {
+      const newValue = !prev;
+      localStorage.setItem('theme', newValue ? 'dark' : 'light');
+      return newValue;
     });
+  }, []);
 
-    /**
-     * Toggle between light and dark theme
-     * Persists preference to localStorage
-     */
-    const toggleTheme = useCallback(() => {
-        setIsDarkMode((prev) => {
-            const newValue = !prev;
-            localStorage.setItem("theme", newValue ? "dark" : "light");
-            return newValue;
-        });
-    }, []);
+  /**
+   * Set a specific theme mode
+   * @param {boolean} dark - Whether to enable dark mode
+   */
+  const setTheme = useCallback((dark) => {
+    setIsDarkMode(dark);
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }, []);
 
-    /**
-     * Set a specific theme mode
-     * @param {boolean} dark - Whether to enable dark mode
-     */
-    const setTheme = useCallback((dark) => {
-        setIsDarkMode(dark);
-        localStorage.setItem("theme", dark ? "dark" : "light");
-    }, []);
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(
+    () => ({
+      // Theme
+      isDarkMode,
+      toggleTheme,
+      setTheme,
 
-    // Memoize context value to prevent unnecessary re-renders
-    const contextValue = useMemo(
-        () => ({
-            // Theme
-            isDarkMode,
-            toggleTheme,
-            setTheme,
+      // App config
+      appName: 'Simple Vite React Express',
+      version: '2.1.0',
+    }),
+    [isDarkMode, toggleTheme, setTheme]
+  );
 
-            // App config
-            appName: "Simple Vite React Express",
-            version: "2.1.0",
-        }),
-        [isDarkMode, toggleTheme, setTheme]
-    );
-
-    return (
-        <AppContext.Provider value={contextValue}>
-            {children}
-        </AppContext.Provider>
-    );
+  return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
 }
 
 export default AppContext;
