@@ -16,6 +16,12 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log('🌱 Starting database seeding...');
 
+  // Idempotent: never add demo data on top of existing data
+  if ((await prisma.contact.count()) > 0) {
+    console.log('ℹ️  Database already has contacts, skipping. Run "npm run db:reset" to start over.');
+    return;
+  }
+
   // Create sample contacts
   const contacts = await Promise.all([
     prisma.contact.create({

@@ -26,7 +26,7 @@ src/
 │   └── __tests__/    Vitest + React Testing Library
 └── server/
     ├── config/       Env parsing, one source of truth
-    ├── middleware/   Security (helmet, rate limit), validation (celebrate/Joi)
+    ├── middleware/   Security (helmet, rate limit), central error handler
     ├── routes/v1/    HTTP layer, one file per resource
     ├── services/     Business logic + Prisma queries
     └── utils/        Response envelope helpers
@@ -37,7 +37,7 @@ scripts/              setup.js
 ## Key rules
 
 - **Pages never call axios.** They use a hook; the hook uses a service.
-- **Routes stay thin.** Validate, call a service, send the response envelope.
+- **Routes stay thin.** Validate (celebrate/Joi), call a service, send the response envelope. No try/catch: Express 5 forwards async errors to `middleware/error.js`.
 - **One config module.** Read `process.env` only in `src/server/config/index.js`.
 - **JSDoc, not TypeScript.** Keep the project approachable.
 

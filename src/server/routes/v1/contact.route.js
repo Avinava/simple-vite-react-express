@@ -1,95 +1,65 @@
-import express from 'express';
-import { contactValidation } from '../../middleware/validate.js';
-import { successResponse, errorResponse } from '../../utils/response.js';
+import { Router } from 'express';
+import { celebrate, Joi, Segments } from 'celebrate';
+import { successResponse } from '../../utils/response.js';
+import { httpError } from '../../middleware/error.js';
 import contactService from '../../services/contact.service.js';
 
-const router = express.Router();
+const router = Router();
 
-/**
- * GET /list
- * Retrieve a list of contacts.
- */
+// Validation schemas
+const contactFields = {
+  firstName: Joi.string().max(100),
+  lastName: Joi.string().max(100),
+  email: Joi.string().email().max(255),
+  phone: Joi.string().allow('').max(50),
+  company: Joi.string().allow('').max(255),
+  notes: Joi.string().allow('').max(2000),
+};
+
+const createContactSchema = {
+  [Segments.BODY]: Joi.object({
+    ...contactFields,
+    firstName: contactFields.firstName.required(),
+    lastName: contactFields.lastName.required(),
+    email: contactFields.email.required(),
+  }),
+};
+
+const updateContactSchema = {
+  [Segments.BODY]: Joi.object(contactFields),
+};
+
+const contactIdSchema = {
+  [Segments.PARAMS]: Joi.object({
+    id: Joi.number().integer().positive().required(),
+  }),
+};
+
+// Routes: validate, call the service, send the envelope.
+// Errors (including Prisma ones) are handled by middleware/error.js.
 router.get('/list', async (req, res) => {
-  try {
-    const contacts = await contactService.findAll();
-    res.status(200).json(successResponse(contacts));
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(errorResponse('Failed to retrieve contacts'));
-  }
+  res.json(successResponse(await contactService.findAll()));
 });
 
-/**
- * GET /:id
- * Retrieve a contact by ID.
- */
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const contact = await contactService.findById(id);
-
-    if (!contact) {
-      return res.status(404).json(errorResponse('Contact not found'));
-    }
-
-    res.status(200).json(successResponse(contact));
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(errorResponse('Failed to retrieve contact'));
-  }
+router.get('/:id', celebrate(contactIdSchema), async (req, res) => {
+  const contact = await contactService.findById(req.params.id);
+  if (!contact) throw httpError(404, 'Contact not found');
+  res.json(successResponse(contact));
 });
 
-/**
- * POST /create
- * Create a new contact.
- */
-router.post('/', contactValidation.create, async (req, res) => {
-  const { firstName, lastName, email } = req.body;
-
-  try {
-    const contact = await contactService.create({ firstName, lastName, email });
-
-    res.status(201).json(successResponse(contact));
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(errorResponse('Failed to create contact'));
-  }
+router.post('/', celebrate(createContactSchema), async (req, res) => {
+  const contact = await contactService.create(req.body);
+  res.status(201).json(successResponse(contact));
 });
 
-/**
- * PUT /update/:id
- * Update an existing contact by ID.
- */
-router.put('/:id', contactValidation.update, async (req, res) => {
-  const { id } = req.params;
-  const { firstName, lastName, email } = req.body;
-
-  try {
-    const contact = await contactService.update(Number(id), { firstName, lastName, email });
-
-    res.status(200).json(successResponse(contact));
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(errorResponse('Failed to update contact'));
-  }
+router.put('/:id', celebrate({ ...contactIdSchema, ...updateContactSchema }), async (req, res) => {
+  const contact = await contactService.update(req.params.id, req.body);
+  res.json(successResponse(contact));
 });
 
-/**
- * DELETE /delete/:id
- * Delete a contact by ID.
- */
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const contact = await contactService.delete(Number(id));
-
-    res.status(200).json(successResponse(contact));
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(errorResponse('Failed to delete contact'));
-  }
+router.delete('/:id', celebrate(contactIdSchema), async (req, res) => {
+  const contact = await contactService.delete(req.params.id);
+  res.json(successResponse(contact));
 });
 
 export default router;

@@ -31,6 +31,10 @@ class Database {
       connectionString: process.env.DATABASE_URL,
     });
 
+    // Idle clients can error (e.g. DB restart); log instead of crashing the process
+    pool.on('error', (err) => console.error('Unexpected PostgreSQL pool error:', err.message));
+    this.pool = pool;
+
     // Create Prisma adapter
     const adapter = new PrismaPg(pool);
 
@@ -42,6 +46,14 @@ class Database {
       adapter,
     });
     Database.instance = this;
+  }
+
+  /**
+   * Close Prisma and the pg pool. Called during graceful shutdown.
+   */
+  async disconnect() {
+    await this.prisma.$disconnect();
+    await this.pool.end().catch(() => {}); // already closed by the adapter
   }
 }
 

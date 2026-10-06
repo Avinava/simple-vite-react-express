@@ -20,6 +20,11 @@ export default defineConfig({
     // Path to schema file
     schema: path.join(import.meta.dirname, "prisma", "schema.prisma"),
 
+    // `prisma migrate reset` runs this automatically
+    migrations: {
+        seed: "node prisma/seed.js",
+    },
+
     // Database connection for Prisma CLI (migrations, introspection)
     datasource: {
         url: process.env.DATABASE_URL!,

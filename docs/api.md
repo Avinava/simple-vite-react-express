@@ -10,7 +10,7 @@ Base URL: `/api/v1`. All responses use one envelope:
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/health` | Liveness check |
+| GET | `/health` | Liveness + database check (503 if the DB is down) |
 
 ## Contacts
 
@@ -52,5 +52,5 @@ Base URL: `/api/v1`. All responses use one envelope:
 curl http://localhost:8080/api/v1/contact/list
 ```
 
-Request bodies are validated with [celebrate](https://github.com/arb/celebrate) (Joi); see
-`src/server/middleware/validate.js` and the schemas at the top of each route file.
+Request bodies and params are validated with [celebrate](https://github.com/arb/celebrate) (Joi); the schemas sit at the top of each route file in
+`src/server/routes/v1/`. Errors come back in the same envelope (`success: false`); unknown `/api` paths return a JSON 404, and a missing or conflicting record maps to 404 / 409.

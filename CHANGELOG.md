@@ -23,6 +23,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `example.env` documents `CORS_ORIGIN` and drops the unsupported `?schema=` suffix
 - `.gitignore` trimmed to what this project uses
 
+### Fixed
+
+- API: CORS now honors `CORS_ORIGIN`; unknown `/api/*` paths return a JSON 404 instead of the SPA's HTML
+- API: `/health` checks the database (503 when down) and is exempt from rate limiting
+- API: Prisma errors map to 404 (missing record) / 409 (duplicate or still-referenced record) instead of 500
+- API: contact routes validate `:id`, accept `phone`/`company`/`notes`; request body limited to 100kb
+- Server closes the Prisma client and pg pool on shutdown; pool errors are logged, not fatal
+- `NODE_ENV` now defaults to `production` when unset; `TRUST_PROXY` supported for rate limiting behind proxies
+- `npm run db:seed` is idempotent and `prisma migrate reset` runs the seed
+
+### Changed (server)
+
+- Routes no longer wrap handlers in try/catch; Express 5 forwards errors to `middleware/error.js`
+- Validation schemas live next to their routes (removed `middleware/validate.js`)
+
 ### Removed
 
 - `nodemon` dependency and `nodemon.json`

@@ -22,20 +22,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 /**
- * Validate required environment variables
- * Throws an error if a required variable is missing
- * @param {string} name - Environment variable name
- * @returns {string} The value of the environment variable
- */
-const _requireEnv = (name) => {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
-  return value;
-};
-
-/**
  * Get optional environment variable with default
  * @param {string} name - Environment variable name
  * @param {string} defaultValue - Default value if not set
@@ -59,13 +45,15 @@ const config = {
   /**
    * Node environment
    * Values: 'development', 'production', 'test'
+   * Defaults to 'production' so a missing NODE_ENV never exposes stack traces.
+   * (example.env sets NODE_ENV=development for local work.)
    */
-  nodeEnv: getEnv('NODE_ENV', 'development'),
+  nodeEnv: getEnv('NODE_ENV', 'production'),
 
   /**
    * Check if running in development mode
    */
-  isDevelopment: getEnv('NODE_ENV', 'development') === 'development',
+  isDevelopment: getEnv('NODE_ENV') === 'development',
 
   /**
    * Check if running in production mode
@@ -97,14 +85,27 @@ const config = {
      * Maximum requests per window per IP
      */
     rateLimitMax: 100,
+
+    /**
+     * Number of reverse proxies in front of the app (e.g. 1 on Heroku/Render/nginx).
+     * Needed so rate limiting sees the real client IP. Default: 0 (no proxy).
+     */
+    trustProxy: parseInt(getEnv('TRUST_PROXY', '0'), 10),
   },
 
   /**
    * CORS configuration
    */
   cors: {
+    // '*' or a comma-separated list, e.g. "https://app.example.com,https://admin.example.com"
     origin: getEnv('CORS_ORIGIN', '*'),
   },
 };
+
+if (!config.database.url) {
+  console.warn(
+    '⚠️  DATABASE_URL is not set. Copy example.env to .env and edit it (see docs/getting-started.md).'
+  );
+}
 
 export default config;
